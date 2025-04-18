@@ -25,7 +25,7 @@ const Team = ({ profiles, employees }) => {
         </Col>
         <Col>
           <div className='mb-5'>
-            <Image src={'https:' + profiles.martinez} width={200} height={150}/>
+            <Image src={'https:' + profiles.martinez} width={200} height={260}/>
             <h5 className='marginBottomNull'>Sebastián Martínez de Trincheria</h5>
             <span className={styles.highlight}>{t('home:founder')}</span>
             <ul className={`topSpace ${styles.listBorder}`}>
