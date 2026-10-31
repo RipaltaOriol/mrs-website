@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+
+/*
+ * The only place a colour, type step or spacing value is defined. Tailwind's
+ * default palette and type scale are cleared so nothing outside this block can
+ * be reached for by accident.
+ */
+@theme {
+  --color-*: initial;
+  --color-brand: #99032e;
+  --color-ink: #333333;
+  --color-canvas: #f2f2f2;
+  --color-mist: #d6d6d6;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --font-*: initial;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  --text-*: initial;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.3;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.25;
+  --text-2xl: 1.875rem;
+  --text-2xl--line-height: 1.2;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2.5rem;
+  --text-4xl--line-height: 1.2;
+
+  --spacing: 0.25rem;
+  --container-content: 75rem;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-base text-ink;
+  }
+  h1 {
+    @apply mb-2 text-4xl font-medium;
+  }
+  h2 {
+    @apply mb-2 text-3xl font-medium;
+  }
+  h3,
+  h5 {
+    @apply mb-2 text-lg font-medium;
+  }
+  p {
+    @apply mb-4;
+  }
+}
