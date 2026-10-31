@@ -18,5 +18,27 @@
 3. Añadir numero de teléfono y mantener el botón de enviar correo
 4. Change name from Actualidad a Noticias. Esto seria el Blog.
 
+- Error page
+- Change language in the middle of article
+
 mrsassessors@gmail.com
-Mrs618630099
+(password removed - it was leaked in a public repo; rotate it:
+docs/runbooks/rotate-contentful-credential.md)
+
+
+- Fix navbar
+- Add arial text to icons
+- Fix i18n order
+- Remove styles from Home.css (from portal)
+- Do Layour styles
+- Improve efficiency of styles in AppBar
+- Create tansitions
+
+
+urgent:
+- fix teams
+- fix design
+- include teams in contentful
+- include bio in contentful
+- better rendering of CSS
+- think of more things to improve
