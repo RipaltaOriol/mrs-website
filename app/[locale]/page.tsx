@@ -12,6 +12,9 @@ import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import { PORTAL_URL } from '@/lib/portal'
 import { firmGraph } from '@/lib/structured-data'
+import { Suspense } from 'react'
+import PrototypeSwitcher from '@/components/PrototypeSwitcher'
+import { VARIANTS, VariantA, VariantB, VariantC } from './_prototype/HomeIntroVariants'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
 export const revalidate = 3600
@@ -20,8 +23,10 @@ export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return pageMetadata('home', await pageLocale(props))
 }
 
-export default async function HomePage(props: LocaleParams) {
+export default async function HomePage(props: LocaleParams & { searchParams: Promise<{ variant?: string }> }) {
   const locale = await pageLocale(props)
+  const variant = (await props.searchParams).variant ?? 'current'
+  const areas = getPracticeAreas(locale)
   const t = await getTranslations('home')
   const common = await getTranslations('common')
   const partners = getPartners(locale)
@@ -43,6 +48,8 @@ export default async function HomePage(props: LocaleParams) {
 
       <TreatedImage photograph={IMAGERY.lloretCastle} ratio="band" sizes="100vw" priority />
 
+      {variant === 'current' && (
+        <>
       <Divider />
 
       <section className="mx-7.5">
@@ -58,9 +65,15 @@ export default async function HomePage(props: LocaleParams) {
       <section id="content" className="mx-7.5">
         <h2 className="text-center">{t('work')}</h2>
         <div className="mx-auto my-5 max-w-content">
-          <PracticeAreas areas={getPracticeAreas(locale)} />
+          <PracticeAreas areas={areas} />
         </div>
       </section>
+
+        </>
+      )}
+      {variant === 'A' && <VariantA locale={locale} areas={areas} heading={t('work')} />}
+      {variant === 'B' && <VariantB locale={locale} areas={areas} heading={t('work')} />}
+      {variant === 'C' && <VariantC locale={locale} areas={areas} heading={t('work')} />}
 
       <span id="team" />
       <Divider />
@@ -83,6 +96,9 @@ export default async function HomePage(props: LocaleParams) {
       </section>
 
       <Divider />
+      <Suspense>
+        <PrototypeSwitcher variants={[{ key: 'current', name: 'today' }, ...VARIANTS]} />
+      </Suspense>
     </div>
   )
 }
