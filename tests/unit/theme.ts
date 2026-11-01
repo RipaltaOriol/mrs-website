@@ -53,3 +53,11 @@ export function keyframes(name: string, css = STYLESHEET): string[] {
   const body = css.slice(open + 1, close - 1).replace(/\s+/g, '')
   return [...body.matchAll(/[\w%]+\{[^}]*\}/g)].map(([frame]) => frame.replace(/;\}/, '}'))
 }
+
+/** Every `@apply` rule in the stylesheet, as its selector and the utilities it applies. */
+export function appliedRules(css = STYLESHEET): Array<{ selector: string; utilities: string[] }> {
+  return [...css.matchAll(/([^{}]+)\{\s*@apply ([^;]+);\s*\}/g)].map(([, selector, utilities]) => ({
+    selector: selector.trim().replace(/\s*\n\s*/g, ' '),
+    utilities: utilities.trim().split(/\s+/),
+  }))
+}

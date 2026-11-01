@@ -76,3 +76,20 @@ export function stylesheets(html: string): string[] {
     .filter((tag) => tag.rel === 'stylesheet')
     .map((tag) => tag.href)
 }
+
+/** The markup inside the first `<header>`, `<main>` or `<footer>`. */
+export function region(html: string, name: 'header' | 'main' | 'footer'): string {
+  const start = html.indexOf(`<${name}`)
+  if (start < 0) return ''
+  const open = html.indexOf('>', start) + 1
+  return html.slice(open, html.indexOf(`</${name}>`, open))
+}
+
+/** Every tag in `html` whose `class` applies one of `utilities` with no variant prefix. */
+export function styledBy(html: string, utilities: string[]): Attrs[] {
+  const resting = new RegExp(`(?:^|\\s)(?:${utilities.join('|')})(?:\\s|$)`)
+  return [...html.matchAll(/<\w+\b[^>]*>/g)]
+    .map(([tag]) => tag)
+    .filter((tag) => resting.test(tag.match(/class="([^"]*)"/)?.[1] ?? ''))
+    .flatMap((tag) => tags(tag, '\\w+'))
+}

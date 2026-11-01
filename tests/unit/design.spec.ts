@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { relative } from 'node:path'
 import { expect, test } from '@playwright/test'
-import { contrast, keyframes, roseUsedAsText, sourceFiles, STYLESHEET, themeTokens } from './theme'
+import { appliedRules, contrast, keyframes, roseUsedAsText, sourceFiles, STYLESHEET, themeTokens } from './theme'
 
 const tokens = themeTokens()
 const colour = (name: string) => {
@@ -33,6 +33,8 @@ const PAIRINGS: Array<[text: string, surface: string, minimum: number]> = [
   ['white', 'brand', BODY],
   ['white', 'brand-deep', BODY],
   ['brand', 'mist', BODY],
+  ['white', 'ink', BODY],
+  ['mist', 'ink', BODY],
 ]
 
 for (const [text, surface, minimum] of PAIRINGS) {
@@ -90,4 +92,14 @@ test('a reduced-motion preference suppresses all animation and transition', () =
   expect(compact).toContain('animation:none!important;')
   expect(compact).toContain('transition:none!important;')
   expect(compact).toContain('scroll-behavior:auto!important;')
+})
+
+test('the focus ring is drawn in the brand red', () => {
+  const base = appliedRules().find((rule) => rule.selector === ':focus-visible')
+  expect(base?.utilities).toEqual(['outline-2', 'outline-offset-2', 'outline-brand'])
+})
+
+test('only the charcoal footer overrides the focus ring to white', () => {
+  const white = appliedRules().filter((rule) => rule.utilities.includes('outline-white'))
+  expect(white.map((rule) => rule.selector)).toEqual(['footer :focus-visible'])
 })

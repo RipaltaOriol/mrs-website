@@ -1,11 +1,17 @@
 {
-  "work": "Àrees de Pràctica",
-  "team": "Equip",
-  "contact": "Contacte",
   "blog": "Actualitat",
-  "clientsPortal": "Clients",
-  "employeePortal": "Traballadors",
+  "closeMenu": "Tancar el menú",
+  "contact": "Contacte",
+  "firm": "La Firma",
   "footerContact": "CONTACTE",
   "footerText": "Fidels al nostre compromís de modernització i creixement, des del nostre despatx treballem dia a dia per la creació de nous serveis adaptats a les noves necessitades de nostra societat.",
-  "privacyPolicy": "Política de Privacitat"
+  "home": "Inici",
+  "locale": "Idioma",
+  "menu": "Menú",
+  "offices": "Oficines",
+  "portal": "Portal",
+  "portalAction": "Accedir al Portal",
+  "privacyPolicy": "Política de Privacitat",
+  "team": "Equip",
+  "work": "Àrees de Pràctica"
 }

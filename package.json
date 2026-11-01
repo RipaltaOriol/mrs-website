@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test:unit": "playwright test -c playwright.unit.config.ts",
-    "test:smoke": "playwright test",
+    "test:smoke": "playwright test --project http",
+    "test:interaction": "playwright test --project browser",
     "lint:comments": "node scripts/check-comments.mjs --base origin/main",
     "prepare": "git config core.hooksPath .githooks || true"
   },

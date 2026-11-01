@@ -1,9 +1,7 @@
 import { hasLocale } from 'next-intl'
 import { getRequestConfig } from 'next-intl/server'
+import { NAMESPACES } from './namespaces'
 import { routing } from './routing'
-
-// The locale JSON files carried over unchanged; each file is one namespace.
-const NAMESPACES = ['common', 'home', 'about', 'blog', 'policy'] as const
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale

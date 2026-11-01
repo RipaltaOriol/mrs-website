@@ -94,11 +94,16 @@ for (const path of ['/does-not-exist', '/es/does-not-exist', '/xx/about']) {
 // still a real 404, and the site's own 404 content is still what gets
 // delivered, so both are asserted here. Narrower than the localised-document
 // assertion the other unknown routes get, deliberately.
-for (const path of ['/blogs/no-such-article', '/es/blogs/no-such-article']) {
+const UNKNOWN_ARTICLE = {
+  '/blogs/no-such-article': 'Aquesta pàgina no existeix',
+  '/es/blogs/no-such-article': 'Esta página no existe',
+}
+
+for (const [path, heading] of Object.entries(UNKNOWN_ARTICLE)) {
   test(`unknown Article ${path} returns 404 carrying the site's 404`, async ({ request }) => {
     const response = await request.get(path)
     expect(response.status()).toBe(404)
-    expect(await response.text()).toContain('This page cannot be found')
+    expect(await response.text()).toContain(heading)
   })
 }
 

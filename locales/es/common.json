@@ -1,11 +1,17 @@
 {
-  "work": "Áreas de Práctica",
-  "team": "Equipo",
-  "contact": "Contacto",
   "blog": "Actualidad",
-  "clientsPortal": "Clientes",
-  "employeePortal": "Trabajadores",
+  "closeMenu": "Cerrar el menú",
+  "contact": "Contacto",
+  "firm": "La Firma",
   "footerContact": "CONTACTO",
   "footerText": "Fieles a nuestro compromiso de modernización y crecimiento, trabajamos día a día para la creación de nuevos servicios adaptados a las noves necesidades de nuestra sociedad.",
-  "privacyPolicy": "Política de Privacidad"
+  "home": "Inicio",
+  "locale": "Idioma",
+  "menu": "Menú",
+  "offices": "Oficinas",
+  "portal": "Portal",
+  "portalAction": "Acceder al Portal",
+  "privacyPolicy": "Política de Privacidad",
+  "team": "Equipo",
+  "work": "Áreas de Práctica"
 }

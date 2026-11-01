@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Link, usePathname } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 
@@ -10,25 +10,37 @@ function counterpartPath(pathname: string): string {
   return pathname.startsWith('/blogs/') ? '/blogs' : pathname
 }
 
-export default function LocaleSwitcher() {
+/** The surface the switcher sits on: the light header or the charcoal footer. */
+export type Tone = 'light' | 'dark'
+
+const TONES: Record<Tone, { idle: string; current: string }> = {
+  light: { idle: 'text-stone hover:text-ink', current: 'text-brand' },
+  dark: { idle: 'text-mist hover:text-white', current: 'text-white underline' },
+}
+
+export default function LocaleSwitcher({ tone }: { tone: Tone }) {
   const current = useLocale()
   const pathname = usePathname()
+  const t = useTranslations('common')
+  const styles = TONES[tone]
 
   return (
-    <div className="flex justify-end">
-      {routing.locales.map((locale) => (
-        <span key={locale} className="my-5 border-r border-white px-5 last:border-r-0">
-          <Link
-            href={counterpartPath(pathname)}
-            locale={locale}
-            hrefLang={locale}
-            aria-current={locale === current ? 'true' : undefined}
-            className="uppercase text-white"
-          >
-            {locale}
-          </Link>
-        </span>
-      ))}
-    </div>
+    <nav aria-label={t('locale')}>
+      <ul className="flex items-center gap-2 text-sm font-medium">
+        {routing.locales.map((locale) => (
+          <li key={locale}>
+            <Link
+              href={counterpartPath(pathname)}
+              locale={locale}
+              hrefLang={locale}
+              aria-current={locale === current ? 'true' : undefined}
+              className={`rounded px-1 py-1 uppercase ${locale === current ? styles.current : styles.idle}`}
+            >
+              {locale}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   )
 }

@@ -1,10 +1,14 @@
-import { getLocale } from 'next-intl/server'
+import type { Metadata } from 'next'
+import { getLocale, getTranslations } from 'next-intl/server'
 import NotFoundContent from '@/components/NotFoundContent'
 import SiteDocument from '@/components/SiteDocument'
 import { SITE_METADATA } from '@/lib/metadata'
 import './globals.css'
 
-export const metadata = SITE_METADATA
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('notFound')
+  return { ...SITE_METADATA, title: `${t('title')} — MRS Assessors` }
+}
 
 // Every URL no page claims lands here, rendered on the server with a real 404
 // status. Calling `notFound()` from a dynamically rendered page would instead

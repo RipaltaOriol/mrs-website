@@ -60,6 +60,9 @@
 }
 
 @layer base {
+  html {
+    @apply scroll-pt-24;
+  }
   body {
     @apply bg-canvas font-sans text-base text-ink;
   }
@@ -83,7 +86,6 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-brand;
   }
-  header :focus-visible,
   footer :focus-visible {
     @apply outline-white;
   }

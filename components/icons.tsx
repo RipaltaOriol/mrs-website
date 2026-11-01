@@ -19,18 +19,6 @@ function Icon({ size = 16, children, ...props }: IconProps) {
   )
 }
 
-export const PersonIcon = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0Zm0 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm0 11.5a6.5 6.5 0 0 1-4.9-2.2C3.9 10.6 5.8 9.5 8 9.5s4.1 1.1 4.9 2.8A6.5 6.5 0 0 1 8 14.5Z" />
-  </Icon>
-)
-
-export const BriefcaseIcon = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M5.5 1A1.5 1.5 0 0 0 4 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v2.4l6.5 1.7V8h3v.6L16 6.9V4.5A1.5 1.5 0 0 0 14.5 3H12v-.5A1.5 1.5 0 0 0 10.5 1h-5ZM5 3v-.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V3H5Zm-5 4.9v5.6A1.5 1.5 0 0 0 1.5 15h13a1.5 1.5 0 0 0 1.5-1.5V7.9l-6.5 1.7v.4h-3v-.4L0 7.9Z" />
-  </Icon>
-)
-
 export const MenuIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M2 4h12v1.25H2zM2 7.4h12v1.25H2zM2 10.8h12v1.25H2z" />
@@ -52,5 +40,11 @@ export const EnvelopeIcon = (p: IconProps) => (
 export const ShieldLockIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M8 0c-.7 0-1.9.3-3 .6C3.9.9 2.7 1.3 2.1 1.5A1.1 1.1 0 0 0 1.3 2.4C.7 6.9 2 10.2 3.7 12.3A11 11 0 0 0 7.1 15.8c.3.1.6.2.9.2s.6-.1.9-.2a11 11 0 0 0 3.4-3.5c1.7-2.1 3-5.4 2.4-9.9a1.1 1.1 0 0 0-.8-.9C13.3 1.3 12.1.9 11 .6 9.9.3 8.7 0 8 0Zm0 5a1.5 1.5 0 0 1 .5 2.9l.4 2.1H7.1l.4-2.1A1.5 1.5 0 0 1 8 5Z" />
+  </Icon>
+)
+
+export const CloseIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3.3 2.4 8 7.1l4.7-4.7.9.9L8.9 8l4.7 4.7-.9.9L8 8.9l-4.7 4.7-.9-.9L7.1 8 2.4 3.3l.9-.9Z" />
   </Icon>
 )

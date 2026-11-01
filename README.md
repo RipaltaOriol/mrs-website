@@ -20,17 +20,26 @@ npm run dev
 
 ```bash
 npm run typecheck
-npm run test:unit    # the content boundary, over fixtures; no network, no build
-npm run test:smoke   # builds, starts on :3100, and checks every route over HTTP
+npm run test:unit         # the content boundary and the design tokens, over fixtures
+npm run test:smoke        # builds, starts on :3100, and checks every route over HTTP
+npm run test:interaction  # drives the built site in Chromium
 ```
+
+`test:interaction` needs browser binaries: `npx playwright install chromium`.
 
 The unit specification (`tests/unit/`) covers the content boundary: what each
 content type resolves to, and which malformed responses fail the build.
 
 The smoke specification (`tests/smoke/`) covers URL shape in both Locales,
-`hreflang` alternates, document language, the Locale switcher, 404 status and
-the content-backed routes. It needs no browser binaries, but it does need
-working Contentful credentials, because it builds the site.
+`hreflang` alternates, document language, the Locale switcher, the header and
+footer markup, the localised 404 and the content-backed routes. It needs no
+browser binaries, but it does need working Contentful credentials, because it
+builds the site.
+
+The interaction specification (`tests/interaction/`) covers what only a rendered
+page can show: the header hairline appearing on scroll, the full-screen mobile
+navigation and keyboard reachability with a visible focus ring. See
+[ADR-0004](docs/adr/0004-browser-driven-interaction-specification.md).
 
 ## Where things live
 
@@ -40,6 +49,7 @@ working Contentful credentials, because it builds the site.
   nothing outside this directory knows Contentful exists
 - `i18n/`: next-intl routing, navigation and message loading from `locales/{ca,es}/*.json`
 - `app/globals.css`: the single `@theme` block, the only place colours, type steps and spacing are defined
+- `lib/offices.ts`: the firm's two Offices, read by both the contact section and the footer
 
 ## Content
 

@@ -1,40 +1,81 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import { formatAddress, OFFICES } from '@/lib/offices'
+import { PORTAL_URL } from '@/lib/portal'
 import { EnvelopeIcon, ShieldLockIcon, TelephoneIcon } from './icons'
+import LocaleSwitcher from './LocaleSwitcher'
+
+const EMAIL = 'administracio@mrsassessors.com'
+const TELEPHONES = ['972371821', '972372240']
+
+const heading = 'mb-4 font-sans text-sm font-semibold tracking-wide text-mist uppercase'
 
 export default async function Footer() {
   const t = await getTranslations('common')
 
   return (
-    <footer className="bg-brand pt-7.5 text-white">
-      <div className="mx-auto grid max-w-content gap-6 px-3 md:grid-cols-2">
-        <div>
-          <h5>MRS Assessors</h5>
-          <p>{t('footerText')}</p>
-        </div>
-        <div>
-          <h5>{t('footerContact')}</h5>
-          <ul className="mb-4 space-y-1">
-            {['972371821', '972372240'].map((phone) => (
-              <li key={phone} className="flex items-center gap-2.5">
-                <TelephoneIcon size={12} />
-                {phone}
+    <footer className="bg-ink text-white">
+      <div className="mx-auto max-w-content px-5 py-14">
+        <div className="grid gap-10 md:grid-cols-3">
+          <div>
+            <h2 className={heading}>MRS Assessors</h2>
+            <p className="max-w-measure text-sm text-mist">{t('footerText')}</p>
+            <a href={PORTAL_URL} aria-label={t('portalAction')} className="btn text-sm font-medium">
+              {t('portal')}
+            </a>
+          </div>
+
+          <div>
+            <h2 className={heading}>{t('offices')}</h2>
+            <ul className="space-y-4 text-sm">
+              {OFFICES.map((office) => (
+                <li key={office.name}>
+                  <address className="not-italic">
+                    <span className="block font-medium">{office.name}</span>
+                    <span className="block text-mist">{formatAddress(office)}</span>
+                  </address>
+                  <a href={office.map} className="text-mist underline underline-offset-4 hover:text-white">
+                    Mapa
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className={heading}>{t('footerContact')}</h2>
+            <ul className="space-y-2 text-sm">
+              {TELEPHONES.map((telephone) => (
+                <li key={telephone} className="flex items-center gap-2.5">
+                  <TelephoneIcon size={12} />
+                  <a href={`tel:+34${telephone}`} className="hover:underline">
+                    {telephone}
+                  </a>
+                </li>
+              ))}
+              <li className="flex items-center gap-2.5">
+                <EnvelopeIcon size={12} />
+                <a href={`mailto:${EMAIL}`} className="hover:underline">
+                  {EMAIL}
+                </a>
               </li>
-            ))}
-            <li className="flex items-center gap-2.5">
-              <EnvelopeIcon size={12} />
-              administracio@mrsassessors.com
-            </li>
-            <li className="flex items-center gap-2.5">
-              <ShieldLockIcon size={12} />
-              <Link href="/policy" className="text-white hover:underline">
-                {t('privacyPolicy')}
-              </Link>
-            </li>
-          </ul>
+              <li className="flex items-center gap-2.5">
+                <ShieldLockIcon size={12} />
+                <Link href="/policy" className="hover:underline">
+                  {t('privacyPolicy')}
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div className="pb-5 text-center">© 2020 Copyright: mrsassessors.com</div>
+
+      <div className="border-t border-stone">
+        <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-4 px-5 py-5 text-sm text-mist">
+          <span>© {new Date().getFullYear()} mrsassessors.com</span>
+          <LocaleSwitcher tone="dark" />
+        </div>
+      </div>
     </footer>
   )
 }
