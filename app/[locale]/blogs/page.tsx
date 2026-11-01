@@ -2,15 +2,17 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import ArticleListItem from '@/components/ArticleListItem'
 import PageTitle from '@/components/PageTitle'
+import StructuredData from '@/components/StructuredData'
 import { getArticles } from '@/lib/content'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+import { breadcrumbs } from '@/lib/structured-data'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
 export const revalidate = 3600
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
-  return { alternates: localeAlternates('/blogs', await pageLocale(props)) }
+  return pageMetadata('blogs', await pageLocale(props))
 }
 
 export default async function ArticlesPage(props: LocaleParams) {
@@ -21,6 +23,15 @@ export default async function ArticlesPage(props: LocaleParams) {
 
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
+      <StructuredData
+        data={breadcrumbs(
+          [
+            { name: common('home'), page: '/' },
+            { name: common('blog'), page: '/blogs' },
+          ],
+          locale,
+        )}
+      />
       <PageTitle title={common('blog')} />
       <ol className="mx-auto max-w-measure motion-safe:animate-fade-in">
         {articles.map((article) => (

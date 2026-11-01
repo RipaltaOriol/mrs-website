@@ -3,19 +3,21 @@ import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
 import Offices from '@/components/Offices'
 import PracticeAreas from '@/components/PracticeAreas'
+import StructuredData from '@/components/StructuredData'
 import Team from '@/components/Team'
 import TreatedImage from '@/components/TreatedImage'
 import { getEmployees, getPartners, getPracticeAreas, groupByDepartment } from '@/lib/content'
 import { IMAGERY } from '@/lib/imagery'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import { PORTAL_URL } from '@/lib/portal'
+import { firmGraph } from '@/lib/structured-data'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
 export const revalidate = 3600
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
-  return { alternates: localeAlternates('/', await pageLocale(props)) }
+  return pageMetadata('home', await pageLocale(props))
 }
 
 export default async function HomePage(props: LocaleParams) {
@@ -27,6 +29,7 @@ export default async function HomePage(props: LocaleParams) {
 
   return (
     <div>
+      <StructuredData data={firmGraph(locale)} />
       <section aria-labelledby="hero-statement" className="mx-auto max-w-content px-5 pt-16 pb-12 md:pt-24 md:pb-16">
         <p className="mb-5 text-sm font-medium tracking-widest text-stone uppercase">MRS Assessors</p>
         <h1 id="hero-statement" className="max-w-4xl">

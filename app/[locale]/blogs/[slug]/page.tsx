@@ -5,11 +5,14 @@ import { getTranslations } from 'next-intl/server'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import ArticleTags from '@/components/ArticleTags'
 import PageTitle from '@/components/PageTitle'
+import StructuredData from '@/components/StructuredData'
 import PublishedDate from '@/components/PublishedDate'
-import { getPathname, Link } from '@/i18n/navigation'
+import { Link } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
 import { getArticle, getArticles, type Article } from '@/lib/content'
+import { articleMetadata } from '@/lib/metadata'
 import { pageLocale } from '@/lib/page'
+import { articleMarkup, breadcrumbs } from '@/lib/structured-data'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
 export const revalidate = 3600
@@ -42,27 +45,29 @@ export async function generateMetadata(props: ArticleParams): Promise<Metadata> 
   // An absent Article is the page's 404 to declare, not metadata's: calling
   // `notFound()` from here sends Next's bare error document.
   if (!found) return {}
-  const { title, slug, preview, locale } = found
-
-  return {
-    title,
-    description: preview ?? undefined,
-    // An Article exists independently per Locale (GLOSSARY: Article), so it
-    // has no counterpart at this slug to declare an hreflang alternate for. It
-    // claims a canonical URL and nothing else.
-    alternates: { canonical: getPathname({ href: `/blogs/${slug}`, locale }) },
-  }
+  return articleMetadata(found, found.locale)
 }
 
 export default async function ArticlePage(props: ArticleParams) {
   const found = await requestedArticle(props)
   if (!found) notFound()
-  const { title, published, tags, image, body, locale } = found
+  const { title, slug, published, tags, image, body, locale } = found
   const common = await getTranslations('common')
   const t = await getTranslations('blog')
 
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
+      <StructuredData data={articleMarkup(found, locale)} />
+      <StructuredData
+        data={breadcrumbs(
+          [
+            { name: common('home'), page: '/' },
+            { name: common('blog'), page: '/blogs' },
+            { name: title, page: `/blogs/${slug}` },
+          ],
+          locale,
+        )}
+      />
       <nav aria-label={common('blog')} className="mx-auto mb-8 max-w-measure">
         <Link href="/blogs" className="text-sm text-brand underline-offset-4 hover:underline">
           <span aria-hidden="true">← </span>

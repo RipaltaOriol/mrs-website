@@ -5,6 +5,8 @@ export type Office = {
   street: string
   postcode: string
   town: string
+  latitude: number
+  longitude: number
   map: string
 }
 
@@ -15,6 +17,8 @@ export const OFFICES: readonly Office[] = [
     street: 'Calle Can Guidet, núm. 5 local 1A',
     postcode: '17310',
     town: 'Lloret de Mar',
+    latitude: 41.7061464,
+    longitude: 2.8388331,
     map: 'https://goo.gl/maps/CuMMNSxdEvmvxePt9',
   },
   {
@@ -23,6 +27,8 @@ export const OFFICES: readonly Office[] = [
     street: 'Passeig Jacint Verdaguer, núm. 8',
     postcode: '17310',
     town: 'Lloret de Mar',
+    latitude: 41.6990774,
+    longitude: 2.8484235,
     map: 'https://goo.gl/maps/7QK7f6fKXKPq2Yjc8',
   },
 ] as const

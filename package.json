@@ -11,11 +11,13 @@
     "test:smoke": "playwright test --project http",
     "test:interaction": "playwright test --project browser",
     "lint:comments": "node scripts/check-comments.mjs --base origin/main",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "prepare": "git config core.hooksPath .githooks || true",
+    "icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^16.2.2",
     "@contentful/rich-text-types": "^17.2.7",
+    "@vercel/analytics": "^2.0.1",
     "contentful": "^11.12.10",
     "next": "^15.5.28",
     "next-intl": "^4.14.9",
@@ -28,6 +30,7 @@
     "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   }

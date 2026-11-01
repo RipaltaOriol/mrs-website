@@ -180,3 +180,29 @@ export function anchors(html: string): Array<{ href: string; text: string; label
     return [{ href: decode(href), text: visibleText(inner), label: label && decode(label) }]
   })
 }
+
+/** The text of `<title>`, character references decoded. */
+export function documentTitle(html: string): string | undefined {
+  const title = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/)?.[1]
+  return title === undefined ? undefined : visibleText(title)
+}
+
+/** The `content` of the `<meta>` whose `property` or `name` is `key`, decoded. */
+export function metaContent(html: string, key: string): string | undefined {
+  const tag = tags(html, 'meta').find((meta) => meta.property === key || meta.name === key)
+  return tag?.content === undefined ? undefined : visibleText(tag.content)
+}
+
+/** Every `<script type="application/ld+json">`, parsed. */
+export function structuredData(html: string): Array<Record<string, unknown>> {
+  return [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(
+    ([, json]) => JSON.parse(json),
+  )
+}
+
+/** The `href` of every `<link>` whose `rel` is `rel`. */
+export function linkHrefs(html: string, rel: string): string[] {
+  return tags(html, 'link')
+    .filter((tag) => tag.rel === rel)
+    .map((tag) => tag.href)
+}

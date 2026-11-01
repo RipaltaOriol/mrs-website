@@ -1,11 +1,14 @@
+import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import SiteDocument from '@/components/SiteDocument'
 import { routing } from '@/i18n/routing'
-import { SITE_METADATA } from '@/lib/metadata'
+import { siteMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import '../globals.css'
 
-export const metadata = SITE_METADATA
+export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
+  return siteMetadata(await pageLocale(props))
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))

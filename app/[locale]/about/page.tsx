@@ -1,22 +1,33 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import PageTitle from '@/components/PageTitle'
+import StructuredData from '@/components/StructuredData'
 import TreatedImage from '@/components/TreatedImage'
 import { IMAGERY } from '@/lib/imagery'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+import { breadcrumbs } from '@/lib/structured-data'
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
-  return { alternates: localeAlternates('/about', await pageLocale(props)) }
+  return pageMetadata('about', await pageLocale(props))
 }
 
 export default async function AboutPage(props: LocaleParams) {
-  await pageLocale(props)
+  const locale = await pageLocale(props)
   const t = await getTranslations('about')
   const common = await getTranslations('common')
 
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
+      <StructuredData
+        data={breadcrumbs(
+          [
+            { name: common('home'), page: '/' },
+            { name: common('firm'), page: '/about' },
+          ],
+          locale,
+        )}
+      />
       <PageTitle title={common('firm')} />
 
       <div className="mx-auto mb-10 max-w-measure motion-safe:animate-fade-in lg:mb-14">
