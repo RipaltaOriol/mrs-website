@@ -2,10 +2,13 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
 import PracticeAreas, { type PracticeArea } from '@/components/PracticeAreas'
+import TreatedImage from '@/components/TreatedImage'
 import { getEmployees, getPartners, splitLocaleList } from '@/lib/content'
+import { IMAGERY } from '@/lib/imagery'
 import { localeAlternates } from '@/lib/metadata'
 import { formatAddress, OFFICES } from '@/lib/offices'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+import { PORTAL_URL } from '@/lib/portal'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
 export const revalidate = 3600
@@ -57,12 +60,22 @@ export default async function HomePage(props: LocaleParams) {
 
   return (
     <div>
+      <section aria-labelledby="hero-statement" className="mx-auto max-w-content px-5 pt-16 pb-12 md:pt-24 md:pb-16">
+        <p className="mb-5 text-sm font-medium tracking-widest text-stone uppercase">MRS Assessors</p>
+        <h1 id="hero-statement" className="max-w-4xl">
+          {t('heroStatement')}
+        </h1>
+        <p className="mt-5 mb-8 max-w-measure text-lg text-stone">{t('heroSubline')}</p>
+        <a href={PORTAL_URL} className="btn">
+          {common('portalAction')}
+        </a>
+      </section>
+
+      <TreatedImage photograph={IMAGERY.lloretCastle} ratio="band" sizes="100vw" priority />
+
       <Divider />
 
-      <section className="mx-7.5 text-center">
-        <span className="block text-2xl font-medium text-brand">MRS ASSESSORS</span>
-        <h1>{t('title')}</h1>
-        <span className="block text-lg text-brand">{t('subtitle')}</span>
+      <section className="mx-7.5">
         <div className="mx-auto my-5 max-w-content text-start">
           <p>{t('body1')}</p>
           <p>{t('body2')}</p>

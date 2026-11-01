@@ -38,10 +38,10 @@ export function sourceFiles(): string[] {
     .filter((file) => /\.(tsx?|css)$/.test(file))
 }
 
-/** The frames of a stylesheet `@keyframes` rule, whitespace removed. */
-export function keyframes(name: string, css = STYLESHEET): string[] {
-  const rule = css.indexOf(`@keyframes ${name} `)
-  if (rule < 0) return []
+/** The body of the first stylesheet block opened by `prelude`, or `undefined` if there is none. */
+export function block(prelude: string, css = STYLESHEET): string | undefined {
+  const rule = css.indexOf(`${prelude} `)
+  if (rule < 0) return undefined
   const open = css.indexOf('{', rule)
   let depth = 0
   let close = open
@@ -50,7 +50,13 @@ export function keyframes(name: string, css = STYLESHEET): string[] {
     if (css[close] === '}') depth--
     close++
   } while (depth > 0 && close < css.length)
-  const body = css.slice(open + 1, close - 1).replace(/\s+/g, '')
+  return css.slice(open + 1, close - 1)
+}
+
+/** The frames of a stylesheet `@keyframes` rule, whitespace removed. */
+export function keyframes(name: string, css = STYLESHEET): string[] {
+  const body = block(`@keyframes ${name}`, css)?.replace(/\s+/g, '')
+  if (body === undefined) return []
   return [...body.matchAll(/[\w%]+\{[^}]*\}/g)].map(([frame]) => frame.replace(/;\}/, '}'))
 }
 

@@ -48,6 +48,10 @@
     }
   }
 
+  --aspect-*: initial;
+  --aspect-band: 12 / 5;
+  --aspect-landscape: 3 / 2;
+
   --spacing: 0.25rem;
   --container-content: 75rem;
   --container-measure: 34em;
@@ -57,6 +61,27 @@
 /* The one button recipe, in the same file as the tokens it is built from. */
 @utility btn {
   @apply inline-block rounded bg-brand px-3 py-1.5 text-white hover:bg-brand-deep;
+}
+
+/** The one photographic treatment, drawn over every design image at its locked ratio. */
+@utility treated {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-mist);
+
+  & img {
+    filter: saturate(0.65) sepia(0.12) contrast(0.96);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: var(--color-rose);
+    mix-blend-mode: multiply;
+    opacity: 0.22;
+  }
 }
 
 @layer base {

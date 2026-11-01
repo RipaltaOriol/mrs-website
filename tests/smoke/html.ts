@@ -93,3 +93,16 @@ export function styledBy(html: string, utilities: string[]): Attrs[] {
     .filter((tag) => resting.test(tag.match(/class="([^"]*)"/)?.[1] ?? ''))
     .flatMap((tag) => tags(tag, '\\w+'))
 }
+
+/** The visible text of `markup`, tags and entities removed. */
+export function visibleText(markup: string): string {
+  return markup.replace(/<[^>]*>/g, '').replace(/&\w+;/g, ' ').trim()
+}
+
+/** The opening tag and contents of the first treated image frame. */
+export function treatedFrame(html: string): { frame: string; inner: string } | undefined {
+  const start = html.search(/<div\b[^>]*class="[^"]*\btreated\b/)
+  if (start < 0) return undefined
+  const open = html.indexOf('>', start) + 1
+  return { frame: html.slice(start, open), inner: html.slice(open, html.indexOf('</div>', open)) }
+}

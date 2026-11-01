@@ -4,8 +4,9 @@ Contentful previously held Articles, Partner photographs, Employees, the homepag
 slider and a pair of generic page images. We narrowed it to the content that
 genuinely changes: Articles and Employees. Practice Areas, Office addresses and
 Partner biographies stay in the locale JSON files, and design imagery moved into
-the repository under `public/`. The `slider`, `genericImages` and `team` content
-types were retired.
+the repository under `assets/imagery/`, statically imported through
+`lib/imagery.ts`. The `slider`, `genericImages` and `team` content types were
+retired.
 
 A content management system earns its cost for content edited often by people who
 cannot deploy. Here that describes Articles and Employees and nothing else: the
