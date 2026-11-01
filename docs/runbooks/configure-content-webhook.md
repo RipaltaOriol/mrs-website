@@ -20,6 +20,14 @@ is no window where it is reachable without a secret.
 
 ## Steps
 
+`scripts/configure-content-webhook.sh` walks through every step below
+interactively, including rotation. It generates the secret, checks production
+with probes at each stage, and never writes the secret to disk or GitHub:
+
+```bash
+./scripts/configure-content-webhook.sh
+```
+
 ### 1. Generate the shared secret
 
 ```bash
