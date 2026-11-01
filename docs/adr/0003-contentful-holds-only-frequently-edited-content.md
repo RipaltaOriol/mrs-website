@@ -1,20 +1,18 @@
 # Contentful holds only frequently edited content
 
-> **Revised.** Partner biographies stayed in the locale files. The decision
-> below stands as written; see the revision at the foot of this file.
-
 Contentful previously held Articles, Partner photographs, Employees, the homepage
 slider and a pair of generic page images. We narrowed it to the content that
-genuinely changes: Articles, Employees, and Partner biographies, which moved in
-from hardcoded JSX. Practice areas and Office addresses stay in the locale JSON
-files, and design imagery moved into the repository under `public/`. The `slider`
-and `genericImages` content types were retired.
+genuinely changes: Articles and Employees. Practice Areas, Office addresses and
+Partner biographies stay in the locale JSON files, and design imagery moved into
+the repository under `public/`. The `slider`, `genericImages` and `team` content
+types were retired.
 
 A content management system earns its cost for content edited often by people who
-cannot deploy. Here that describes Articles and nothing else: the nine practice
-areas had not changed in five years. Keeping them in locale JSON makes them
-versioned, diffable and reviewable in a pull request, and removes a build-time
-network call, at the cost of a deploy to change them, which was happening anyway.
+cannot deploy. Here that describes Articles and Employees and nothing else: the
+nine Practice Areas had not changed in five years, and neither had the three
+Partner biographies. Keeping them in locale JSON makes them versioned, diffable
+and reviewable in a pull request, and removes a build-time network call, at the
+cost of a deploy to change them, which was happening anyway.
 
 ## Consequences
 
@@ -24,9 +22,13 @@ network call, at the cost of a deploy to change them, which was happening anyway
   script, run by the repository owner with their own management token, so no write
   credential enters the repository.
 
-## Revision: Partner biographies stayed in the locale files
+## Revision: Partner biographies never moved into Contentful
 
-This ADR recorded Partner biographies as moving into Contentful. They did not.
+As first written, this ADR recorded Partner biographies as moving into Contentful.
+They did not, and the decision above now says so. The reasoning is kept here
+rather than dropped, because the original wording shipped and `#8` was specified
+against it.
+
 When the typed content boundary was built (#3), the space held no field for them:
 the `team` content type carries a `profileName` and a photograph and nothing
 else, and the photographs are retired by #8. Adding a biography field would have
@@ -48,5 +50,8 @@ non-blank string that would otherwise have rendered as a biography line. What
 changed is the source behind the boundary, not the boundary.
 
 So Contentful holds **Articles and Employees**. The `team` content type is no
-longer read by anything and can be retired alongside `slider` and
-`genericImages` when #8 lands.
+longer read by anything and is retired alongside `slider` and `genericImages`.
+
+Issue #8 still asks for biographies "sourced from the content system" and for a
+committed migration script. Both are superseded by this revision, and #8 needs
+amending before it is implemented.
