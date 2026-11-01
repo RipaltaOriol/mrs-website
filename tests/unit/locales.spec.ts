@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { NAMESPACES } from '@/i18n/namespaces'
 import { routing } from '@/i18n/routing'
+import { getPartners } from '@/lib/content'
 
 const messages = (locale: string, namespace: string): Record<string, unknown> =>
   JSON.parse(readFileSync(join(process.cwd(), `locales/${locale}/${namespace}.json`), 'utf8'))
@@ -62,6 +63,16 @@ test('the 404 page promises no redirect in either Locale', () => {
   for (const locale of routing.locales) {
     for (const [key, value] of Object.entries(messages(locale, 'notFound'))) {
       expect(value, `${locale}/notFound.${key}`).not.toMatch(PROMISES_A_REDIRECT)
+    }
+  }
+})
+
+test('every Partner biography in a locale file belongs to a Partner', () => {
+  for (const locale of routing.locales) {
+    const home = messages(locale, 'home')
+    for (const key of Object.keys(home).filter((key) => key.endsWith('Bio'))) {
+      const { [key]: _, ...without } = home
+      expect(() => getPartners(locale, without), `${locale}/home.${key}`).toThrow(key)
     }
   }
 })

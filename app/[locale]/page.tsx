@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
 import PracticeAreas from '@/components/PracticeAreas'
+import Team from '@/components/Team'
 import TreatedImage from '@/components/TreatedImage'
-import { getEmployees, getPartners, getPracticeAreas } from '@/lib/content'
+import { getEmployees, getPartners, getPracticeAreas, groupByDepartment } from '@/lib/content'
 import { IMAGERY } from '@/lib/imagery'
 import { localeAlternates } from '@/lib/metadata'
 import { formatAddress, OFFICES } from '@/lib/offices'
@@ -17,10 +18,6 @@ export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return { alternates: localeAlternates('/', await pageLocale(props)) }
 }
 
-// The slider and the description image came from content types retired by
-// ADR-0003, and Partner photographs leave the Team section. The Team is read
-// through the typed content boundary: Employees from the content system,
-// Partners from the locale file, both guarded the same way.
 export default async function HomePage(props: LocaleParams) {
   const locale = await pageLocale(props)
   const t = await getTranslations('home')
@@ -65,43 +62,11 @@ export default async function HomePage(props: LocaleParams) {
       <span id="team" />
       <Divider />
 
-      <section className="mx-7.5">
-        <h2 className="text-center">{common('team')}</h2>
-        <div className="mx-auto mt-10 mb-5 grid max-w-content gap-x-6 md:grid-cols-2">
-          {partners.map(({ name, role, biography }) => (
-            <div key={name} className="mb-12">
-              <h5 className="mb-0">{name}</h5>
-              <span className="text-brand">{role}</span>
-              <ul className="mt-2.5">
-                {biography.map((text) => (
-                  <li key={text} className="border-t border-ink first:border-t-0">
-                    {text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <hr className="mx-auto max-w-content border-mist" />
-
-        <div className="mx-auto mt-10 mb-5 grid max-w-content gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-          {employees.map(({ name, role, department, email }) => (
-            <div key={email}>
-              <h5 className="mb-0 border-b border-brand text-brand">{name}</h5>
-              <ul className="mt-2.5">
-                {[role, department].map((line) => (
-                  <li key={line} className="border-t border-ink first:border-t-0">
-                    {line}
-                  </li>
-                ))}
-                <li className="border-t border-ink">
-                  E-mail: <a href={`mailto:${email}`} className="underline">{email}</a>
-                </li>
-              </ul>
-            </div>
-          ))}
-        </div>
+      <section aria-labelledby="team-heading" className="mx-7.5">
+        <h2 id="team-heading" className="text-center">
+          {common('team')}
+        </h2>
+        <Team partners={partners} departments={groupByDepartment(employees)} />
       </section>
 
       <span id="contact" />

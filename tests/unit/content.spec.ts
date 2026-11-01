@@ -1,5 +1,12 @@
 import { expect, test } from '@playwright/test'
-import { getArticle, getArticles, getEmployees, getPartners, getPracticeAreas } from '@/lib/content'
+import {
+  getArticle,
+  getArticles,
+  getEmployees,
+  getPartners,
+  getPracticeAreas,
+  groupByDepartment,
+} from '@/lib/content'
 import { ARTICLE_ENTRIES, EMPLOYEE_ENTRIES, sourceOf } from './fixtures'
 
 const source = sourceOf({ employees: EMPLOYEE_ENTRIES })
@@ -48,6 +55,26 @@ test('a response with no entries at all fails rather than rendering an empty pag
   await expect(getEmployees('ca', sourceOf({}))).rejects.toThrow(
     'employees: the content system returned no entries',
   )
+})
+
+test('Employees group by Department in the order each Department first appears', () => {
+  const employee = (name: string, department: string) => ({
+    name,
+    role: 'Administrativa',
+    department,
+    email: `${name.toLowerCase()}@mrsassessors.com`,
+  })
+
+  const departments = groupByDepartment([
+    employee('Silvia', 'Departament Fiscal i Comptable'),
+    employee('Maica', 'Departament Laboral'),
+    employee('Laura', 'Departament Fiscal i Comptable'),
+  ])
+
+  expect(departments.map(({ name, employees }) => [name, employees.map((e) => e.name)])).toEqual([
+    ['Departament Fiscal i Comptable', ['Silvia', 'Laura']],
+    ['Departament Laboral', ['Maica']],
+  ])
 })
 
 const articles = sourceOf({ mrsBlog: ARTICLE_ENTRIES })

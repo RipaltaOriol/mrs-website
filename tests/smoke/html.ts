@@ -149,3 +149,31 @@ export function disclosures(html: string): Array<{
     ]
   })
 }
+
+/** The markup inside the `<section>` labelled by the element with `id`. */
+export function sectionLabelledBy(html: string, id: string): string {
+  const start = html.search(new RegExp(`<section\\b[^>]*\\baria-labelledby="${id}"`))
+  if (start < 0) return ''
+  const open = html.indexOf('>', start) + 1
+  return html.slice(open, html.indexOf('</section>', open))
+}
+
+/** Every `<h3>` and the markup that runs from it to the next `<h3>`. */
+export function headedBlocks(html: string): Array<{ heading: string; body: string }> {
+  const headings = [...html.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/g)]
+  return headings.map((heading, index) => {
+    const start = (heading.index ?? 0) + heading[0].length
+    return {
+      heading: visibleText(heading[1]),
+      body: html.slice(start, headings[index + 1]?.index ?? html.length),
+    }
+  })
+}
+
+/** Every anchor as its `href` and its visible text. */
+export function anchors(html: string): Array<{ href: string; text: string }> {
+  return [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)].map(([, href, inner]) => ({
+    href: href.replaceAll('&amp;', '&'),
+    text: visibleText(inner),
+  }))
+}

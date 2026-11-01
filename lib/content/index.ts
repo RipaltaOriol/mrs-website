@@ -44,6 +44,22 @@ export async function getEmployees(
   return entries.map((fields) => employee(fields, locale))
 }
 
+/** An internal grouping of Employees, named in one Locale. */
+export type Department = {
+  name: string
+  employees: Employee[]
+}
+
+/** `employees` grouped by Department, each Department where its first Employee falls. */
+export function groupByDepartment(employees: Employee[]): Department[] {
+  const departments = new Map<string, Employee[]>()
+  for (const employee of employees) {
+    const members = departments.get(employee.department) ?? []
+    departments.set(employee.department, [...members, employee])
+  }
+  return [...departments].map(([name, members]) => ({ name, employees: members }))
+}
+
 /** An Article as the index lists it, without its body. */
 export type ArticleSummary = {
   slug: string
