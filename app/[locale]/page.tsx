@@ -2,8 +2,12 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
 import PracticeAreas, { type PracticeArea } from '@/components/PracticeAreas'
+import { getEmployees, getPartners, splitLocaleList } from '@/lib/content'
 import { localeAlternates } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+
+// Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
+export const revalidate = 3600
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return { alternates: localeAlternates('/', await pageLocale(props)) }
@@ -11,8 +15,7 @@ export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
 
 type HomeT = Awaited<ReturnType<typeof getTranslations<'home'>>>
 
-// Locale strings store lists as one string joined by `&&`.
-const list = (t: HomeT, key: Parameters<HomeT>[0]) => t(key).split('&&')
+const list = (t: HomeT, key: Parameters<HomeT>[0]) => splitLocaleList(t(key))
 
 function practiceAreas(t: HomeT): PracticeArea[] {
   return [
@@ -59,22 +62,16 @@ const OFFICES = [
   },
 ] as const
 
-const PARTNERS = [
-  { name: 'Rafael Joaquín Ripalta Romeo', roleKey: 'founder', bioKey: 'ripaltaBio' },
-  { name: 'Sebastián Martínez de Trincheria', roleKey: 'founder', bioKey: 'martinezBio' },
-  { name: 'Jordi Sais Giralt', roleKey: 'partner', bioKey: 'saisBio' },
-] as const
-
-const buttonClass = 'inline-block rounded bg-brand px-3 py-1.5 text-white hover:bg-brand/90'
-
 // The slider and the description image came from content types retired by
-// ADR-0003, and Partner photographs leave the Team section. Employees are read
-// from the content system and arrive with the typed content boundary; Partner
-// biographies stay in locale JSON until they move there too (ADR-0003).
+// ADR-0003, and Partner photographs leave the Team section. The Team is read
+// through the typed content boundary: Employees from the content system,
+// Partners from the locale file, both guarded the same way.
 export default async function HomePage(props: LocaleParams) {
-  await pageLocale(props)
+  const locale = await pageLocale(props)
   const t = await getTranslations('home')
   const common = await getTranslations('common')
+  const partners = getPartners(locale)
+  const employees = await getEmployees(locale)
 
   return (
     <div>
@@ -106,16 +103,36 @@ export default async function HomePage(props: LocaleParams) {
       <section className="mx-7.5">
         <h2 className="text-center">{common('team')}</h2>
         <div className="mx-auto mt-10 mb-5 grid max-w-content gap-x-6 md:grid-cols-2">
-          {PARTNERS.map(({ name, roleKey, bioKey }) => (
+          {partners.map(({ name, role, biography }) => (
             <div key={name} className="mb-12">
               <h5 className="mb-0">{name}</h5>
-              <span className="text-brand">{t(roleKey)}</span>
+              <span className="text-brand">{role}</span>
               <ul className="mt-2.5">
-                {list(t, bioKey).map((text) => (
+                {biography.map((text) => (
                   <li key={text} className="border-t border-black first:border-t-0">
                     {text}
                   </li>
                 ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <hr className="mx-auto max-w-content border-mist" />
+
+        <div className="mx-auto mt-10 mb-5 grid max-w-content gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          {employees.map(({ name, role, department, email }) => (
+            <div key={email}>
+              <h5 className="mb-0 border-b border-brand text-brand">{name}</h5>
+              <ul className="mt-2.5">
+                {[role, department].map((line) => (
+                  <li key={line} className="border-t border-black first:border-t-0">
+                    {line}
+                  </li>
+                ))}
+                <li className="border-t border-black">
+                  E-mail: <a href={`mailto:${email}`} className="underline">{email}</a>
+                </li>
               </ul>
             </div>
           ))}
@@ -128,7 +145,7 @@ export default async function HomePage(props: LocaleParams) {
       <section className="mx-7.5">
         <h2 className="text-center">{common('contact')}</h2>
         <div className="mx-auto my-5 max-w-content">
-          <a href="mailto:administracio@mrsassessors.com?Subject=Consulta" className={`${buttonClass} block text-center`}>
+          <a href="mailto:administracio@mrsassessors.com?Subject=Consulta" className="btn block text-center">
             {t('sendEmailBtn')}
           </a>
           <hr className="my-4 border-mist" />
@@ -147,7 +164,7 @@ export default async function HomePage(props: LocaleParams) {
                   <p>{t(office.descriptionKey)}</p>
                   <hr className="my-4 border-mist" />
                   <p>{office.address}</p>
-                  <a href={office.map} className={buttonClass}>
+                  <a href={office.map} className="btn">
                     Mapa
                   </a>
                 </div>

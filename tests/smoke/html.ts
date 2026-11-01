@@ -23,12 +23,29 @@ export function documentLanguage(html: string): string | undefined {
 export function hreflangAlternates(html: string): Record<string, string> {
   return Object.fromEntries(
     tags(html, 'link')
-      .filter((a) => a.rel === 'alternate' && a.hreflang)
-      .map((a) => [a.hreflang, a.href]),
+      .filter((tag) => tag.rel === 'alternate' && tag.hreflang)
+      .map((tag) => [tag.hreflang, tag.href]),
   )
 }
 
 /** The `href` of the Locale switcher anchor for `locale`. */
 export function localeSwitchHref(html: string, locale: string): string | undefined {
-  return tags(html, 'a').find((a) => a.hreflang === locale)?.href
+  return tags(html, 'a').find((anchor) => anchor.hreflang === locale)?.href
+}
+
+/** The `href` of every anchor whose target starts with `prefix`. */
+export function linksUnder(html: string, prefix: string): string[] {
+  return tags(html, 'a')
+    .map((anchor) => anchor.href)
+    .filter((href) => href?.startsWith(prefix))
+}
+
+/** The `href` of `<link rel="canonical">`. */
+export function canonical(html: string): string | undefined {
+  return tags(html, 'link').find((tag) => tag.rel === 'canonical')?.href
+}
+
+/** The `src` of every `<img>`. */
+export function imageSources(html: string): string[] {
+  return tags(html, 'img').map((tag) => tag.src)
 }

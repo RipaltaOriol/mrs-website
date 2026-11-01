@@ -1,4 +1,5 @@
 import { defineConfig } from '@playwright/test'
+import { SMOKE_WEBHOOK_SECRET } from './tests/smoke/secret'
 
 const PORT = 3100
 
@@ -11,6 +12,7 @@ export default defineConfig({
   use: { baseURL: `http://localhost:${PORT}` },
   webServer: {
     command: `npm run build && npm run start -- --port ${PORT}`,
+    env: { CONTENTFUL_WEBHOOK_SECRET: SMOKE_WEBHOOK_SECRET },
     url: `http://localhost:${PORT}/policy`,
     timeout: 300_000,
     reuseExistingServer: !process.env.CI,

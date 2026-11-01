@@ -1,5 +1,13 @@
 import { expect, test } from '@playwright/test'
-import { documentLanguage, hreflangAlternates, localeSwitchHref } from './html'
+import { SMOKE_WEBHOOK_SECRET } from './secret'
+import {
+  canonical,
+  documentLanguage,
+  hreflangAlternates,
+  imageSources,
+  linksUnder,
+  localeSwitchHref,
+} from './html'
 
 const ORIGIN = 'https://www.mrsassessors.com'
 
@@ -71,10 +79,97 @@ test('Spanish-preferring visitors are not redirected away from the Catalan root'
   expect(response.status()).toBe(200)
 })
 
-for (const path of ['/does-not-exist', '/es/does-not-exist', '/blogs/no-such-article', '/xx/about']) {
+for (const path of ['/does-not-exist', '/es/does-not-exist', '/xx/about']) {
   test(`unknown route ${path} returns 404 in a localised document`, async ({ request }) => {
     const response = await request.get(path)
     expect(response.status()).toBe(404)
     expect(documentLanguage(await response.text())).toBe(path.startsWith('/es/') ? 'es' : 'ca')
   })
 }
+
+// An Article slug is the one 404 that does not get a localised document. The
+// route exists and is rendered on demand, so an Article published after a
+// deploy is reachable without one; `notFound()` from a dynamic render sends
+// Next's bare error shell and leaves the document to the client. The status is
+// still a real 404, and the site's own 404 content is still what gets
+// delivered, so both are asserted here. Narrower than the localised-document
+// assertion the other unknown routes get, deliberately.
+for (const path of ['/blogs/no-such-article', '/es/blogs/no-such-article']) {
+  test(`unknown Article ${path} returns 404 carrying the site's 404`, async ({ request }) => {
+    const response = await request.get(path)
+    expect(response.status()).toBe(404)
+    expect(await response.text()).toContain('This page cannot be found')
+  })
+}
+
+// The content-backed routes. These assert on the shape the content system
+// feeds, not on particular Articles, so publishing does not break them.
+const ARTICLE_INDEX = { ca: '/blogs', es: '/es/blogs' } as const
+
+for (const locale of Object.keys(ARTICLE_INDEX) as Locale[]) {
+  const index = ARTICLE_INDEX[locale]
+
+  test(`${index} lists Articles that each resolve`, async ({ request }) => {
+    const html = await (await request.get(index)).text()
+    const articles = linksUnder(html, `${index}/`)
+    expect(articles.length, 'the Article index listed no Articles').toBeGreaterThan(0)
+
+    for (const href of articles) {
+      const article = await request.get(href, { maxRedirects: 0 })
+      expect(article.status(), `${href} did not resolve`).toBe(200)
+    }
+  })
+
+  test(`${index} renders each Article's thumbnail from the content system`, async ({ request }) => {
+    const html = await (await request.get(index)).text()
+    expect(imageSources(html).join(' ')).toContain('images.ctfassets.net')
+  })
+
+  test(`an Article under ${index} claims a canonical URL but no counterpart Locale`, async ({
+    request,
+  }) => {
+    const indexHtml = await (await request.get(index)).text()
+    const [href] = linksUnder(indexHtml, `${index}/`)
+    const html = await (await request.get(href)).text()
+
+    expect(canonical(html)).toBe(`${ORIGIN}${href}`)
+    // Each Article exists independently per Locale, so it has no counterpart
+    // at the same slug to point an hreflang at.
+    expect(hreflangAlternates(html)).toEqual({})
+  })
+
+  test(`an Article under ${index} is not reachable under the other Locale`, async ({ request }) => {
+    const indexHtml = await (await request.get(index)).text()
+    const [href] = linksUnder(indexHtml, `${index}/`)
+    const slug = href.split('/').pop()
+    const elsewhere = locale === 'ca' ? `/es/blogs/${slug}` : `/blogs/${slug}`
+
+    expect((await request.get(elsewhere)).status()).toBe(404)
+  })
+}
+
+test('the Team section lists Employees with the Department of that Locale', async ({ request }) => {
+  const catalan = await (await request.get('/')).text()
+  expect(catalan).toContain('Departament Fiscal i Comptable')
+
+  const spanish = await (await request.get('/es')).text()
+  expect(spanish).toContain('Departamento Fiscal y Contable')
+})
+
+test.describe('the revalidation webhook', () => {
+  const publish = { sys: { type: 'Entry', id: 'x', contentType: { sys: { id: 'mrsBlog' } } } }
+
+  test('refuses a call that does not bear the secret', async ({ request }) => {
+    const response = await request.post('/api/revalidate', { data: publish })
+    expect(response.status()).toBe(401)
+  })
+
+  test('invalidates the Article tag for a publish that does', async ({ request }) => {
+    const response = await request.post('/api/revalidate', {
+      headers: { 'x-webhook-secret': SMOKE_WEBHOOK_SECRET },
+      data: publish,
+    })
+    expect(response.status()).toBe(200)
+    expect(await response.json()).toEqual({ revalidated: ['content:mrsBlog'] })
+  })
+})
