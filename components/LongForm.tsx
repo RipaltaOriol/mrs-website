@@ -1,4 +1,5 @@
 import { anchorId } from '@/lib/anchor'
+import PageTitle from './PageTitle'
 
 export type LongFormSection = { heading: string; body: string }
 
@@ -17,10 +18,7 @@ export default function LongForm({
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
       <div className="lg:grid lg:grid-cols-[var(--container-contents)_minmax(0,var(--container-measure))] lg:justify-center lg:gap-x-14">
-        <header className="mx-auto mb-10 max-w-measure motion-safe:animate-fade-in lg:col-start-2 lg:mx-0 lg:mb-14">
-          <h1 className="mb-0 text-ink">{title}</h1>
-          <div aria-hidden="true" className="mt-6 h-0.5 w-16 bg-rose" />
-        </header>
+        <PageTitle title={title} className="lg:col-start-2 lg:mx-0" />
 
         <nav
           aria-label={contentsLabel}
