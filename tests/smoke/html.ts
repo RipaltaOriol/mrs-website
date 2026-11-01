@@ -94,9 +94,23 @@ export function styledBy(html: string, utilities: string[]): Attrs[] {
     .flatMap((tag) => tags(tag, '\\w+'))
 }
 
-/** The visible text of `markup`, tags and entities removed. */
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+}
+
+/** The visible text of `markup`, tags removed and character references decoded. */
 export function visibleText(markup: string): string {
-  return markup.replace(/<[^>]*>/g, '').replace(/&\w+;/g, ' ').trim()
+  return markup
+    .replace(/<[^>]*>/g, '')
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&(\w+);/g, (_, name) => NAMED_ENTITIES[name] ?? ' ')
+    .trim()
 }
 
 /** The opening tag and contents of the first treated image frame. */
@@ -105,4 +119,33 @@ export function treatedFrame(html: string): { frame: string; inner: string } | u
   if (start < 0) return undefined
   const open = html.indexOf('>', start) + 1
   return { frame: html.slice(start, open), inner: html.slice(open, html.indexOf('</div>', open)) }
+}
+
+/** Every disclosure row: the trigger inside its heading, and the panel that follows. */
+export function disclosures(html: string): Array<{
+  label: string
+  expanded: boolean
+  controls: string
+  panelId: string
+  hidden: boolean
+  panel: string
+}> {
+  const headings = [...html.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/g)]
+  return headings.flatMap((heading, index) => {
+    const [trigger] = tags(heading[1], 'button')
+    if (!trigger) return []
+    const start = (heading.index ?? 0) + heading[0].length
+    const panel = html.slice(start, headings[index + 1]?.index ?? html.length)
+    const [frame] = tags(panel, 'div')
+    return [
+      {
+        label: visibleText(heading[1]),
+        expanded: trigger['aria-expanded'] === 'true',
+        controls: trigger['aria-controls'] ?? '',
+        panelId: frame?.id ?? '',
+        hidden: frame?.hidden !== undefined,
+        panel,
+      },
+    ]
+  })
 }

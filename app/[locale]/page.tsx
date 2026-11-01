@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
-import PracticeAreas, { type PracticeArea } from '@/components/PracticeAreas'
+import PracticeAreas from '@/components/PracticeAreas'
 import TreatedImage from '@/components/TreatedImage'
-import { getEmployees, getPartners, splitLocaleList } from '@/lib/content'
+import { getEmployees, getPartners, getPracticeAreas } from '@/lib/content'
 import { IMAGERY } from '@/lib/imagery'
 import { localeAlternates } from '@/lib/metadata'
 import { formatAddress, OFFICES } from '@/lib/offices'
@@ -15,36 +15,6 @@ export const revalidate = 3600
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return { alternates: localeAlternates('/', await pageLocale(props)) }
-}
-
-type HomeT = Awaited<ReturnType<typeof getTranslations<'home'>>>
-
-const list = (t: HomeT, key: Parameters<HomeT>[0]) => splitLocaleList(t(key))
-
-function practiceAreas(t: HomeT): PracticeArea[] {
-  return [
-    { title: 'Laboral', paragraphs: [t('tab1Content')], items: list(t, 'tab1List') },
-    {
-      title: t('tab2Title'),
-      paragraphs: [t('tab2Content1'), t('tab2Content2')],
-      items: list(t, 'tab2List'),
-    },
-    {
-      title: t('tab3Title'),
-      paragraphs: [t('tab3Content1'), t('tab3Content2'), t('tab3Content3')],
-      items: list(t, 'tab3List'),
-    },
-    { title: 'Mercantil', paragraphs: [t('tab4Content')], items: list(t, 'tab4List') },
-    { title: t('tab5Title'), paragraphs: [t('tab5Content')], items: list(t, 'tab5List') },
-    { title: t('tab6Title'), paragraphs: [t('tab6Content')], items: list(t, 'tab6List') },
-    {
-      title: t('tab7Title'),
-      paragraphs: [t('tab7Content1'), t('tab7Content2')],
-      items: list(t, 'tab7List'),
-    },
-    { title: t('tab8Title'), paragraphs: [], items: list(t, 'tab8List') },
-    { title: t('tab9Title'), paragraphs: [], items: list(t, 'tab9List') },
-  ]
 }
 
 // The slider and the description image came from content types retired by
@@ -88,7 +58,7 @@ export default async function HomePage(props: LocaleParams) {
       <section id="content" className="mx-7.5">
         <h2 className="text-center">{t('work')}</h2>
         <div className="mx-auto my-5 max-w-content">
-          <PracticeAreas areas={practiceAreas(t)} />
+          <PracticeAreas areas={getPracticeAreas(locale)} />
         </div>
       </section>
 

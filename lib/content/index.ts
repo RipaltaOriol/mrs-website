@@ -6,11 +6,8 @@ import { contentful } from './contentful'
 import { ContentError, requireEntries, type ContentImage, type Fields } from './decode'
 import type { ContentSource } from './source'
 
-/**
- * Locale strings store lists as one string joined by `&&`. Exported because the
- * Practice Areas read the same convention out of the same files.
- */
-export function splitLocaleList(value: string): string[] {
+/** Partner biographies store their lines as one string joined by `&&`. */
+function splitLocaleList(value: string): string[] {
   return value
     .split('&&')
     .map((item) => item.trim())
@@ -138,14 +135,35 @@ export type PartnerMessage = (typeof PARTNERS)[number]['roleKey' | 'bioKey']
  * (`"home.saisBio"`), which is a plausible-looking string that would render as
  * a biography. Reading the file means an absent key is absent.
  */
-const HOME_MESSAGES: Record<Locale, Record<string, string>> = { ca: caHome, es: esHome }
+const HOME_MESSAGES: Record<Locale, Unchecked> = { ca: caHome, es: esHome }
 
-function requireMessage(messages: Record<string, string>, key: PartnerMessage): string {
-  const value = messages[key]
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new ContentError(`home.json: "${key}" is missing or empty`)
+/** A value read out of a locale file before the boundary has checked its shape. */
+type Unchecked = Record<string, unknown>
+
+/** A non-blank string at `path`, named by `path` when it is anything else. */
+function requireText(value: unknown, path: string): string {
+  if (value === undefined || value === null) {
+    throw new ContentError(`home.json: ${path} is missing or empty`)
   }
+  if (typeof value !== 'string') throw new ContentError(`home.json: ${path} is not text`)
   const text = value.trim()
+  if (text === '') throw new ContentError(`home.json: ${path} is missing or empty`)
+  return text
+}
+
+/** Every entry of a list of non-blank strings at `path`, trimmed. */
+function requireLines(value: unknown, path: string): string[] {
+  if (!Array.isArray(value)) throw new ContentError(`home.json: ${path} is not a list`)
+  return value.map((item, at) => {
+    if (typeof item !== 'string' || item.trim() === '') {
+      throw new ContentError(`home.json: ${path} holds a blank or non-text item at position ${at}`)
+    }
+    return item.trim()
+  })
+}
+
+function requireMessage(messages: Unchecked, key: PartnerMessage): string {
+  const text = requireText(messages[key], `"${key}"`)
   // next-intl's fallback for a key it cannot resolve. Caught here too, because
   // the messages may have come through a translator rather than from the file.
   if (text === key || text.endsWith(`.${key}`)) {
@@ -165,11 +183,48 @@ function requireMessage(messages: Record<string, string>, key: PartnerMessage): 
  */
 export function getPartners(
   locale: Locale,
-  messages: Record<string, string> = HOME_MESSAGES[locale],
+  messages: Unchecked = HOME_MESSAGES[locale],
 ): Partner[] {
   return PARTNERS.map(({ name, roleKey, bioKey }) => ({
     name,
     role: requireMessage(messages, roleKey),
     biography: splitLocaleList(requireMessage(messages, bioKey)),
   }))
+}
+
+/** One of the nine fields of work the firm advises in, as a single Locale presents it. */
+export type PracticeArea = {
+  title: string
+  summary: string
+  paragraphs: string[]
+  items: string[]
+}
+
+/** The Practice Areas in `locale`, in the order the section presents them. */
+export function getPracticeAreas(
+  locale: Locale,
+  messages: Unchecked = HOME_MESSAGES[locale],
+): PracticeArea[] {
+  const areas = messages.practiceAreas
+  if (!Array.isArray(areas) || areas.length === 0) {
+    throw new ContentError('home.json: "practiceAreas" is missing or empty')
+  }
+
+  return areas.map((entry, index) => {
+    const at = `practiceAreas[${index}]`
+    if (typeof entry !== 'object' || entry === null || Array.isArray(entry)) {
+      throw new ContentError(`home.json: ${at} is not a Practice Area`)
+    }
+
+    const area = entry as Unchecked
+    const items = requireLines(area.items, `${at}.items`)
+    if (items.length === 0) throw new ContentError(`home.json: ${at}.items is missing or empty`)
+
+    return {
+      title: requireText(area.title, `${at}.title`),
+      summary: requireText(area.summary, `${at}.summary`),
+      paragraphs: requireLines(area.paragraphs, `${at}.paragraphs`),
+      items,
+    }
+  })
 }

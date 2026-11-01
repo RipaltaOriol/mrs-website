@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { getArticle, getArticles, getEmployees, getPartners } from '@/lib/content'
+import { getArticle, getArticles, getEmployees, getPartners, getPracticeAreas } from '@/lib/content'
 import { ARTICLE_ENTRIES, EMPLOYEE_ENTRIES, sourceOf } from './fixtures'
 
 const source = sourceOf({ employees: EMPLOYEE_ENTRIES })
@@ -164,6 +164,90 @@ test('both committed locale files resolve every Partner', async () => {
     for (const partner of partners) {
       expect(partner.role, `${locale} ${partner.name} role`).not.toBe('')
       expect(partner.biography.length, `${locale} ${partner.name} biography`).toBeGreaterThan(0)
+    }
+  }
+})
+
+const LABORAL = {
+  title: ' Laboral ',
+  summary: 'Nòmines, contractes i relacions laborals.',
+  paragraphs: ['El departament de laboral ofereix un assessorament global.'],
+  items: ["Altes inicials d'empreses", ' Obertura de centres de treball '],
+}
+
+test('a Practice Area resolves with its title, summary, body and list, trimmed', () => {
+  expect(getPracticeAreas('ca', { practiceAreas: [LABORAL] })).toEqual([
+    {
+      title: 'Laboral',
+      summary: 'Nòmines, contractes i relacions laborals.',
+      paragraphs: ['El departament de laboral ofereix un assessorament global.'],
+      items: ["Altes inicials d'empreses", 'Obertura de centres de treball'],
+    },
+  ])
+})
+
+test('a malformed Practice Area names what is wrong and where', () => {
+  const areas = (practiceAreas: unknown[]) => () => getPracticeAreas('ca', { practiceAreas })
+
+  expect(() => getPracticeAreas('ca', {})).toThrow('home.json: "practiceAreas" is missing or empty')
+  expect(areas([])).toThrow('home.json: "practiceAreas" is missing or empty')
+  expect(areas([{ ...LABORAL, summary: '   ' }])).toThrow(
+    'home.json: practiceAreas[0].summary is missing or empty',
+  )
+  expect(areas([LABORAL, { ...LABORAL, items: 'Altes&&Baixes' }])).toThrow(
+    'home.json: practiceAreas[1].items is not a list',
+  )
+  expect(areas([{ ...LABORAL, items: ['Altes', ''] }])).toThrow(
+    'home.json: practiceAreas[0].items holds a blank or non-text item at position 1',
+  )
+  expect(areas([{ ...LABORAL, items: [] }])).toThrow(
+    'home.json: practiceAreas[0].items is missing or empty',
+  )
+  expect(areas([LABORAL, null])).toThrow('home.json: practiceAreas[1] is not a Practice Area')
+})
+
+test('a Practice Area the firm presents as a list alone carries no body', () => {
+  const [area] = getPracticeAreas('ca', { practiceAreas: [{ ...LABORAL, paragraphs: [] }] })
+  expect(area.paragraphs).toEqual([])
+  expect(area.items.length).toBeGreaterThan(0)
+})
+
+const CATALAN_TITLES = [
+  'Laboral',
+  'Fiscal i Tributari',
+  'Comptable',
+  'Mercantil',
+  'Assegurances',
+  'Gestió',
+  'Jurídic',
+  'Immobiliari',
+  'Financer',
+]
+
+const SPANISH_TITLES = [
+  'Laboral',
+  'Fiscal y Tributario',
+  'Contable',
+  'Mercantil',
+  'Seguros',
+  'Gestión',
+  'Jurídico',
+  'Inmobiliario',
+  'Financiero',
+]
+
+test('both committed locale files hold the nine Practice Areas in the same order', () => {
+  expect(getPracticeAreas('ca').map((area) => area.title)).toEqual(CATALAN_TITLES)
+  expect(getPracticeAreas('es').map((area) => area.title)).toEqual(SPANISH_TITLES)
+})
+
+test('every committed Practice Area carries a one-line summary and a list', () => {
+  for (const locale of ['ca', 'es'] as const) {
+    for (const { title, summary, items } of getPracticeAreas(locale)) {
+      const where = `${locale} ${title}`
+      expect(summary.split(/\s+/).length, `${where} summary is one line`).toBeLessThanOrEqual(20)
+      expect(summary, `${where} summary`).not.toContain('&&')
+      expect(items.length, `${where} items`).toBeGreaterThan(1)
     }
   }
 })

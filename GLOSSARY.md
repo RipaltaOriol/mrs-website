@@ -10,6 +10,7 @@ areas and its people to prospective and existing clients in Catalan and Spanish.
 
 **Practice Area**:
 One of the nine fields of work the firm advises in, such as Laboral or Mercantil.
+Each carries a one-line summary, body copy and a list of the work it covers.
 _Avoid_: Service, tab, department, area of expertise
 
 **Department**:
