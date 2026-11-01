@@ -49,3 +49,30 @@ export function canonical(html: string): string | undefined {
 export function imageSources(html: string): string[] {
   return tags(html, 'img').map((tag) => tag.src)
 }
+
+/** The `id` of every `<section>`, in document order. */
+export function sectionIds(html: string): string[] {
+  return tags(html, 'section').map((tag) => tag.id)
+}
+
+/** The `href` of every anchor inside the `<nav>` labelled `label`. */
+export function navLinks(html: string, label: string): string[] {
+  const start = html.search(new RegExp(`<nav\\b[^>]*aria-label="${label}"`))
+  if (start < 0) return []
+  return tags(html.slice(start, html.indexOf('</nav>', start)), 'a').map((anchor) => anchor.href)
+}
+
+/** The markup inside the first `<article>`. */
+export function articleBody(html: string): { className: string; inner: string } | undefined {
+  const [article] = tags(html, 'article')
+  if (!article) return undefined
+  const open = html.indexOf('>', html.indexOf('<article')) + 1
+  return { className: article.class ?? '', inner: html.slice(open, html.indexOf('</article>', open)) }
+}
+
+/** The `href` of every `<link rel="stylesheet">`. */
+export function stylesheets(html: string): string[] {
+  return tags(html, 'link')
+    .filter((tag) => tag.rel === 'stylesheet')
+    .map((tag) => tag.href)
+}

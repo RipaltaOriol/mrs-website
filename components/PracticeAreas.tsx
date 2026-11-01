@@ -45,7 +45,7 @@ export default function PracticeAreas({ areas }: { areas: PracticeArea[] }) {
             aria-controls={`${id}-panel-${i}`}
             tabIndex={i === active ? 0 : -1}
             onClick={() => setActive(i)}
-            className={`px-4 py-2 text-brand ${i === active ? 'bg-mist' : ''}`}
+            className={`-mb-px border-b-2 px-4 py-2 text-brand ${i === active ? 'border-brand bg-mist' : 'border-transparent'}`}
           >
             {area.title}
           </button>

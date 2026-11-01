@@ -109,7 +109,7 @@ export default async function HomePage(props: LocaleParams) {
               <span className="text-brand">{role}</span>
               <ul className="mt-2.5">
                 {biography.map((text) => (
-                  <li key={text} className="border-t border-black first:border-t-0">
+                  <li key={text} className="border-t border-ink first:border-t-0">
                     {text}
                   </li>
                 ))}
@@ -126,11 +126,11 @@ export default async function HomePage(props: LocaleParams) {
               <h5 className="mb-0 border-b border-brand text-brand">{name}</h5>
               <ul className="mt-2.5">
                 {[role, department].map((line) => (
-                  <li key={line} className="border-t border-black first:border-t-0">
+                  <li key={line} className="border-t border-ink first:border-t-0">
                     {line}
                   </li>
                 ))}
-                <li className="border-t border-black">
+                <li className="border-t border-ink">
                   E-mail: <a href={`mailto:${email}`} className="underline">{email}</a>
                 </li>
               </ul>

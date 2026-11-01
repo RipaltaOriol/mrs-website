@@ -1,8 +1,12 @@
-import { Montserrat } from 'next/font/google'
+import { Inter, Newsreader } from 'next/font/google'
 
-// Downloaded at build time and served from the site itself.
-export const montserrat = Montserrat({
+// next/font downloads these at build time and serves them from the site's own origin.
+export const newsreader = Newsreader({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
-  variable: '--font-montserrat',
+  variable: '--font-newsreader',
+})
+
+export const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
 })
