@@ -100,6 +100,23 @@ test('an Article carries its thumbnail as an absolute URL with its intrinsic siz
   expect(article.preview).toBe('TS Sentencia num. 553/2023 de 5 mayo')
 })
 
+test('an Article is dated by when it was created in the content system', async () => {
+  const [summary] = await getArticles('ca', articles)
+  expect(summary.published).toEqual(new Date('2023-06-14T22:30:11.482Z'))
+
+  const article = await getArticle('es', 'disolucion-matrimonial-procede-la-exencion-por-reinversion-en-vivienda', articles)
+  expect(article?.published).toEqual(new Date('2023-06-15T08:02:47.105Z'))
+})
+
+test('an Article with no readable creation time names the entry', async () => {
+  const [ca] = ARTICLE_ENTRIES
+  const undated = { ...ca, createdAt: 'not a date' }
+
+  await expect(getArticles('ca', sourceOf({ mrsBlog: [undated] }))).rejects.toThrow(
+    'mrsBlog 6CZFHcyNy7Fo8DoYirQWJm: its creation time is not a date',
+  )
+})
+
 test('an Article whose thumbnail never resolved is reported as that field, not as a TypeError', async () => {
   const [ca] = ARTICLE_ENTRIES
   const broken = { ...ca, fields: { ...ca.fields, thumbnail: { sys: { id: 'x', type: 'Link' } } } }

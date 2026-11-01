@@ -7,7 +7,7 @@
  * vocabulary is the clearer one; past this boundary there are only Articles,
  * Employees and Partners.
  */
-export type ContentEntry = { id: string; fields: Record<string, unknown> }
+export type ContentEntry = { id: string; createdAt: string; fields: Record<string, unknown> }
 
 /**
  * The site's only window onto the content system. Everything the boundary

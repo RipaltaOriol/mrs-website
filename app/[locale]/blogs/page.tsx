@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import ArticleCard from '@/components/ArticleCard'
-import Divider from '@/components/Divider'
+import ArticleListItem from '@/components/ArticleListItem'
+import PageTitle from '@/components/PageTitle'
 import { getArticles } from '@/lib/content'
 import { localeAlternates } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
@@ -20,17 +20,13 @@ export default async function ArticlesPage(props: LocaleParams) {
   const articles = await getArticles(locale)
 
   return (
-    <div>
-      <Divider />
-      <div className="mx-7.5">
-        <h2 className="text-center">{common('blog')}</h2>
-        <div className="mx-auto my-5 grid max-w-content gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
-            <ArticleCard key={article.slug} article={article} readMore={t('readMore')} />
-          ))}
-        </div>
-      </div>
-      <Divider />
+    <div className="mx-auto max-w-content px-5 py-14 md:py-20">
+      <PageTitle title={common('blog')} />
+      <ol className="mx-auto max-w-measure motion-safe:animate-fade-in">
+        {articles.map((article) => (
+          <ArticleListItem key={article.slug} article={article} locale={locale} tagsLabel={t('tags')} />
+        ))}
+      </ol>
     </div>
   )
 }

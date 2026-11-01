@@ -41,6 +41,15 @@ export class Fields {
     return value
   }
 
+  /** When the entry was first created in the content system. */
+  createdAt(): Date {
+    const created = new Date(this.entry.createdAt)
+    if (Number.isNaN(created.getTime())) {
+      throw new ContentError(`${this.contentType} ${this.entry.id}: its creation time is not a date`)
+    }
+    return created
+  }
+
   /** A non-blank string. */
   text(field: string): string {
     const value = this.present(field)

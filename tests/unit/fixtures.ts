@@ -11,6 +11,7 @@ export function sourceOf(entries: Record<string, ContentEntry[]>): ContentSource
 export const EMPLOYEE_ENTRIES: ContentEntry[] = [
   {
     id: '4KtCPNBMFdO6Ihj0qiVHzK',
+    createdAt: '2022-02-03T10:11:12.000Z',
     fields: {
       name: 'Silvia Fullà Soms',
       role_cat: 'Administrativa',
@@ -22,6 +23,7 @@ export const EMPLOYEE_ENTRIES: ContentEntry[] = [
   },
   {
     id: '2tLdvqN0hWrhpeFmoULTkJ',
+    createdAt: '2022-02-03T10:14:40.000Z',
     fields: {
       name: 'Maica Rodriguez Sanchez',
       role_cat: 'Administrativa',
@@ -64,6 +66,7 @@ const RICH_TEXT = {
 export const ARTICLE_ENTRIES: ContentEntry[] = [
   {
     id: '6CZFHcyNy7Fo8DoYirQWJm',
+    createdAt: '2023-06-14T22:30:11.482Z',
     fields: {
       title: "Dissolució matrimonial procedeix l'exempció per reinversió",
       slug: 'dissolucio-matrimonial-procedeix-lexempcio-per-reinversio-en-habitatge',
@@ -77,6 +80,7 @@ export const ARTICLE_ENTRIES: ContentEntry[] = [
   },
   {
     id: '3hBeBktPIBmIEhzrO3xZxu',
+    createdAt: '2023-06-15T08:02:47.105Z',
     fields: {
       title: 'Disolución matrimonial procede la exención por reinversión',
       slug: 'disolucion-matrimonial-procede-la-exencion-por-reinversion-en-vivienda',

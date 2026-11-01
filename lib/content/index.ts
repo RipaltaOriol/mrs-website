@@ -64,6 +64,7 @@ export function groupByDepartment(employees: Employee[]): Department[] {
 export type ArticleSummary = {
   slug: string
   title: string
+  published: Date
   preview: string | null
   tags: string[]
   thumbnail: ContentImage
@@ -79,6 +80,7 @@ function summary(fields: Fields): ArticleSummary {
   return {
     slug: fields.text('slug'),
     title: fields.text('title'),
+    published: fields.createdAt(),
     preview: fields.optionalText('textPreview'),
     tags: fields.textList('tags'),
     thumbnail: fields.image('thumbnail'),

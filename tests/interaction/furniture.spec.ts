@@ -86,7 +86,7 @@ test.describe('the mobile navigation', () => {
   test('closes when a destination is chosen', async ({ page }) => {
     await page.goto('/')
     await toggle(page).click()
-    await panel(page).getByRole('link', { name: 'Actualitat' }).click()
+    await panel(page).getByRole('link', { name: 'Notícies' }).click()
 
     await expect(page).toHaveURL(/\/blogs$/)
     await expect(panel(page)).toBeHidden()

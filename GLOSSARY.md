@@ -56,6 +56,11 @@ A published piece of legal or tax commentary. Each Article exists independently
 per Locale rather than as one piece with translations.
 _Avoid_: Blog post, news item, post, entry
 
+**Notícies**:
+The section of the site that lists the Articles of one Locale, newest first.
+Rendered in Spanish as "Noticias".
+_Avoid_: Blog, Actualitat, news feed
+
 **Locale**:
 One of the two languages the site is published in: Catalan, the default, and Spanish.
 _Avoid_: Language, translation, region

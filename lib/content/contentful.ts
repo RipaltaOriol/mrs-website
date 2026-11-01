@@ -42,6 +42,7 @@ async function fetchEntries(contentType: string): Promise<ContentEntry[]> {
     entries.push(
       ...response.items.map((item) => ({
         id: item.sys.id,
+        createdAt: item.sys.createdAt,
         fields: item.fields as Record<string, unknown>,
       })),
     )
@@ -58,7 +59,7 @@ export const contentful: ContentSource = {
     // rejects the promise rather than throwing past an `await`.
     deliveryClient()
 
-    return unstable_cache(() => fetchEntries(contentType), ['content', contentType], {
+    return unstable_cache(() => fetchEntries(contentType), ['content', contentType, 'dated'], {
       tags: [contentTag(contentType)],
       revalidate: CONTENT_REVALIDATE_SECONDS,
     })()
