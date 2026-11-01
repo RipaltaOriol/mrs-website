@@ -1,5 +1,5 @@
 import { expect, test, type APIRequestContext } from '@playwright/test'
-import { linksUnder, region, treatedFrame as band, visibleText as text } from './html'
+import { anchors, linksUnder, region, treatedFrame as band, visibleText as text } from './html'
 
 const PORTAL = 'https://app.kabiku.es/login/?next=/'
 
@@ -42,6 +42,41 @@ for (const [path, { alt }] of Object.entries(ALT_BY_PATH)) {
       expect(decodeURIComponent(src)).toMatch(/\/_next\/static\/media\/lloret-castle\.[\w-]+\.jpg/)
       expect(img).toMatch(/background-image:url\(&quot;data:image\/svg\+xml/)
       expect(img).toContain(`alt="${alt.replaceAll("'", '&#x27;')}"`)
+    })
+  })
+}
+
+const FIRM_BY_PATH = { '/': '/about', '/es': '/es/about' } as const
+
+for (const [path, firm] of Object.entries(FIRM_BY_PATH)) {
+  test.describe(`the homepage introduction on ${path}`, () => {
+    const main = async (request: APIRequestContext) =>
+      region(await (await request.get(path)).text(), 'main')
+
+    const introduction = (markup: string) => {
+      const start = markup.indexOf('<section', markup.indexOf('treated'))
+      return markup.slice(start, markup.indexOf('</section>', start))
+    }
+
+    test('is a few sentences ending in a link to The Firm', async ({ request }) => {
+      const intro = introduction(await main(request))
+      const prose = text(intro.slice(0, intro.lastIndexOf('<a')))
+      const sentences = prose.split(/(?<=[.!?])\s+/).filter(Boolean)
+      expect(sentences.length).toBeGreaterThan(0)
+      expect(sentences.length).toBeLessThanOrEqual(3)
+      expect(anchors(intro).map((anchor) => anchor.href)).toEqual([firm])
+    })
+
+    test('keeps the section order: introduction, Practice Areas, Team, Contact', async ({ request }) => {
+      const markup = await main(request)
+      const order = [
+        markup.indexOf(`href="${firm}"`),
+        markup.indexOf('<section id="content"'),
+        markup.indexOf('aria-labelledby="team-heading"'),
+        markup.indexOf('aria-labelledby="contact-heading"'),
+      ]
+      expect(order.every((index) => index > -1)).toBe(true)
+      expect([...order].sort((a, b) => a - b)).toEqual(order)
     })
   })
 }

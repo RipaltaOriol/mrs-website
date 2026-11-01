@@ -4,7 +4,7 @@ import { useId, useRef, useState, type KeyboardEvent } from 'react'
 import type { PracticeArea } from '@/lib/content'
 import { ChevronDownIcon } from './icons'
 
-/** The Practice Areas as a full-width accordion, each row opening in place. */
+/** The Practice Areas as a full-width accordion on the ink surface, each row opening in place. */
 export default function PracticeAreas({ areas }: { areas: PracticeArea[] }) {
   const [open, setOpen] = useState<ReadonlySet<number>>(new Set([0]))
   const triggers = useRef<(HTMLButtonElement | null)[]>([])
@@ -32,11 +32,11 @@ export default function PracticeAreas({ areas }: { areas: PracticeArea[] }) {
   }
 
   return (
-    <div className="border-t border-mist">
+    <div className="border-t border-stone">
       {areas.map((area, index) => {
         const expanded = open.has(index)
         return (
-          <div key={area.title} className="border-b border-mist">
+          <div key={area.title} className="border-b border-stone">
             <h3 className="mb-0">
               <button
                 ref={(el) => {
@@ -47,15 +47,15 @@ export default function PracticeAreas({ areas }: { areas: PracticeArea[] }) {
                 aria-controls={`${id}-panel-${index}`}
                 onClick={() => toggle(index)}
                 onKeyDown={onKeyDown(index)}
-                className="flex w-full items-start gap-4 py-5 text-start font-sans hover:text-brand md:py-6"
+                className="flex w-full items-start gap-4 py-5 text-start font-sans hover:text-mist md:py-6"
               >
                 <span className="flex-1">
-                  <span className="block font-display text-xl text-balance">{area.title}</span>
-                  <span className="mt-1 block max-w-measure text-sm text-stone">{area.summary}</span>
+                  <span className="block font-display text-2xl text-balance">{area.title}</span>
+                  <span className="mt-1 block max-w-measure text-sm text-mist">{area.summary}</span>
                 </span>
                 <ChevronDownIcon
                   size={20}
-                  className={`mt-1.5 shrink-0 text-brand ${expanded ? 'rotate-180' : ''}`}
+                  className={`mt-1.5 shrink-0 text-mist ${expanded ? 'rotate-180' : ''}`}
                 />
               </button>
             </h3>
@@ -68,7 +68,7 @@ export default function PracticeAreas({ areas }: { areas: PracticeArea[] }) {
               ))}
               <ul className="grid gap-x-10 sm:grid-cols-2">
                 {area.items.map((item) => (
-                  <li key={item} className="border-t border-mist py-2 text-sm text-stone">
+                  <li key={item} className="border-t border-stone py-2 text-sm text-mist">
                     {item}
                   </li>
                 ))}

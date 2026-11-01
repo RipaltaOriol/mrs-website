@@ -6,6 +6,7 @@ import PracticeAreas from '@/components/PracticeAreas'
 import StructuredData from '@/components/StructuredData'
 import Team from '@/components/Team'
 import TreatedImage from '@/components/TreatedImage'
+import { Link } from '@/i18n/navigation'
 import { getEmployees, getPartners, getPracticeAreas, groupByDepartment } from '@/lib/content'
 import { IMAGERY } from '@/lib/imagery'
 import { pageMetadata } from '@/lib/metadata'
@@ -43,21 +44,19 @@ export default async function HomePage(props: LocaleParams) {
 
       <TreatedImage photograph={IMAGERY.lloretCastle} ratio="band" sizes="100vw" priority />
 
-      <Divider />
-
-      <section className="mx-7.5">
-        <div className="mx-auto my-5 max-w-content text-start">
-          <p>{t('body1')}</p>
-          <p>{t('body2')}</p>
-        </div>
+      <section className="mx-auto max-w-content px-5 py-14 text-center md:py-20">
+        <p className="mx-auto mb-4 max-w-measure font-display text-xl text-balance">{t('intro')}</p>
+        <Link href="/about" className="font-medium text-brand underline-offset-4 hover:underline">
+          {t('firmLink')}
+        </Link>
       </section>
 
       <span id="work" />
-      <Divider />
-
-      <section id="content" className="mx-7.5">
-        <h2 className="text-center">{t('work')}</h2>
-        <div className="mx-auto my-5 max-w-content">
+      <section id="content" aria-labelledby="work-heading" data-surface="ink" className="bg-ink py-16 text-white md:py-24">
+        <div className="mx-auto max-w-content px-5">
+          <h2 id="work-heading" className="mb-10 text-4xl md:mb-14">
+            {t('work')}
+          </h2>
           <PracticeAreas areas={getPracticeAreas(locale)} />
         </div>
       </section>

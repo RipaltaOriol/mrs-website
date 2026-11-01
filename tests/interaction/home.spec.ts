@@ -60,3 +60,30 @@ test('nothing on the homepage advances or moves on its own', async ({ page }) =>
   )
   expect(running).toBe(0)
 })
+
+for (const { name, viewport } of VIEWPORTS) {
+  test.describe(`the Practice Areas on a ${name}`, () => {
+    test.use({ viewport })
+
+    test('are the dominant section: the one full-bleed ink surface, under the largest heading', async ({ page }) => {
+      await page.goto('/')
+      const practice = page.locator('main section#content')
+      const box = (await practice.boundingBox())!
+      const width = await page.evaluate(() => document.documentElement.clientWidth)
+      expect(box.x).toBe(0)
+      expect(box.width).toBe(width)
+      expect(await practice.getAttribute('data-surface')).toBe('ink')
+
+      const surfaces = await page
+        .locator('main section')
+        .evaluateAll((sections) => sections.map((section) => getComputedStyle(section).backgroundColor))
+      const canvas = await page.evaluate(() => getComputedStyle(document.body).backgroundColor)
+      expect(surfaces.filter((surface) => !['rgba(0, 0, 0, 0)', canvas].includes(surface))).toHaveLength(1)
+
+      const size = (selector: string) =>
+        page.locator(selector).evaluateAll((headings) => headings.map((h) => parseFloat(getComputedStyle(h).fontSize)))
+      const [heading] = await size('main #content h2')
+      for (const other of await size('main section:not(#content) h2')) expect(heading).toBeGreaterThan(other)
+    })
+  })
+}

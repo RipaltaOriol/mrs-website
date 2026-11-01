@@ -99,7 +99,7 @@ test('the focus ring is drawn in the brand red', () => {
   expect(base?.utilities).toEqual(['outline-2', 'outline-offset-2', 'outline-brand'])
 })
 
-test('only the charcoal footer overrides the focus ring to white', () => {
+test('only the charcoal surfaces override the focus ring to white', () => {
   const white = appliedRules().filter((rule) => rule.utilities.includes('outline-white'))
-  expect(white.map((rule) => rule.selector)).toEqual(['footer :focus-visible'])
+  expect(white.map((rule) => rule.selector)).toEqual(["footer :focus-visible, [data-surface='ink'] :focus-visible"])
 })
