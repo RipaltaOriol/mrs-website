@@ -80,7 +80,10 @@ test('the home page publishes the firm as a LegalService at both Offices', async
       expect(office).toMatchObject({
         telephone: ['+34972371821', '+34972372240'],
         geo: { '@type': 'GeoCoordinates' },
-        areaServed: expect.anything(),
+        areaServed: [
+          { '@type': 'City', name: 'Lloret de Mar' },
+          { '@type': 'AdministrativeArea', name: path === '/' ? 'Província de Girona' : 'Provincia de Girona' },
+        ],
       })
       expect(office.openingHoursSpecification).toEqual([
         expect.objectContaining({ opens: '09:00', closes: '14:00' }),

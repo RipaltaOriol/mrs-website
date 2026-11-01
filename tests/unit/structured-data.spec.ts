@@ -50,8 +50,20 @@ test('each Office carries its coordinates, the firm’s telephones, the area ser
   for (const office of [central, verdaguer]) {
     expect(office.telephone).toEqual(['+34972371821', '+34972372240'])
     expect(office.email).toBe('administracio@mrsassessors.com')
-    expect(office.areaServed).toEqual({ '@type': 'AdministrativeArea', name: 'Girona' })
+    expect(office.areaServed).toEqual([
+      { '@type': 'City', name: 'Lloret de Mar' },
+      { '@type': 'AdministrativeArea', name: 'Província de Girona' },
+    ])
     expect(office.openingHoursSpecification).toEqual(HOURS)
+  }
+})
+
+test('the province is named in the asked-for Locale', () => {
+  for (const office of offices(firmGraph('es'))) {
+    expect(office.areaServed).toEqual([
+      { '@type': 'City', name: 'Lloret de Mar' },
+      { '@type': 'AdministrativeArea', name: 'Provincia de Girona' },
+    ])
   }
 })
 

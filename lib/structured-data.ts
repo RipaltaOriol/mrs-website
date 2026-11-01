@@ -11,6 +11,8 @@ const FIRM_ID = `${SITE_URL}/#firm`
 
 const FIRM_TELEPHONES = TELEPHONES.map((telephone) => telephoneHref(telephone).replace('tel:', ''))
 
+const PROVINCE: Record<Locale, string> = { ca: 'Província de Girona', es: 'Provincia de Girona' }
+
 const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
 const OPENING_HOURS = [
@@ -56,7 +58,10 @@ export function firmGraph(locale: Locale): JsonLd {
     hasMap: office.map,
     telephone: FIRM_TELEPHONES,
     email: EMAIL,
-    areaServed: { '@type': 'AdministrativeArea', name: 'Girona' },
+    areaServed: [
+      { '@type': 'City', name: 'Lloret de Mar' },
+      { '@type': 'AdministrativeArea', name: PROVINCE[locale] },
+    ],
     openingHoursSpecification: OPENING_HOURS,
   }))
   return { '@context': 'https://schema.org', '@graph': [firm, ...offices] }
