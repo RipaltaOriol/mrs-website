@@ -48,6 +48,9 @@ test('the band photograph renders under the shared treatment', async ({ page }) 
 test('nothing on the homepage advances or moves on its own', async ({ page }) => {
   await page.goto('/')
   await page.waitForLoadState('networkidle')
+  await page.waitForFunction(() =>
+    [...document.querySelectorAll('main img')].every((image) => (image as HTMLImageElement).complete),
+  )
   const snapshot = () => page.locator('main').evaluate((main) => main.innerHTML)
   const before = await snapshot()
   await page.waitForTimeout(6_000)

@@ -1,12 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import { EMAIL, formatTelephone, telephoneHref, TELEPHONES } from '@/lib/contact'
 import { formatAddress, OFFICES } from '@/lib/offices'
 import { PORTAL_URL } from '@/lib/portal'
 import { EnvelopeIcon, ShieldLockIcon, TelephoneIcon } from './icons'
 import LocaleSwitcher from './LocaleSwitcher'
-
-const EMAIL = 'administracio@mrsassessors.com'
-const TELEPHONES = ['972371821', '972372240']
 
 const heading = 'mb-4 font-sans text-sm font-semibold tracking-wide text-mist uppercase'
 
@@ -34,8 +32,12 @@ export default async function Footer() {
                     <span className="block font-medium">{office.name}</span>
                     <span className="block text-mist">{formatAddress(office)}</span>
                   </address>
-                  <a href={office.map} className="text-mist underline underline-offset-4 hover:text-white">
-                    Mapa
+                  <a
+                    href={office.map}
+                    aria-label={t('viewOnMapAt', { office: office.name })}
+                    className="text-mist underline underline-offset-4 hover:text-white"
+                  >
+                    {t('viewOnMap')}
                   </a>
                 </li>
               ))}
@@ -48,8 +50,8 @@ export default async function Footer() {
               {TELEPHONES.map((telephone) => (
                 <li key={telephone} className="flex items-center gap-2.5">
                   <TelephoneIcon size={12} />
-                  <a href={`tel:+34${telephone}`} className="hover:underline">
-                    {telephone}
+                  <a href={telephoneHref(telephone)} className="hover:underline">
+                    {formatTelephone(telephone)}
                   </a>
                 </li>
               ))}

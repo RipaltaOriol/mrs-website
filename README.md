@@ -49,7 +49,8 @@ navigation and keyboard reachability with a visible focus ring. See
   nothing outside this directory knows Contentful exists
 - `i18n/`: next-intl routing, navigation and message loading from `locales/{ca,es}/*.json`
 - `app/globals.css`: the single `@theme` block, the only place colours, type steps and spacing are defined
-- `lib/offices.ts`: the firm's two Offices, read by both the contact section and the footer
+- `lib/offices.ts`: the firm's two Offices, read by both the Offices section and the footer
+- `lib/contact.ts`: the firm's telephone numbers and email address, read by the same two
 
 ## Content
 

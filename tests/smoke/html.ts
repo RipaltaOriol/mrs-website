@@ -170,10 +170,13 @@ export function headedBlocks(html: string): Array<{ heading: string; body: strin
   })
 }
 
-/** Every anchor as its `href` and its visible text. */
-export function anchors(html: string): Array<{ href: string; text: string }> {
-  return [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)].map(([, href, inner]) => ({
-    href: href.replaceAll('&amp;', '&'),
-    text: visibleText(inner),
-  }))
+/** Every anchor as its `href`, its visible text and its `aria-label`. */
+export function anchors(html: string): Array<{ href: string; text: string; label?: string }> {
+  const decode = (value: string) => value.replaceAll('&amp;', '&')
+  return [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].flatMap(([, attributes, inner]) => {
+    const href = attributes.match(/\bhref="([^"]*)"/)?.[1]
+    if (href === undefined) return []
+    const label = attributes.match(/\baria-label="([^"]*)"/)?.[1]
+    return [{ href: decode(href), text: visibleText(inner), label: label && decode(label) }]
+  })
 }

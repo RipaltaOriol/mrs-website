@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
+import Offices from '@/components/Offices'
 import PracticeAreas from '@/components/PracticeAreas'
 import Team from '@/components/Team'
 import TreatedImage from '@/components/TreatedImage'
 import { getEmployees, getPartners, getPracticeAreas, groupByDepartment } from '@/lib/content'
 import { IMAGERY } from '@/lib/imagery'
 import { localeAlternates } from '@/lib/metadata'
-import { formatAddress, OFFICES } from '@/lib/offices'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import { PORTAL_URL } from '@/lib/portal'
 
@@ -72,36 +72,11 @@ export default async function HomePage(props: LocaleParams) {
       <span id="contact" />
       <Divider />
 
-      <section className="mx-7.5">
-        <h2 className="text-center">{common('contact')}</h2>
-        <div className="mx-auto my-5 max-w-content">
-          <a href="mailto:administracio@mrsassessors.com?Subject=Consulta" className="btn block text-center">
-            {t('sendEmailBtn')}
-          </a>
-          <hr className="my-4 border-mist" />
-          <div className="grid gap-6 md:grid-cols-2">
-            {OFFICES.map((office) => (
-              <article key={office.name} className="mb-6 overflow-hidden rounded border border-mist bg-white">
-                <iframe
-                  src={office.embed}
-                  title={office.name}
-                  className="block h-full min-h-62.5 w-full"
-                  allowFullScreen
-                  loading="lazy"
-                />
-                <div className="p-4">
-                  <h5>{office.name}</h5>
-                  <p>{t(office.descriptionKey)}</p>
-                  <hr className="my-4 border-mist" />
-                  <p>{formatAddress(office)}</p>
-                  <a href={office.map} className="btn">
-                    Mapa
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+      <section aria-labelledby="contact-heading" className="mx-7.5">
+        <h2 id="contact-heading" className="text-center">
+          {common('contact')}
+        </h2>
+        <Offices />
       </section>
 
       <Divider />

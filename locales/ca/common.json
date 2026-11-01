@@ -17,5 +17,7 @@
   "portalAction": "Accedir al Portal",
   "privacyPolicy": "Política de Privacitat",
   "team": "Equip",
+  "viewOnMap": "Veure al mapa",
+  "viewOnMapAt": "Veure al mapa: {office}",
   "work": "Àrees de Pràctica"
 }

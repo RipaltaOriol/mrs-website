@@ -1,12 +1,8 @@
 import { expect, test, type Locator, type Page } from '@playwright/test'
 import { getPartners } from '@/lib/content'
+import { columnsOf, overflowOf } from './layout'
 
 const team = (page: Page) => page.locator('section[aria-labelledby="team-heading"]')
-
-const columnsOf = async (blocks: Locator) => {
-  const lefts = await blocks.evaluateAll((elements) => elements.map((el) => Math.round(el.getBoundingClientRect().x)))
-  return new Set(lefts).size
-}
 
 const besideEachOther = async (partner: Locator) => {
   const name = await partner.locator('h3').boundingBox()
@@ -19,8 +15,7 @@ test.describe('the Team section on a phone', () => {
 
   test('stacks every block into one column without overflowing', async ({ page }) => {
     await page.goto('/')
-    const overflow = await team(page).evaluate((section) => section.scrollWidth - section.clientWidth)
-    expect(overflow).toBeLessThanOrEqual(0)
+    expect(await overflowOf(team(page))).toBeLessThanOrEqual(0)
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
 
     for (const partner of await team(page).locator('article').all()) {

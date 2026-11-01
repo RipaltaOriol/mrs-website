@@ -8,6 +8,7 @@ export const routing = defineRouting({
   // The URL alone decides the Locale. Detecting it from headers or a cookie
   // would redirect `/` away from Catalan for Spanish-preferring browsers.
   localeDetection: false,
+  localeCookie: false,
   // hreflang alternates are declared per page in the document head instead,
   // where Articles can opt out of claiming a counterpart that does not exist.
   alternateLinks: false,

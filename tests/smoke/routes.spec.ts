@@ -178,3 +178,24 @@ test.describe('the revalidation webhook', () => {
     expect(await response.json()).toEqual({ revalidated: ['content:mrsBlog'] })
   })
 })
+
+test('no document sets a cookie or embeds a third party', async ({ request }) => {
+  const index = await (await request.get('/blogs')).text()
+  const [article] = linksUnder(index, '/blogs/')
+  const everywhere = [...PAGES, ...Object.values(LOCALES).map((at) => at('/about')), article, '/ca/about', '/does-not-exist']
+
+  for (const path of everywhere) {
+    const response = await request.get(path, { maxRedirects: 0 })
+    const headers = response.headersArray().map(({ name }) => name.toLowerCase())
+    expect(headers, path).not.toContain('set-cookie')
+
+    const html = await response.text()
+    expect(html, path).not.toMatch(/<(iframe|embed|object)\b/)
+    expect(html, path).not.toContain('maps/embed')
+  }
+})
+
+test('the revalidation endpoint sets no cookie either', async ({ request }) => {
+  const response = await request.post('/api/revalidate', { data: {} })
+  expect(response.headersArray().map(({ name }) => name.toLowerCase())).not.toContain('set-cookie')
+})

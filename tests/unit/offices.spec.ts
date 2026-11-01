@@ -16,9 +16,10 @@ test('an Office address composes into the line the contact section renders', () 
   expect(OFFICES.map(formatAddress)).toEqual(ADDRESS_LINES)
 })
 
-test('every Office carries a map link and an embeddable map', () => {
-  for (const { name, map, embed } of OFFICES) {
-    expect(map, name).toMatch(/^https:\/\/goo\.gl\/maps\/\S+$/)
-    expect(embed, name).toMatch(/^https:\/\/www\.google\.com\/maps\/embed\?\S+$/)
+test('every Office links out to a map application and embeds none', () => {
+  for (const office of OFFICES) {
+    expect(office.map, office.name).toMatch(/^https:\/\/goo\.gl\/maps\/\S+$/)
+    expect(Object.keys(office), office.name).not.toContain('embed')
+    expect(JSON.stringify(office), office.name).not.toContain('maps/embed')
   }
 })
