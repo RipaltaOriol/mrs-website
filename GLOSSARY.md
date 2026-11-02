@@ -25,8 +25,8 @@ _Avoid_: Company, about, agency, practice
 
 **Office**:
 One of the firm's two physical locations, both in Lloret de Mar, each with its own
-address and a link out to a map application. The firm's telephone numbers and email
-address are not attributed to an Office; they reach the firm.
+address and a link out to a map application. The firm's email address is not
+attributed to an Office; it reaches the firm.
 _Avoid_: Branch, location, headquarters, seat
 
 ### People

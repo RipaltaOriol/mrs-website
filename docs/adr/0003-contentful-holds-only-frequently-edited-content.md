@@ -2,11 +2,11 @@
 
 Contentful previously held Articles, Partner photographs, Employees, the homepage
 slider and a pair of generic page images. We narrowed it to the content that
-genuinely changes: Articles and Employees. Practice Areas, Office addresses and
-Partner biographies stay in the locale JSON files, and design imagery moved into
-the repository under `assets/imagery/`, statically imported through
-`lib/imagery.ts`. The `slider`, `genericImages` and `team` content types were
-retired.
+genuinely changes: Articles and Employees. Practice Areas and Partner biographies
+stay in the locale JSON files, Office addresses live in `lib/offices.ts`, and
+design imagery moved into the repository under `assets/imagery/`, statically
+imported through `lib/imagery.ts`. The `slider`, `genericImages` and `team`
+content types were retired.
 
 A content management system earns its cost for content edited often by people who
 cannot deploy. Here that describes Articles and Employees and nothing else: the
@@ -56,3 +56,19 @@ longer read by anything and is retired alongside `slider` and `genericImages`.
 Issue #8 still asks for biographies "sourced from the content system" and for a
 committed migration script. Both are superseded by this revision, and #8 needs
 amending before it is implemented.
+
+## Revision: Office addresses live in TypeScript, not the locale files
+
+As first written, this ADR placed Office addresses in the locale JSON files. They
+were never there: they began as a const in `app/[locale]/page.tsx`, and #5 moved
+them to `lib/offices.ts` so the Offices section and the footer read one source.
+
+They stay there. An address is not translated: the same street, postcode and
+town in both Locales, along with the coordinates and map link that go with it.
+Putting it in `locales/{ca,es}/*.json` would mean two copies that must be kept
+identical by hand, with nothing to catch them drifting apart. The decision above
+still holds: Office addresses are outside Contentful, versioned and reviewed in
+a pull request, and a deploy changes them.
+
+What does vary by Locale stays in the locale files: each Office's description
+is read through its `descriptionKey`.
