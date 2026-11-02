@@ -335,3 +335,32 @@ test('a blank preview counts as no preview', async () => {
   expect(article?.preview).toBeNull()
   expect(article?.description).toBe('El TS declara no haber lugar.')
 })
+
+test('the items of a list opening the body stay separate words', async () => {
+  const listItem = (value: string) => ({ nodeType: 'list-item', data: {}, content: [paragraph(value)] })
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: {
+      nodeType: 'document',
+      data: {},
+      content: [{ nodeType: 'unordered-list', data: {}, content: [listItem('Primer punt'), listItem('Segon punt')] }],
+    },
+  })
+  expect(article?.description).toBe('Primer punt Segon punt')
+})
+
+test('a body whose opening word overruns a description is cut inside that word', async () => {
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: { nodeType: 'document', data: {}, content: [paragraph(`${'x'.repeat(200)} final`)] },
+  })
+  expect(article?.description).toBe(`${'x'.repeat(159)}…`)
+})
+
+test('an Article with no preview and no text in its body is described by its title', async () => {
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: { nodeType: 'document', data: {}, content: [{ nodeType: 'hr', data: {}, content: [] }] },
+  })
+  expect(article?.description).toBe("Dissolució matrimonial procedeix l'exempció per reinversió")
+})

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { getPathname } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
+import type { Article } from './content'
 import { SITE_NAME, SITE_URL } from './site'
 
 export { SITE_NAME }
@@ -61,7 +62,7 @@ export async function pageMetadata(page: MetaPage, locale: Locale): Promise<Meta
 
 /** Title, description, canonical URL and social card for an Article. */
 export function articleMetadata(
-  article: { slug: string; title: string; description: string; published: Date },
+  article: Pick<Article, 'slug' | 'title' | 'description' | 'published'>,
   locale: Locale,
 ): Metadata {
   const { title, slug, description, published } = article
