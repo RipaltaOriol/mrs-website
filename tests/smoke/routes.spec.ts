@@ -8,15 +8,15 @@ import {
   linksUnder,
   localeSwitchHref,
 } from './html'
+import { PAGE_PATHS, spanish } from './pages'
 
 const ORIGIN = 'https://www.mrsassessors.com'
 
-// Every page the site publishes, as its Catalan (unprefixed) path.
-const PAGES = ['/', '/about', '/blogs', '/policy']
+const PAGES = PAGE_PATHS.ca
 
 const LOCALES = {
   ca: (page: string) => page,
-  es: (page: string) => (page === '/' ? '/es' : `/es${page}`),
+  es: spanish,
 } as const
 
 type Locale = keyof typeof LOCALES

@@ -4,6 +4,7 @@ import LongForm from '@/components/LongForm'
 import StructuredData from '@/components/StructuredData'
 import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+import { pageTrail } from '@/lib/pages'
 import { breadcrumbs } from '@/lib/structured-data'
 
 const SECTIONS = [
@@ -30,13 +31,7 @@ export default async function PolicyPage(props: LocaleParams) {
   return (
     <>
       <StructuredData
-        data={breadcrumbs(
-          [
-            { name: common('home'), page: '/' },
-            { name: common('privacyPolicy'), page: '/policy' },
-          ],
-          locale,
-        )}
+        data={breadcrumbs(pageTrail('policy', common), locale)}
       />
       <LongForm
         title={t('title')}

@@ -9,13 +9,11 @@ import {
   structuredData,
   visibleText,
 } from './html'
+import { INNER_PAGE_PATHS, PAGE_PATHS } from './pages'
 
 const ORIGIN = 'https://www.mrsassessors.com'
 
-const PAGES = {
-  ca: ['/', '/about', '/blogs', '/policy'],
-  es: ['/es', '/es/about', '/es/blogs', '/es/policy'],
-} as const
+const PAGES = PAGE_PATHS
 
 const CLIENTS = {
   Googlebot: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
@@ -110,7 +108,7 @@ test('the home page publishes the firm as a LegalService at both Offices', async
   }
 })
 
-for (const path of ['/about', '/blogs', '/policy', '/es/about', '/es/blogs', '/es/policy']) {
+for (const path of INNER_PAGE_PATHS) {
   test(`${path} carries breadcrumbs from the home page to itself`, async ({ request }) => {
     const html = await (await request.get(path)).text()
     const [trail] = nodesOf(html, 'BreadcrumbList')

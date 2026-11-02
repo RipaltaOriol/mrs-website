@@ -12,6 +12,7 @@ import { routing, type Locale } from '@/i18n/routing'
 import { getArticle, getArticles, type Article } from '@/lib/content'
 import { articleMetadata } from '@/lib/metadata'
 import { pageLocale } from '@/lib/page'
+import { pageTrail } from '@/lib/pages'
 import { articleMarkup, breadcrumbs } from '@/lib/structured-data'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
@@ -54,14 +55,7 @@ export default async function ArticlePage(props: ArticleParams) {
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
       <StructuredData data={articleMarkup(found, locale)} />
       <StructuredData
-        data={breadcrumbs(
-          [
-            { name: common('home'), page: '/' },
-            { name: common('blog'), page: '/blogs' },
-            { name: title, page: `/blogs/${slug}` },
-          ],
-          locale,
-        )}
+        data={breadcrumbs([...pageTrail('blogs', common), { name: title, page: `/blogs/${slug}` }], locale)}
       />
       <nav aria-label={common('blog')} className="mx-auto mb-8 max-w-measure">
         <Link href="/blogs" className="text-sm text-brand underline-offset-4 hover:underline">

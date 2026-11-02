@@ -6,6 +6,7 @@ import StructuredData from '@/components/StructuredData'
 import { getArticles } from '@/lib/content'
 import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+import { pageTrail } from '@/lib/pages'
 import { breadcrumbs } from '@/lib/structured-data'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
@@ -24,13 +25,7 @@ export default async function ArticlesPage(props: LocaleParams) {
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
       <StructuredData
-        data={breadcrumbs(
-          [
-            { name: common('home'), page: '/' },
-            { name: common('blog'), page: '/blogs' },
-          ],
-          locale,
-        )}
+        data={breadcrumbs(pageTrail('blogs', common), locale)}
       />
       <PageTitle title={common('blog')} />
       <ol className="mx-auto max-w-measure motion-safe:animate-fade-in">
