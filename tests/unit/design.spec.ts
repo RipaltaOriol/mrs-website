@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { relative } from 'node:path'
 import { expect, test } from '@playwright/test'
-import { appliedRules, contrast, keyframes, roseUsedAsText, sourceFiles, STYLESHEET, themeTokens } from './theme'
+import { appliedRules, codeFiles, contrast, hexColours, keyframes, paletteColours, roseUsedAsText, sourceFiles, STYLESHEET, themeTokens } from './theme'
 
 const tokens = themeTokens()
 const colour = (name: string) => {
@@ -42,6 +42,30 @@ for (const [text, surface, minimum] of PAIRINGS) {
     expect(contrast(colour(text), colour(surface))).toBeGreaterThanOrEqual(minimum)
   })
 }
+
+const COLOUR_COPIES = ['app/manifest.ts', 'lib/social-image.tsx', 'scripts/generate-icons.mjs']
+
+test('only the consumers that cannot read CSS restate a colour', () => {
+  const holders = codeFiles()
+    .filter((file) => hexColours(readFileSync(file, 'utf8')).length > 0)
+    .map((file) => relative(process.cwd(), file))
+    .sort()
+  expect(holders).toEqual(COLOUR_COPIES)
+})
+
+test('every restated colour is a palette token', () => {
+  const palette = paletteColours(tokens)
+  for (const file of COLOUR_COPIES) {
+    for (const hex of hexColours(readFileSync(file, 'utf8'))) {
+      expect(palette, `${file} restates ${hex}`).toContain(hex)
+    }
+  }
+})
+
+test('the colour scan recognises hex literals and ignores anchors', () => {
+  expect(hexColours("background: '#F7F3F0', color: '#fff'")).toEqual(['#f7f3f0', '#ffffff'])
+  expect(hexColours("href: '#contact', id: '#about'")).toEqual([])
+})
 
 test('the dusty rose is never used as text', () => {
   const offenders = sourceFiles()

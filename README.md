@@ -48,7 +48,10 @@ navigation and keyboard reachability with a visible focus ring. See
   `getArticle`, `getEmployees` and `getPartners` and get domain objects back;
   nothing outside this directory knows Contentful exists
 - `i18n/`: next-intl routing, navigation and message loading from `locales/{ca,es}/*.json`
-- `app/globals.css`: the single `@theme` block, the only place colours, type steps and spacing are defined
+- `app/globals.css`: the single `@theme` block, the only place colours, type steps and spacing are defined.
+  The social images, the web manifest and the icon script cannot read CSS, so they restate
+  palette colours; `npm run test:unit` fails if any copy drifts. Run `npm run icons` after
+  changing the brand red
 - `lib/offices.ts`: the firm's two Offices, read by both the Offices section and the footer
 - `lib/contact.ts`: the firm's telephone numbers and email address, read by the same two
 

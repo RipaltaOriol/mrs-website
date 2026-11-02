@@ -31,12 +31,29 @@ const ROSE_AS_TEXT = /(?<![\w-])(?:[\w-]+:)*(?:text|placeholder|caret)-rose\b|(?
 /** Whether a source text styles any text in the dusty rose. */
 export const roseUsedAsText = (source: string) => ROSE_AS_TEXT.test(source)
 
-/** Every stylesheet and component source the site renders from. */
-export function sourceFiles(): string[] {
-  return ['app', 'components']
+function filesUnder(dirs: string[], pattern: RegExp): string[] {
+  return dirs
     .flatMap((dir) => readdirSync(join(process.cwd(), dir), { recursive: true, encoding: 'utf8' }).map((f) => join(process.cwd(), dir, f)))
-    .filter((file) => /\.(tsx?|css)$/.test(file))
+    .filter((file) => pattern.test(file))
 }
+
+/** Every stylesheet and component source the site renders from. */
+export const sourceFiles = () => filesUnder(['app', 'components'], /\.(tsx?|css)$/)
+
+/** Every TypeScript and JavaScript file the site or its build runs. */
+export const codeFiles = () => filesUnder(['app', 'components', 'lib', 'scripts'], /\.(tsx?|mjs|js)$/)
+
+/** Every `#rgb` or `#rrggbb` literal in a source text, as lowercase `#rrggbb`. */
+export const hexColours = (source: string) =>
+  [...source.matchAll(/#([0-9a-f]{6}|[0-9a-f]{3})\b/gi)].map(([, digits]) =>
+    `#${(digits.length === 3 ? digits.replace(/./g, '$&$&') : digits).toLowerCase()}`,
+  )
+
+/** The value of every `--color-*` token in the palette. */
+export const paletteColours = (tokens = themeTokens()) =>
+  Object.entries(tokens)
+    .filter(([name]) => name.startsWith('--color-') && name !== '--color-*')
+    .map(([, value]) => value.toLowerCase())
 
 /** The body of the first stylesheet block opened by `prelude`, or `undefined` if there is none. */
 export function block(prelude: string, css = STYLESHEET): string | undefined {

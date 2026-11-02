@@ -6,10 +6,18 @@ places and fought Bootstrap's defaults with `!important`. Three colour systems
 coexisted and none of them held the logo's actual red, `#99032E`. We removed
 Bootstrap, react-bootstrap and react-bootstrap-icons entirely and moved to
 Tailwind v4, where a single `@theme` block is the only place a colour, type step
-or spacing value can be defined, so duplication is structurally impossible rather
-than merely discouraged.
+or spacing value can be defined for anything that reads CSS, so duplication there
+is structurally impossible rather than merely discouraged.
 
 ## Consequences
+
+- Three consumers cannot read CSS and restate palette colours as hex literals: the
+  social images (`lib/social-image.tsx`), the web manifest (`app/manifest.ts`) and
+  the icon script (`scripts/generate-icons.mjs`). Generating the `@theme` block from
+  a shared TypeScript module would add a build step for a handful of literals, so
+  instead a unit test fails if any of them stops matching a token or if a hex
+  colour appears in any other script. The favicons are generated files and still
+  need `npm run icons` after the brand red changes.
 
 - Tailwind v4 relies on `@property`, `color-mix()` and cascade layers, setting the
   browser floor at Safari 16.4+, Chrome 111+ and Firefox 128+. Below that, layout
