@@ -19,10 +19,7 @@ export function siteMetadata(locale: Locale): Metadata {
   }
 }
 
-/**
- * Canonical URL and hreflang alternates for a page that exists in every
- * Locale. `page` is the unprefixed path, e.g. `/about`.
- */
+/** Canonical URL and hreflang alternates for `page`, an unprefixed path such as `/about`. */
 export function localeAlternates(page: string, locale: Locale): Metadata['alternates'] {
   const pathFor = (l: Locale) => getPathname({ href: page, locale: l })
   return {

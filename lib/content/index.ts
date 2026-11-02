@@ -87,13 +87,7 @@ function summary(fields: Fields): ArticleSummary {
   }
 }
 
-/**
- * The Articles published in `locale`, newest first.
- *
- * Each Article exists independently per Locale, so this filters on the entry's
- * own `language` rather than asking the Delivery API for a translation. A
- * Locale with no Articles yet is an empty index, not a failure.
- */
+/** The Articles published in `locale`, newest first; empty when the Locale has none. */
 export async function getArticles(
   locale: Locale,
   source: ContentSource = contentful,
@@ -102,12 +96,7 @@ export async function getArticles(
   return entries.filter((fields) => fields.text('language') === locale).map(summary)
 }
 
-/**
- * The Article published at `slug` in `locale`, or `null` if there is none.
- *
- * `null` is an absent Article, which the route turns into a 404. It is not a
- * broken content response: `requireEntries` has already rejected that.
- */
+/** The Article published at `slug` in `locale`, or `null` if there is none. */
 export async function getArticle(
   locale: Locale,
   slug: string,
@@ -133,11 +122,7 @@ export type Partner = {
   biography: string[]
 }
 
-/**
- * The Partners, in the order the Team section presents them. Names are the
- * firm's three principals and do not change; the role and the biography are
- * translated, so they come from the locale file.
- */
+/** The Partners in Team section order, with the `home` message keys for role and biography. */
 const PARTNERS = [
   { name: 'Rafael Joaquín Ripalta Romeo', roleKey: 'founder', bioKey: 'ripaltaBio' },
   { name: 'Sebastián Martínez de Trincheria', roleKey: 'founder', bioKey: 'martinezBio' },
@@ -147,12 +132,9 @@ const PARTNERS = [
 /** The `home` message keys the Partners read. */
 export type PartnerMessage = (typeof PARTNERS)[number]['roleKey' | 'bioKey']
 
-/**
- * The `home` namespace of each locale file, read directly rather than through a
- * translator: next-intl answers a missing key with the key path itself
- * (`"home.saisBio"`), which is a plausible-looking string that would render as
- * a biography. Reading the file means an absent key is absent.
- */
+// next-intl answers a missing key with its path (`"home.saisBio"`), which would
+// render as a biography; the file itself leaves an absent key absent.
+/** The `home` namespace of each locale file, read without a translator. */
 const HOME_MESSAGES: Record<Locale, Unchecked> = { ca: caHome, es: esHome }
 
 /** A value read out of a locale file before the boundary has checked its shape. */
@@ -182,23 +164,14 @@ function requireLines(value: unknown, path: string): string[] {
 
 function requireMessage(messages: Unchecked, key: PartnerMessage): string {
   const text = requireText(messages[key], `"${key}"`)
-  // next-intl's fallback for a key it cannot resolve. Caught here too, because
-  // the messages may have come through a translator rather than from the file.
+  // next-intl's answer for a key it cannot resolve, for messages passed through a translator.
   if (text === key || text.endsWith(`.${key}`)) {
     throw new ContentError(`home.json: "${key}" looks like an unresolved message key`)
   }
   return text
 }
 
-/**
- * The Partners in `locale`.
- *
- * Biographies stay in the locale JSON rather than the content system: ADR-0003
- * moved Articles and Employees in because they are edited often, and the three
- * biographies are not. They pass through the boundary all the same so that a
- * half-translated locale file fails the build with the key named, rather than
- * rendering a Partner with no biography.
- */
+/** The Partners in `locale`, read from the locale file and checked like content. */
 export function getPartners(
   locale: Locale,
   messages: Unchecked = HOME_MESSAGES[locale],

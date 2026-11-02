@@ -19,10 +19,7 @@ export const revalidate = 3600
 
 type ArticleParams = { params: Promise<{ locale: string; slug: string }> }
 
-/**
- * Every Article published in every Locale. Articles added after a deploy are
- * rendered on demand and cached under the same tag the webhook invalidates.
- */
+/** Every Article published in every Locale; later Articles render on demand. */
 export async function generateStaticParams() {
   const perLocale = await Promise.all(
     routing.locales.map(async (locale) => {
@@ -42,8 +39,6 @@ async function requestedArticle(props: ArticleParams): Promise<(Article & { loca
 
 export async function generateMetadata(props: ArticleParams): Promise<Metadata> {
   const found = await requestedArticle(props)
-  // An absent Article is the page's 404 to declare, not metadata's: calling
-  // `notFound()` from here sends Next's bare error document.
   if (!found) return {}
   return articleMetadata(found, found.locale)
 }

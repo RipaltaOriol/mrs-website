@@ -1,5 +1,4 @@
-// Minimal attribute readers over server-rendered HTML. Deliberately tiny: the
-// smoke specification asserts on a handful of tags, not on DOM structure.
+// Attribute readers over server-rendered HTML, enough for tag-level assertions.
 
 type Attrs = Record<string, string>
 

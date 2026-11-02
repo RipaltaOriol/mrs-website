@@ -41,7 +41,7 @@ test('an unconfigured secret refuses every call rather than accepting any', () =
 })
 
 test('a content type the site does not read is acknowledged without invalidating', () => {
-  // `team`, `slider` and `genericImages` were retired by ADR-0003.
+  // `slider` is still in the content space but nothing renders it.
   expect(planRevalidation(SECRET, entryPublished('slider'))).toEqual({ status: 200, tags: [] })
 })
 
@@ -50,8 +50,7 @@ test('a payload that names nothing recognisable is refused', () => {
   expect(planRevalidation(SECRET, null).status).toBe(400)
 })
 
-// Next only accepts a literal for a segment's `revalidate`, so each
-// content-backed route repeats the number instead of importing it.
+// Next accepts only a literal for a segment's `revalidate`.
 test('every content-backed route regenerates on the same hourly window', async () => {
   const routes = [
     'app/[locale]/page.tsx',

@@ -87,13 +87,6 @@ for (const path of ['/does-not-exist', '/es/does-not-exist', '/xx/about']) {
   })
 }
 
-// An Article slug is the one 404 that does not get a localised document. The
-// route exists and is rendered on demand, so an Article published after a
-// deploy is reachable without one; `notFound()` from a dynamic render sends
-// Next's bare error shell and leaves the document to the client. The status is
-// still a real 404, and the site's own 404 content is still what gets
-// delivered, so both are asserted here. Narrower than the localised-document
-// assertion the other unknown routes get, deliberately.
 const UNKNOWN_ARTICLE = {
   '/blogs/no-such-article': 'Aquesta pàgina no existeix',
   '/es/blogs/no-such-article': 'Esta página no existe',
@@ -107,8 +100,8 @@ for (const [path, heading] of Object.entries(UNKNOWN_ARTICLE)) {
   })
 }
 
-// The content-backed routes. These assert on the shape the content system
-// feeds, not on particular Articles, so publishing does not break them.
+// The content-backed routes, asserted on the shape the content system feeds so
+// publishing an Article never breaks them.
 const ARTICLE_INDEX = { ca: '/blogs', es: '/es/blogs' } as const
 
 for (const locale of Object.keys(ARTICLE_INDEX) as Locale[]) {

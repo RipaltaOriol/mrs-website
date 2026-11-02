@@ -23,9 +23,6 @@ async function fetchEntries(contentType: string): Promise<ContentEntry[]> {
   const client = deliveryClient()
   const entries: ContentEntry[] = []
 
-  // Paged to the end rather than capped: a cap would silently drop the
-  // entries past it, which is the one broken response that looks like a
-  // healthy one.
   for (let skip = 0; ; skip += PAGE_SIZE) {
     const response = await client.getEntries({
       content_type: contentType,
@@ -54,9 +51,7 @@ async function fetchEntries(contentType: string): Promise<ContentEntry[]> {
 /** The live Delivery API, cached per content type under its own tag. */
 export const contentful: ContentSource = {
   async entries(contentType) {
-    // Checked here rather than inside the cached function so a missing
-    // credential fails the build immediately instead of being cached, and
-    // rejects the promise rather than throwing past an `await`.
+    // Validated outside `unstable_cache` so a missing credential is never cached.
     deliveryClient()
 
     return unstable_cache(() => fetchEntries(contentType), ['content', contentType, 'dated'], {

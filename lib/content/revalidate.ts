@@ -1,10 +1,6 @@
 import { contentTag } from './cache'
 
-/**
- * The content types the site reads. `team`, `slider` and `genericImages` are
- * still in the space but nothing renders them (ADR-0003), so a change to one
- * invalidates nothing.
- */
+/** The content types the site renders; a change to any other invalidates nothing. */
 export const READ_CONTENT_TYPES = ['mrsBlog', 'employees'] as const
 
 export type RevalidationPlan =
@@ -23,14 +19,7 @@ function contentTypeOf(payload: unknown): string | null | undefined {
   return typeof id === 'string' ? id : undefined
 }
 
-/**
- * What a content webhook call should invalidate, decided without touching the
- * cache so it can be checked on its own.
- *
- * Contentful sends the changed entry or asset and repeats a configured header
- * back; `secret` is that header. Comparison is fail-closed: with no secret set
- * in the environment the route refuses every call rather than trusting any.
- */
+/** What a webhook call carrying `secret` should invalidate; with no secret configured, nothing passes. */
 export function planRevalidation(secret: string | null, payload: unknown): RevalidationPlan {
   const expected = process.env.CONTENTFUL_WEBHOOK_SECRET
   if (!expected) {

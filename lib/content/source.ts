@@ -9,11 +9,7 @@
  */
 export type ContentEntry = { id: string; createdAt: string; fields: Record<string, unknown> }
 
-/**
- * The site's only window onto the content system. Everything the boundary
- * resolves comes through this one method, so a fixture can stand in for the
- * Delivery API without a network call.
- */
+/** The site's only window onto the content system, replaceable by a fixture. */
 export type ContentSource = {
   /** Every published entry of `contentType`, with links resolved. */
   entries(contentType: string): Promise<ContentEntry[]>

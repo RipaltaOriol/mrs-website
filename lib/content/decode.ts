@@ -9,11 +9,7 @@ export type ContentImage = {
   alt: string
 }
 
-/**
- * A content response the site cannot render. Thrown, never caught: the build
- * stops with the content type, the entry and the field named, instead of a
- * `TypeError` from somewhere deep inside a page.
- */
+/** A content response the site cannot render, naming the content type, entry and field. */
 export class ContentError extends Error {
   constructor(message: string) {
     super(message)
@@ -21,10 +17,7 @@ export class ContentError extends Error {
   }
 }
 
-/**
- * Reads fields off one entry. Every read is checked, so no page ever reaches
- * into a content response and finds `undefined` two properties down.
- */
+/** Checked reads of the fields on one entry. */
 export class Fields {
   constructor(
     private readonly contentType: string,
@@ -78,11 +71,7 @@ export class Fields {
     })
   }
 
-  /**
-   * A resolved Asset link, flattened. An unresolved link — which is what the
-   * Delivery API sends for an asset that was unpublished or deleted — reads as
-   * a missing image rather than as `undefined` four properties down.
-   */
+  /** A resolved Asset link, flattened; an unresolved link reads as a missing image. */
   image(field: string): ContentImage {
     const value = this.present(field)
     const file = (value as { fields?: { file?: unknown; title?: unknown } }).fields?.file
@@ -90,6 +79,7 @@ export class Fields {
     const url = (file as { url?: unknown })?.url
     const { width, height } = (size ?? {}) as { width?: unknown; height?: unknown }
 
+    // The Delivery API sends an unpublished or deleted asset as an unresolved link.
     if (typeof url !== 'string' || typeof width !== 'number' || typeof height !== 'number') {
       this.fail(field, 'is not a resolved image')
     }
@@ -104,10 +94,7 @@ export class Fields {
     }
   }
 
-  /**
-   * A rich text document, checked only as far as the renderer needs: a document
-   * node with content. Validating every node type would duplicate the schema.
-   */
+  /** A rich text document, checked down to its document node and content. */
   richText(field: string): Document {
     const value = this.present(field)
     const { nodeType, content } = value as { nodeType?: unknown; content?: unknown }
@@ -119,20 +106,14 @@ export class Fields {
   }
 }
 
-/**
- * Every entry of `contentType`, as checked readers.
- *
- * An empty collection is a failure, not an absence of content: the Delivery API
- * answers an unknown content type, a revoked token's accessible scope or a
- * wiped environment with exactly this, and the site has content of all three
- * types. A Locale holding none of them is a different matter, and the callers
- * that filter by Locale decide that for themselves.
- */
+/** Every entry of `contentType`, as checked readers; an empty collection throws. */
 export async function requireEntries(
   source: ContentSource,
   contentType: string,
 ): Promise<Fields[]> {
   const entries = await source.entries(contentType)
+  // The Delivery API answers an unknown content type, an unscoped token and a
+  // wiped environment alike with an empty collection.
   if (entries.length === 0) {
     throw new ContentError(`${contentType}: the content system returned no entries`)
   }

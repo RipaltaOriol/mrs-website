@@ -21,8 +21,7 @@ test('each content type carries its own revalidation tag, matched to the webhook
   expect(contentTag('employees')).toBe('content:employees')
 })
 
-// The acceptance criterion is hourly, so the number is pinned here rather than
-// only being compared against the route literals, which could drift together.
+// Pinned on its own: the constant and the route literals could drift together.
 test('content is regenerated hourly', () => {
   expect(CONTENT_REVALIDATE_SECONDS).toBe(60 * 60)
 })

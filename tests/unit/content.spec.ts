@@ -157,8 +157,7 @@ test('an Article with an empty body fails rather than rendering a blank page', a
   )
 })
 
-// Partner biographies are the one thing the boundary reads from the committed
-// locale JSON rather than the content system (ADR-0003).
+// Partner messages as the committed locale JSON holds them.
 const HOME_MESSAGES: Record<string, string> = {
   founder: 'Soci Fundador',
   partner: 'Soci',
@@ -192,9 +191,7 @@ test('a Partner biography absent from the locale file names the key', async () =
   )
 })
 
-// next-intl answers a missing key with the key path itself, which is why the
-// boundary reads the locale file rather than a translator: that string is not
-// blank and would otherwise render as a biography line.
+// next-intl answers a missing key with the key path, which is not blank.
 test('a Partner biography is never the message key standing in for itself', async () => {
   expect(() => getPartners('ca', { ...HOME_MESSAGES, saisBio: 'home.saisBio' })).toThrow(
     'home.json: "saisBio" looks like an unresolved message key',

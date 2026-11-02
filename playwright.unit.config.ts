@@ -1,8 +1,6 @@
 import { defineConfig } from '@playwright/test'
 
-// The unit specification runs in-process over fixtures: no server, no network,
-// no browser. It is a separate project from the smoke specification, which
-// needs a production build.
+// Runs in-process over fixtures with no server, network or browser.
 export default defineConfig({
   testDir: './tests/unit',
   fullyParallel: true,

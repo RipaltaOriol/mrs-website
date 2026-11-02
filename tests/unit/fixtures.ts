@@ -1,9 +1,6 @@
 import type { ContentEntry, ContentSource } from '@/lib/content/source'
 
-/**
- * A ContentSource over literal entries, standing in for the Delivery API.
- * Field shapes here are copied from live responses, deep links included.
- */
+/** A ContentSource over literal entries shaped like live Delivery API responses. */
 export function sourceOf(entries: Record<string, ContentEntry[]>): ContentSource {
   return { entries: async (contentType) => entries[contentType] ?? [] }
 }
