@@ -32,12 +32,12 @@ export default async function Offices() {
       <div className="grid gap-x-10 md:grid-cols-2">
         {OFFICES.map((office) => (
           <article key={office.name} className="flex h-full flex-col border-b border-mist py-8">
-            <h3 className="mb-2 text-2xl">{office.name}</h3>
+            <h3 className="mb-2 text-2xl">{t(office.name)}</h3>
             <p className="max-w-measure text-sm text-pretty text-stone">{t(office.descriptionKey)}</p>
             <address className="mb-4 max-w-measure not-italic">{formatAddress(office)}</address>
             <a
               href={office.map}
-              aria-label={common('viewOnMapAt', { office: office.name })}
+              aria-label={common('viewOnMapAt', { office: t(office.name) })}
               className="mt-auto w-fit font-medium text-brand underline underline-offset-4 hover:text-brand-deep"
             >
               {common('viewOnMap')}

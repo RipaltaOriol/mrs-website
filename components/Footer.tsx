@@ -12,6 +12,7 @@ const heading = 'mb-4 font-sans text-sm font-semibold tracking-wide text-mist up
 
 export default async function Footer() {
   const t = await getTranslations('common')
+  const home = await getTranslations('home')
 
   return (
     <footer className="bg-ink text-white">
@@ -31,12 +32,12 @@ export default async function Footer() {
               {OFFICES.map((office) => (
                 <li key={office.name}>
                   <address className="not-italic">
-                    <span className="block font-medium">{office.name}</span>
+                    <span className="block font-medium">{home(office.name)}</span>
                     <span className="block text-mist">{formatAddress(office)}</span>
                   </address>
                   <a
                     href={office.map}
-                    aria-label={t('viewOnMapAt', { office: office.name })}
+                    aria-label={t('viewOnMapAt', { office: home(office.name) })}
                     className="text-mist underline underline-offset-4 hover:text-white"
                   >
                     {t('viewOnMap')}
