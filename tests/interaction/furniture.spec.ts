@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test'
 import { bottomBorderAlpha, controlsIn, tabThrough } from './focus'
+import { overflowOf } from './layout'
 
 const PHONE = { width: 390, height: 844 }
 const DESKTOP = { width: 1280, height: 900 }
+const FOLDED_PHONE = { width: 280, height: 653 }
+const TABLET = { width: 768, height: 1024 }
 
 test.describe('the header hairline', () => {
   test.use({ viewport: DESKTOP })
@@ -116,5 +119,18 @@ for (const [region, viewport] of [
         expect(stop!.ringIsVisible, `${control} has no visible focus ring`).toBe(true)
       }
     })
+  })
+}
+
+for (const viewport of [FOLDED_PHONE, PHONE, TABLET, DESKTOP]) {
+  test.describe(`the header and footer at ${viewport.width}px`, () => {
+    test.use({ viewport })
+
+    for (const path of ['/policy', '/es/policy']) {
+      test(`fit the viewport on ${path} without scrolling sideways`, async ({ page }) => {
+        await page.goto(path)
+        expect(await overflowOf(page.locator('html'))).toBe(0)
+      })
+    }
   })
 }

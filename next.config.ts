@@ -8,6 +8,7 @@ const config: NextConfig = {
   outputFileTracingIncludes: {
     '/**/opengraph-image': ['./assets/fonts/*.ttf', './public/logo.png'],
   },
+  htmlLimitedBots: /.*/,
   images: {
     remotePatterns: [{ protocol: 'https', hostname: 'images.ctfassets.net' }],
   },

@@ -6,6 +6,8 @@ import { PORTAL_URL } from '@/lib/portal'
 import { EnvelopeIcon, ShieldLockIcon, TelephoneIcon } from './icons'
 import LocaleSwitcher from './LocaleSwitcher'
 
+const [mailbox, domain] = EMAIL.split('@')
+
 const heading = 'mb-4 font-sans text-sm font-semibold tracking-wide text-mist uppercase'
 
 export default async function Footer() {
@@ -58,7 +60,8 @@ export default async function Footer() {
               <li className="flex items-center gap-2.5">
                 <EnvelopeIcon size={12} />
                 <a href={`mailto:${EMAIL}`} className="hover:underline">
-                  {EMAIL}
+                  {mailbox}
+                  <wbr />@{domain}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">

@@ -17,6 +17,11 @@ const PAGES = {
   es: ['/es', '/es/about', '/es/blogs', '/es/policy'],
 } as const
 
+const CLIENTS = {
+  Googlebot: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+  'a browser': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+} as const
+
 const PLACEHOLDER = /linkedin-cover|lorem|ipsum|placeholder|example\.com|localhost|Oriol/i
 
 /** The site-relative path of an absolute production URL. */
@@ -47,6 +52,18 @@ for (const [locale, paths] of Object.entries(PAGES)) {
     for (const title of titles) expect(title).toMatch(/ — MRS Assessors$/)
     for (const description of descriptions) expect(description?.length).toBeGreaterThan(50)
   })
+
+  for (const [client, userAgent] of Object.entries(CLIENTS)) {
+    test(`every ${locale} page served to ${client} carries its title and description in the head`, async ({
+      request,
+    }) => {
+      for (const path of paths) {
+        const head = region(await (await request.get(path, { headers: { 'user-agent': userAgent } })).text(), 'head')
+        expect(documentTitle(head), path).toMatch(/ — MRS Assessors$/)
+        expect(metaContent(head, 'description'), path).toBeDefined()
+      }
+    })
+  }
 
   for (const path of paths) {
     test(`${path} carries a social card with its own preview image`, async ({ request }) => {

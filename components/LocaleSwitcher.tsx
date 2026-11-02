@@ -25,7 +25,7 @@ export default function LocaleSwitcher({ tone }: { tone: Tone }) {
   const styles = TONES[tone]
 
   return (
-    <nav aria-label={t('locale')}>
+    <div role="group" aria-label={t('locale')}>
       <ul className="flex items-center gap-2 text-sm font-medium">
         {routing.locales.map((locale) => (
           <li key={locale}>
@@ -41,6 +41,6 @@ export default function LocaleSwitcher({ tone }: { tone: Tone }) {
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   )
 }

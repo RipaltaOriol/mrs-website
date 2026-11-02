@@ -77,12 +77,13 @@ export function stylesheets(html: string): string[] {
     .map((tag) => tag.href)
 }
 
-/** The markup inside the first `<header>`, `<main>` or `<footer>`. */
-export function region(html: string, name: 'header' | 'main' | 'footer'): string {
-  const start = html.indexOf(`<${name}`)
+/** The markup inside the first `<head>`, `<header>`, `<main>` or `<footer>`. */
+export function region(html: string, name: 'head' | 'header' | 'main' | 'footer'): string {
+  const start = html.search(new RegExp(`<${name}[\\s>]`))
   if (start < 0) return ''
   const open = html.indexOf('>', start) + 1
-  return html.slice(open, html.indexOf(`</${name}>`, open))
+  const close = html.indexOf(`</${name}>`, open)
+  return close < 0 ? '' : html.slice(open, close)
 }
 
 /** Every tag in `html` whose `class` applies one of `utilities` with no variant prefix. */

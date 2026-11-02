@@ -56,6 +56,8 @@
   --container-content: 75rem;
   --container-measure: 34em;
   --container-contents: 15rem;
+
+  --breakpoint-xs: 22.5rem;
 }
 
 /* The one button recipe, in the same file as the tokens it is built from. */
@@ -89,7 +91,7 @@
     @apply scroll-pt-24;
   }
   body {
-    @apply bg-canvas font-sans text-base text-ink;
+    @apply bg-canvas font-sans text-base text-ink wrap-break-word;
   }
   h1,
   h2,
