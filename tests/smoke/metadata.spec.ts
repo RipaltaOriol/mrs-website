@@ -110,6 +110,17 @@ test('the home page publishes the firm as a LegalService at both Offices', async
   }
 })
 
+/** Every step of the page's breadcrumb trail is the canonical URL of the page it names, ending at this one. */
+async function expectCanonicalTrail(request: APIRequestContext, html: string) {
+  const [trail] = nodesOf(html, 'BreadcrumbList')
+  const items = (trail.itemListElement as Array<{ item: string }>).map(({ item }) => item)
+
+  expect(items.at(-1)).toBe(canonical(html))
+  for (const item of items.slice(0, -1)) {
+    expect(canonical(await (await request.get(local(item))).text()), item).toBe(item)
+  }
+}
+
 for (const path of ['/', '/es']) {
   test(`each Office on ${path} is published at the home page’s canonical URL`, async ({ request }) => {
     const html = await (await request.get(path)).text()
@@ -127,7 +138,7 @@ for (const path of INNER_PAGE_PATHS) {
     const items = trail.itemListElement as Array<{ item: string }>
 
     expect(items[0].item).toBe(path.startsWith('/es') ? `${ORIGIN}/es` : ORIGIN)
-    expect(items.at(-1)!.item).toBe(canonical(html))
+    await expectCanonicalTrail(request, html)
   })
 }
 
@@ -141,6 +152,7 @@ for (const index of ['/blogs', '/es/blogs']) {
     expect(article).toMatchObject({ headline: heading, url: canonical(html), inLanguage: index === '/blogs' ? 'ca' : 'es' })
     expect(Date.parse(article.datePublished as string)).not.toBeNaN()
     expect(nodesOf(html, 'BreadcrumbList')).toHaveLength(1)
+    await expectCanonicalTrail(request, html)
 
     expect(metaContent(html, 'og:type')).toBe('article')
     expect(metaContent(html, 'og:title')).toBe(heading)
@@ -159,7 +171,7 @@ test('the sitemap lists every page in both Locales and every Article', async ({ 
   const response = await request.get('/sitemap.xml')
   expect(response.status()).toBe(200)
   const xml = await response.text()
-  const listed = [...xml.matchAll(/<loc>([^<]*)<\/loc>/g)].map(([, url]) => url)
+  const listed = sitemapUrls(xml).map(({ loc }) => loc)
 
   for (const path of [...PAGES.ca, ...PAGES.es]) {
     expect(listed).toContain(path === '/' ? ORIGIN : `${ORIGIN}${path}`)
