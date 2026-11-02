@@ -136,12 +136,16 @@ for (const viewport of [FOLDED_PHONE, PHONE, TABLET, DESKTOP]) {
 }
 
 for (const path of ['/', '/es/about']) {
-  test(`${path} asks no Vercel endpoint to record the visit`, async ({ page }) => {
-    const requested: string[] = []
-    page.on('request', (request) => requested.push(new URL(request.url()).pathname))
+  test.describe(`${path} once loaded`, () => {
+    test('has fetched nothing from another origin and reported the visit nowhere', async ({ page, baseURL }) => {
+      const requested: URL[] = []
+      page.on('request', (request) => requested.push(new URL(request.url())))
 
-    await page.goto(path, { waitUntil: 'networkidle' })
+      await page.goto(path, { waitUntil: 'networkidle' })
 
-    expect(requested.filter((pathname) => pathname.startsWith('/_vercel/'))).toEqual([])
+      const site = new URL(baseURL!).origin
+      const tracking = requested.filter(({ origin, pathname }) => origin !== site || pathname.startsWith('/_vercel/'))
+      expect(tracking.map(String)).toEqual([])
+    })
   })
 }
