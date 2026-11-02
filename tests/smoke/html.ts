@@ -44,6 +44,14 @@ export function canonical(html: string): string | undefined {
   return tags(html, 'link').find((tag) => tag.rel === 'canonical')?.href
 }
 
+/** Every `<url>` of a sitemap as its `<loc>` and its `hreflang` → absolute URL alternates. */
+export function sitemapUrls(xml: string): Array<{ loc: string; alternates: Record<string, string> }> {
+  return [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, entry]) => ({
+    loc: entry.match(/<loc>([^<]*)<\/loc>/)![1].replaceAll('&amp;', '&'),
+    alternates: Object.fromEntries(tags(entry, 'xhtml:link').map((tag) => [tag.hreflang, tag.href])),
+  }))
+}
+
 /** The `src` of every `<img>`. */
 export function imageSources(html: string): string[] {
   return tags(html, 'img').map((tag) => tag.src)

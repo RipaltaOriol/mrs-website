@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { routing, type Locale } from '@/i18n/routing'
 import { PAGES } from './pages'
-import { absoluteUrl } from './structured-data'
+import { absoluteUrl } from './site'
 
 /** The Articles published in each Locale, as the sitemap needs them. */
 export type ArticlesByLocale = Record<Locale, Array<{ slug: string; published: Date }>>
