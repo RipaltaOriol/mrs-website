@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation'
 import { EMAIL, formatTelephone, telephoneHref, TELEPHONES } from '@/lib/contact'
 import { formatAddress, OFFICES } from '@/lib/offices'
 import { PORTAL_URL } from '@/lib/portal'
-import { EnvelopeIcon, ShieldLockIcon, TelephoneIcon } from './icons'
+import { EnvelopeIcon, MobilePhoneIcon, ShieldLockIcon, TelephoneIcon } from './icons'
 import LocaleSwitcher from './LocaleSwitcher'
 
 const [mailbox, domain] = EMAIL.split('@')
@@ -50,11 +50,11 @@ export default async function Footer() {
           <div>
             <h2 className={heading}>{t('footerContact')}</h2>
             <ul className="space-y-2 text-sm">
-              {TELEPHONES.map((telephone) => (
-                <li key={telephone} className="flex items-center gap-2.5">
-                  <TelephoneIcon size={12} />
-                  <a href={telephoneHref(telephone)} className="hover:underline">
-                    {formatTelephone(telephone)}
+              {TELEPHONES.map(({ number, kind }) => (
+                <li key={number} className="flex items-center gap-2.5">
+                  {kind === 'mobile' ? <MobilePhoneIcon size={12} /> : <TelephoneIcon size={12} />}
+                  <a href={telephoneHref(number)} className="hover:underline">
+                    {formatTelephone(number)}
                   </a>
                 </li>
               ))}

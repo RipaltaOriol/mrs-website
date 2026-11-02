@@ -41,7 +41,7 @@ test.describe('the contact links', () => {
   test('dial, write or open a map, and take a visible focus ring in the tab order', async ({ page }) => {
     await page.goto('/')
     const controls = await controlsIn(offices(page))
-    for (const telephone of TELEPHONES) expect(controls).toContain(`a ${telephoneHref(telephone)}`)
+    for (const { number } of TELEPHONES) expect(controls).toContain(`a ${telephoneHref(number)}`)
     expect(controls.filter((control) => control.startsWith('a mailto:'))).toHaveLength(1)
     for (const office of OFFICES) expect(controls).toContain(`a ${office.map}`)
 
@@ -49,7 +49,7 @@ test.describe('the contact links', () => {
     await first.focus()
     await page.keyboard.press('Shift+Tab')
     const [stop] = await tabThrough(page, 1)
-    expect(stop.control).toBe(`a ${telephoneHref(TELEPHONES[0])}`)
+    expect(stop.control).toBe(`a ${telephoneHref(TELEPHONES[0].number)}`)
     expect(stop.ringIsVisible).toBe(true)
   })
 })

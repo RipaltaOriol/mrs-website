@@ -1,7 +1,9 @@
 import { getTranslations } from 'next-intl/server'
 import { EMAIL, formatTelephone, telephoneHref, TELEPHONES } from '@/lib/contact'
 import { formatAddress, OFFICES } from '@/lib/offices'
-import { EnvelopeIcon, TelephoneIcon } from './icons'
+import { EnvelopeIcon, MobilePhoneIcon, TelephoneIcon } from './icons'
+
+const contactIcon = { size: 14, className: 'shrink-0 text-brand' }
 
 const contactLink = 'text-lg text-ink underline decoration-mist decoration-1 underline-offset-4 hover:decoration-brand'
 
@@ -13,16 +15,16 @@ export default async function Offices() {
   return (
     <div className="mx-auto mt-10 mb-5 max-w-content">
       <ul className="flex flex-col gap-4 border-y border-mist py-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-10">
-        {TELEPHONES.map((telephone) => (
-          <li key={telephone} className="flex items-center gap-3">
-            <TelephoneIcon size={14} className="shrink-0 text-brand" />
-            <a href={telephoneHref(telephone)} className={contactLink}>
-              {formatTelephone(telephone)}
+        {TELEPHONES.map(({ number, kind }) => (
+          <li key={number} className="flex items-center gap-3">
+            {kind === 'mobile' ? <MobilePhoneIcon {...contactIcon} /> : <TelephoneIcon {...contactIcon} />}
+            <a href={telephoneHref(number)} className={contactLink}>
+              {formatTelephone(number)}
             </a>
           </li>
         ))}
         <li className="flex items-center gap-3">
-          <EnvelopeIcon size={14} className="shrink-0 text-brand" />
+          <EnvelopeIcon {...contactIcon} />
           <a href={`mailto:${EMAIL}`} className={`${contactLink} break-all`}>
             {EMAIL}
           </a>
