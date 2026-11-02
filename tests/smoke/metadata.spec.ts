@@ -2,10 +2,12 @@ import { expect, test, type APIRequestContext } from '@playwright/test'
 import {
   canonical,
   documentTitle,
+  hreflangAlternates,
   linkHrefs,
   linksUnder,
   metaContent,
   region,
+  sitemapUrls,
   structuredData,
   visibleText,
 } from './html'
@@ -108,6 +110,16 @@ test('the home page publishes the firm as a LegalService at both Offices', async
   }
 })
 
+for (const path of ['/', '/es']) {
+  test(`each Office on ${path} is published at the home page’s canonical URL`, async ({ request }) => {
+    const html = await (await request.get(path)).text()
+    const offices = nodesOf(html, 'LegalService')
+
+    expect(offices).not.toHaveLength(0)
+    for (const office of offices) expect(office.url).toBe(canonical(html))
+  })
+}
+
 for (const path of INNER_PAGE_PATHS) {
   test(`${path} carries breadcrumbs from the home page to itself`, async ({ request }) => {
     const html = await (await request.get(path)).text()
@@ -157,6 +169,19 @@ test('the sitemap lists every page in both Locales and every Article', async ({ 
   for (const index of ['/blogs', '/es/blogs']) {
     const [href] = linksUnder(await (await request.get(index)).text(), `${index}/`)
     expect(listed).toContain(`${ORIGIN}${href}`)
+  }
+})
+
+test('every URL in the sitemap is the canonical URL of the page it names, with that page’s own counterparts', async ({
+  request,
+}) => {
+  const urls = sitemapUrls(await (await request.get('/sitemap.xml')).text())
+  expect(urls.length).toBeGreaterThan(0)
+
+  for (const { loc, alternates } of urls) {
+    const html = await (await request.get(local(loc))).text()
+    expect(canonical(html), loc).toBe(loc)
+    expect(alternates, loc).toEqual(hreflangAlternates(html))
   }
 })
 

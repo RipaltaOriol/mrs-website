@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 import { routing } from '@/i18n/routing'
 import { PAGES, pageTrail, type Page } from '@/lib/pages'
 import { sitemapEntries } from '@/lib/sitemap'
-import { absoluteUrl } from '@/lib/structured-data'
+import { absoluteUrl } from '@/lib/site'
 
 const LABELS: Record<string, string> = { home: 'Inici', firm: 'La Firma', blog: 'Notícies' }
 const label = (key: string) => LABELS[key]

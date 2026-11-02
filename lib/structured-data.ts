@@ -1,7 +1,7 @@
-import { routing, type Locale } from '@/i18n/routing'
+import type { Locale } from '@/i18n/routing'
 import type { Article } from './content'
 import { EMAIL, TELEPHONES, telephoneHref } from './contact'
-import { SITE_NAME, SITE_URL } from './site'
+import { SITE_NAME, SITE_URL, absoluteUrl } from './site'
 import { OFFICES } from './offices'
 
 /** A schema.org JSON-LD document. */
@@ -19,13 +19,6 @@ const OPENING_HOURS = [
   ['09:00', '14:00'],
   ['16:00', '19:00'],
 ].map(([opens, closes]) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: WEEKDAYS, opens, closes }))
-
-/** An absolute URL for an unprefixed site path in `locale`. */
-export function absoluteUrl(page: string, locale: Locale): string {
-  const prefix = locale === routing.defaultLocale ? '' : `/${locale}`
-  const path = `${prefix}${page === '/' ? '' : page}`
-  return `${SITE_URL}${path}`
-}
 
 /** The firm as an Organization, and each Office as a LegalService belonging to it. */
 export function firmGraph(locale: Locale): JsonLd {
