@@ -134,3 +134,14 @@ for (const viewport of [FOLDED_PHONE, PHONE, TABLET, DESKTOP]) {
     }
   })
 }
+
+for (const path of ['/', '/es/about']) {
+  test(`${path} asks no Vercel endpoint to record the visit`, async ({ page }) => {
+    const requested: string[] = []
+    page.on('request', (request) => requested.push(new URL(request.url()).pathname))
+
+    await page.goto(path, { waitUntil: 'networkidle' })
+
+    expect(requested.filter((pathname) => pathname.startsWith('/_vercel/'))).toEqual([])
+  })
+}

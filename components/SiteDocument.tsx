@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { Analytics } from '@vercel/analytics/next'
 import { NextIntlClientProvider } from 'next-intl'
 import type { Locale } from '@/i18n/routing'
 import { inter, newsreader } from '@/lib/fonts'
@@ -16,7 +15,6 @@ export default function SiteDocument({ locale, children }: { locale: Locale; chi
           <main>{children}</main>
           <Footer />
         </NextIntlClientProvider>
-        <Analytics />
       </body>
     </html>
   )
