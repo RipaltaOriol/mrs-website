@@ -1,45 +1,170 @@
 {
   "language": "cat",
-  "title": "Advocats i Consultors",
-  "subtitle": "Especialistes en Funció Pública i Dret Administratiu",
-  "body1": "El grup MRS Assessors té més de 20 anys d'experiència prestant assessorament jurídic, fiscal i tributari, comptable, laboral, immobiliari i d'assegurances a Lloret de Mar i Girona per a empreses, particulars i administracions públiques.",
-  "body2": "Som un equip humà que treballa sota un concepte de client integral, és a dir, una gestió professional global a mida del client que ens permet establir una relació personalitzada i propera amb el client, i aconseguir alhora una unitat de criteri i de gestió, mitjançant la coordinació i la col·laboració de tots els departaments.",
+  "heroStatement": "Advocats i consultors a Lloret de Mar des de fa més de vint anys",
+  "heroSubline": "Especialistes en funció pública i dret administratiu, amb assessorament jurídic, fiscal, comptable i laboral per a empreses, particulars i administracions.",
+  "intro": "Fa més de vint anys que el grup MRS Assessors assessora empreses, particulars i administracions públiques de Lloret de Mar i Girona en matèria jurídica, fiscal, comptable, laboral, immobiliària i d'assegurances. Treballem amb un concepte de client integral: una gestió global i propera, amb tots els departaments coordinats.",
+  "firmLink": "Coneix la Firma",
   "work": "Pràctica",
-  "tab2Title": "Fiscal i Tributari",
-  "tab3Title": "Comptable",
-  "tab5Title": "Assegurance",
-  "tab6Title": "Gestió",
-  "tab7Title": "Jurídic",
-  "tab8Title": "Immobiliari",
-  "tab9Title": "Financer",
-  "tab1Content": "El departament de laboral ofereix un assessorament global. No pensem només en la confecció d'unes nòmines i unes liquidacions a la Seguretat Social, sinó també en les relacions laborals, reunions d'empresa, auditories laborals, informes d'acomiadament, etc. Assessorem en les relacions laborals i en les gestions relatives a la relació de l'empresa amb l'administració pública, d'acord amb les disposicions legals vigents, en el marc de la continua modificació de la legislació laboral, i l'evolució constant dels convenis col·lectius i de les diferents obligacions formals.",
-  "tab2Content1": "En els darrers anys les normatives fiscals i comptables s'han anat apropant, per tant, no podem entendre un assessorament fiscal deslligat de les accions econòmiques diàries de l'empresa. I si omplir bé uns documents per presentar a l' Administració Tributària és important, més ho és que aquests documents s’ajustin a la realitat tributària de l’empresa. L’assessorament i estudi previ de qualsevol operació econòmica són ara molt importants, ja que, com diu el refrany, \"val més curar-se en salut\".",
-  "tab2Content2": "El nostre assessorament es personalitza segons el tipus d'empresa i la seva qualificació fiscal, i contempla l’assessorament, el seguiment i control dels impostos, la confecció dels impresos : IVA, renda, societats, successions i donacions, operacions amb tercers, etc., la relació amb l'Administració Tributària: resposta a requeriments, assessorament a inspeccions, tràmits, i d'altres, i defensa jurídica davant els òrgans administratius i judicials",
-  "tab3Content1": "L'assessorem perquè tingui una comptabilitat adaptada a les seves necessitats i que compleixi les normes legals vigents.",
-  "tab3Content2": "Som a prop de les noves empreses i d'aquelles que volen fer realitat una gestió comptable per primera vegada; som al seu costat per fer la posada en marxa, i fins i tot per ajudar-lo a la formació del personal. Un cop fet aquest primer pas, estem sempre a la seva disposició per resoldre dubtes, fer comprovacions periòdiques i estudis econòmics i financers. Oferim l'assessorament en el tancament anual de comptes i l'elaboració de la memòria i els balanços per dipositar al Registre Mercantil.",
-  "tab3Content3": "Si vostè busca l'acompliment d'unes obligacions fiscals, en el nostre despatx li podem oferir la confecció dels registres fiscals necessaris segons la normativa de cada moment. Només cal que ens lliuri les factures, la resta és cosa nostra. Si la seva empresa necessita una comptabilitat ajustada a la normativa mercantil, la nostra feina inclou totes les anotacions per arribar a obtenir la imatge fidel del patrimoni de l'empresa i l' elaboració posterior de la memòria i els balanços per dipositar al Registre Mercantil.",
-  "tab4Content": "Aquest departament es dedica a l'estudi per a la constitució i legalització de tot tipus de societats, contractes mercantils i totes les possibles adaptacions o canvis que es produeixin sobre la vida societària.",
-  "tab5Content": "Gestiona la cobertura dels riscos inherents a l'empresari o al particular, i assessora sobre les assegurances i inversions més adequades, per tal de gaudir de la millor cobertura possible i el major estalvi en el producte contractat.",
-  "tab6Content": "Profundament implicat amb la resta de departaments, sobretot en la representació davant dels organismes oficials i davant d'altres entitats, aquest departament fa de pont amb tots els altres dels despatx, i els ajuda en la tramitació dels diversos documents.",
-  "tab7Content1": "L'alt nivell d'especialització jurídica de MRS Assessors ha comportat a la consecució d'una altíssima taxa d'èxit davant les administracions i tribunals, sense oblidar el nostre important tarannà mediador.",
-  "tab7Content2": "Àrees d'especialització jurídica:",
-  "tab1List": "Altes inicials d'empreses&&Obertura de centres de treball&&Inscripcions i altes de treballadors&&Contractes i pròrrogues&&Gestió de nòmines (TC2 i TC1)&&Incapacitat temporal, invalidesa i jubilacions&&Contenciosos laborals CMAC&&Inspeccions laborals, recursos i reclamacions&&Prevenció de riscos laborals&&Connexió de la xarxa amb la tresoreria de la Seguretat Social&&Treballadors autònoms. Altes, baixes i prestacions&&Base de dades de jurisprudència i convenis&&Règims especials (de la llar, agrari, ...)&&Assessorament i consultes",
-  "tab2List": "Impost sobre la renda i el patrimoni de les persones físiques&&Impost sobre societats&&Impost sobre el valor afegit&&Tramitació i seguiment dels règims en estimació directa simplificada i mòduls&&Pagaments fraccionats i retencions de lloguers&&Impost sobre activitats econòmiques i altres tributs locals&&Impost sobre transmissions patrimonials&&Impost sobre successions i donacions&&Inspeccions fiscals, recursos i reclamacions&&Requeriments i ajornaments",
-  "tab3List": "Assessorament general en matèria comptable&&Planificació i inici de comptabilitats&&Comptabilitat d'empreses en el règim d'estimació directa&&Comptabilitat de societats&&Confecció dels llibres de comptabilitat&&Presentació i tramitació per a la legalització dels llibres oficials de la comptabilitat&&Informes tècnics comprables: estudi de ratis, valoració d'empreses, actualitzacions de balanços, etc.",
-  "tab4List": "Constitució de Societats. ( Cerca i sol·licitud de denominacions socials, Constitució de Societats Civils i Comunitats de Bens, Dissolució de Societats)&&Actuacions en societats constituïdes. (Canvi de domicili, Transformació SA / SL, - Augment Capital, Disminució Capital, Modificació de l'objecte social)&&Contractes mercantils. (Confecció de contractes d'arrendament de Mobles i Immobles, Confecció de contractes de compravenda, Confecció d'altres contractes)&&Comptes anuals",
-  "tab5List": "Multirisc empresarial&&Multirisc de comerços, indústries i oficines&&Multirisc de la llar i comunitats&&Responsabilitat civil&&Vehicles industrials&&Vehicles comercials&&Turismes&&Jubilació&&Protecció jurídica&&Subsidis&&Vida&&Pensions&&  Assistència i hospitalització",
-  "tab6List": "Certificat de registres civils&&Certificat d'últimes voluntats&&Certificat de denominació de societats&&Patents i marques&&Assessorament i tràmit d'herències i donacions&&  Consultes i tràmits a diferents organismes oficials",
-  "tab7List": "Dret Civil&&Dret Mercantil&&Dret Penal&&Dret Administratiu (incloent Dret Urbanístic i Dret de la Funció Pública)&&Dret Laboral&&Dret Financer i Tributari",
-  "tab8List": "Administració de Comunitats de Propietaris i Urbanitzacions&&Formalització de contractes&&Registre de contractes, constitució i dipòsit de fiances&&Emissió i cobrament de rebuts de lloguer&&Reclamació d’impagats&&Assegurança de la finca&&Aplicació d'augments i repercussions a arrendataris&&Recerca i selecció de llogaters&&Intermediació immobiliària&&Informes",
-  "tab9List": "Hipoteques&&Préstecs personals",
+  "practiceAreas": [
+    {
+      "title": "Laboral",
+      "summary": "Nòmines, contractes i relacions laborals, amb representació davant la Seguretat Social i la Inspecció de Treball.",
+      "paragraphs": [
+        "El departament de laboral ofereix un assessorament global. No pensem només en la confecció d'unes nòmines i unes liquidacions a la Seguretat Social, sinó també en les relacions laborals, reunions d'empresa, auditories laborals, informes d'acomiadament, etc. Assessorem en les relacions laborals i en les gestions relatives a la relació de l'empresa amb l'administració pública, d'acord amb les disposicions legals vigents, en el marc de la continua modificació de la legislació laboral, i l'evolució constant dels convenis col·lectius i de les diferents obligacions formals."
+      ],
+      "items": [
+        "Altes inicials d'empreses",
+        "Obertura de centres de treball",
+        "Inscripcions i altes de treballadors",
+        "Contractes i pròrrogues",
+        "Gestió de nòmines (TC2 i TC1)",
+        "Incapacitat temporal, invalidesa i jubilacions",
+        "Contenciosos laborals CMAC",
+        "Inspeccions laborals, recursos i reclamacions",
+        "Prevenció de riscos laborals",
+        "Connexió de la xarxa amb la tresoreria de la Seguretat Social",
+        "Treballadors autònoms. Altes, baixes i prestacions",
+        "Base de dades de jurisprudència i convenis",
+        "Règims especials (de la llar, agrari, ...)",
+        "Assessorament i consultes"
+      ]
+    },
+    {
+      "title": "Fiscal i Tributari",
+      "summary": "Planificació i presentació d'impostos, amb assistència en inspeccions i defensa davant l'Administració Tributària.",
+      "paragraphs": [
+        "En els darrers anys les normatives fiscals i comptables s'han anat apropant, per tant, no podem entendre un assessorament fiscal deslligat de les accions econòmiques diàries de l'empresa. I si omplir bé uns documents per presentar a l' Administració Tributària és important, més ho és que aquests documents s’ajustin a la realitat tributària de l’empresa. L’assessorament i estudi previ de qualsevol operació econòmica són ara molt importants, ja que, com diu el refrany, \"val més curar-se en salut\".",
+        "El nostre assessorament es personalitza segons el tipus d'empresa i la seva qualificació fiscal, i contempla l’assessorament, el seguiment i control dels impostos, la confecció dels impresos : IVA, renda, societats, successions i donacions, operacions amb tercers, etc., la relació amb l'Administració Tributària: resposta a requeriments, assessorament a inspeccions, tràmits, i d'altres, i defensa jurídica davant els òrgans administratius i judicials"
+      ],
+      "items": [
+        "Impost sobre la renda i el patrimoni de les persones físiques",
+        "Impost sobre societats",
+        "Impost sobre el valor afegit",
+        "Tramitació i seguiment dels règims en estimació directa simplificada i mòduls",
+        "Pagaments fraccionats i retencions de lloguers",
+        "Impost sobre activitats econòmiques i altres tributs locals",
+        "Impost sobre transmissions patrimonials",
+        "Impost sobre successions i donacions",
+        "Inspeccions fiscals, recursos i reclamacions",
+        "Requeriments i ajornaments"
+      ]
+    },
+    {
+      "title": "Comptable",
+      "summary": "Comptabilitat ajustada a la normativa, des de la posada en marxa fins al tancament anual i el dipòsit de comptes.",
+      "paragraphs": [
+        "L'assessorem perquè tingui una comptabilitat adaptada a les seves necessitats i que compleixi les normes legals vigents.",
+        "Som a prop de les noves empreses i d'aquelles que volen fer realitat una gestió comptable per primera vegada; som al seu costat per fer la posada en marxa, i fins i tot per ajudar-lo a la formació del personal. Un cop fet aquest primer pas, estem sempre a la seva disposició per resoldre dubtes, fer comprovacions periòdiques i estudis econòmics i financers. Oferim l'assessorament en el tancament anual de comptes i l'elaboració de la memòria i els balanços per dipositar al Registre Mercantil.",
+        "Si vostè busca l'acompliment d'unes obligacions fiscals, en el nostre despatx li podem oferir la confecció dels registres fiscals necessaris segons la normativa de cada moment. Només cal que ens lliuri les factures, la resta és cosa nostra. Si la seva empresa necessita una comptabilitat ajustada a la normativa mercantil, la nostra feina inclou totes les anotacions per arribar a obtenir la imatge fidel del patrimoni de l'empresa i l' elaboració posterior de la memòria i els balanços per dipositar al Registre Mercantil."
+      ],
+      "items": [
+        "Assessorament general en matèria comptable",
+        "Planificació i inici de comptabilitats",
+        "Comptabilitat d'empreses en el règim d'estimació directa",
+        "Comptabilitat de societats",
+        "Confecció dels llibres de comptabilitat",
+        "Presentació i tramitació per a la legalització dels llibres oficials de la comptabilitat",
+        "Informes tècnics comprables: estudi de ratis, valoració d'empreses, actualitzacions de balanços, etc."
+      ]
+    },
+    {
+      "title": "Mercantil",
+      "summary": "Constitució de societats, contractes mercantils i tots els canvis de la vida societària.",
+      "paragraphs": [
+        "Aquest departament es dedica a l'estudi per a la constitució i legalització de tot tipus de societats, contractes mercantils i totes les possibles adaptacions o canvis que es produeixin sobre la vida societària."
+      ],
+      "items": [
+        "Constitució de Societats. ( Cerca i sol·licitud de denominacions socials, Constitució de Societats Civils i Comunitats de Bens, Dissolució de Societats)",
+        "Actuacions en societats constituïdes. (Canvi de domicili, Transformació SA / SL, - Augment Capital, Disminució Capital, Modificació de l'objecte social)",
+        "Contractes mercantils. (Confecció de contractes d'arrendament de Mobles i Immobles, Confecció de contractes de compravenda, Confecció d'altres contractes)",
+        "Comptes anuals"
+      ]
+    },
+    {
+      "title": "Assegurances",
+      "summary": "Cobertura dels riscos de l'empresa i del particular, amb assessorament sobre assegurances i inversions.",
+      "paragraphs": [
+        "Gestiona la cobertura dels riscos inherents a l'empresari o al particular, i assessora sobre les assegurances i inversions més adequades, per tal de gaudir de la millor cobertura possible i el major estalvi en el producte contractat."
+      ],
+      "items": [
+        "Multirisc empresarial",
+        "Multirisc de comerços, indústries i oficines",
+        "Multirisc de la llar i comunitats",
+        "Responsabilitat civil",
+        "Vehicles industrials",
+        "Vehicles comercials",
+        "Turismes",
+        "Jubilació",
+        "Protecció jurídica",
+        "Subsidis",
+        "Vida",
+        "Pensions",
+        "Assistència i hospitalització"
+      ]
+    },
+    {
+      "title": "Gestió",
+      "summary": "Tràmits i certificats davant els organismes oficials, incloses herències, donacions, patents i marques.",
+      "paragraphs": [
+        "Profundament implicat amb la resta de departaments, sobretot en la representació davant dels organismes oficials i davant d'altres entitats, aquest departament fa de pont amb tots els altres dels despatx, i els ajuda en la tramitació dels diversos documents."
+      ],
+      "items": [
+        "Certificat de registres civils",
+        "Certificat d'últimes voluntats",
+        "Certificat de denominació de societats",
+        "Patents i marques",
+        "Assessorament i tràmit d'herències i donacions",
+        "Consultes i tràmits a diferents organismes oficials"
+      ]
+    },
+    {
+      "title": "Jurídic",
+      "summary": "Defensa i mediació en dret civil, mercantil, penal, administratiu, laboral i tributari.",
+      "paragraphs": [
+        "L'alt nivell d'especialització jurídica de MRS Assessors ha comportat a la consecució d'una altíssima taxa d'èxit davant les administracions i tribunals, sense oblidar el nostre important tarannà mediador.",
+        "Àrees d'especialització jurídica:"
+      ],
+      "items": [
+        "Dret Civil",
+        "Dret Mercantil",
+        "Dret Penal",
+        "Dret Administratiu (incloent Dret Urbanístic i Dret de la Funció Pública)",
+        "Dret Laboral",
+        "Dret Financer i Tributari"
+      ]
+    },
+    {
+      "title": "Immobiliari",
+      "summary": "Administració de comunitats i finques, contractes de lloguer i intermediació immobiliària.",
+      "paragraphs": [],
+      "items": [
+        "Administració de Comunitats de Propietaris i Urbanitzacions",
+        "Formalització de contractes",
+        "Registre de contractes, constitució i dipòsit de fiances",
+        "Emissió i cobrament de rebuts de lloguer",
+        "Reclamació d’impagats",
+        "Assegurança de la finca",
+        "Aplicació d'augments i repercussions a arrendataris",
+        "Recerca i selecció de llogaters",
+        "Intermediació immobiliària",
+        "Informes"
+      ]
+    },
+    {
+      "title": "Financer",
+      "summary": "Hipoteques i préstecs personals.",
+      "paragraphs": [],
+      "items": [
+        "Hipoteques",
+        "Préstecs personals"
+      ]
+    }
+  ],
   "partner": "Soci",
   "founder": "Soci Fundador",
   "ripaltaBio": "Llicenciat en Dret per la Universidad de Navarra&&Màster en Tributació i Assessoria Fiscal&&Tècnic en Comptabilitat i Anàlisi Econòmic-Financer per la Escuela Superior de Investigación y Técnicas Empresariales&&Gestor Administratiu Col·legiat COGAC Nº 3116&&Administrador de Finques Col·legiat CAFGI nº 729&&Agent de la Propietat Immobiliària Girona Col·legiat nº 942&&E-mail: rafael@mrsassessors.com",
   "martinezBio": "Llicenciat en Dret per la Universidad de Navarra&&Màster en Tributació i Assessoria Fiscal&&Diploma d'Estudis Avançats en Dret Financer i Tributari&&Professor de Dret Tributari Universitat de Girona&&Assessor Tributari en diferents ens locals, i advocat especialista en la jurisdicció contenciós administrativa&&E-mail: sebastian@mrsassessors.com",
   "saisBio": "Llicenciat en Dret per la UNED&&Especialitzat en assessorament i defensa jurídica civil, laboral, i administrativa, especialment en matèria urbanística.&&Assessor urbanístic en diferenes ens locals&&E-mail: jordi@mrsassessors.com",
-  "gilBio": "Llicenciat en Dret per la Universitat Pompeu Fabra&&Màster en Advocacia por la Universitat de Girona&&Postgrau en Comunicació Política i Institucional per l'Institut de Ciències Polítiques i Socials (UAB))&&Diploma de especialització en el sector immobiliari AICAT per la Fundació Universitat de Girona i el Col·legi d'Agents de la Propietat Immobiliària de Girona&&Curs “Pràctica Administrativa y Processal Laboral” pel Centro de Estudios Financieros&&Curs monogràfic “Comunitats de propietaris i administradors de finques” pel el Centro de Estudios Financieros&&E-mail: juridic@mrsassessors.com",
-  "sendEmailBtn": "Envia'ns un email",
-  "office1": "Assessoria Comptable, Fiscal, Laboral, Jurídica i Mercantil.",
-  "office2": "Assessoria Immobiliària, Administració de Finques, Gestoria i Assegurances.",
-  "office3": "Assessoria Jurídica, Mercantil i Tributaria."
+  "office1": "Assessoria Comptable, Fiscal, Laboral, Jurídica i Mercantil. Gestoria i Assegurances.",
+  "office2": "Assessoria Immobiliària i Administració de Finques."
 }

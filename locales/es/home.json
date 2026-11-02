@@ -1,45 +1,172 @@
 {
   "language": "es",
-  "title": "Abogados y Consultores",
-  "subtitle": "Especialistas en Función Pública y Derecho Administrativo",
-  "body1": "El grupo MRS Assessors tiene más de 20 años de experiencia prestando asesoramiento jurídico, fiscal y tributario, contable, laboral, inmobiliario y de seguros en Lloret de Mar y Girona para empresas, particulares y administraciones públicas.",
-  "body2": "Somos un equipo humano que trabaja bajo un concepto de cliente integral, es decir, una gestión profesional global a medida del cliente que nos permite establecer una relación personalizada y cercana con el cliente, y conseguir a la vez una unidad de criterio y de gestión, mediante la coordinación y la colaboración de todos los departamentos.",
+  "heroStatement": "Abogados y consultores en Lloret de Mar desde hace más de veinte años",
+  "heroSubline": "Especialistas en función pública y derecho administrativo, con asesoramiento jurídico, fiscal, contable y laboral para empresas, particulares y administraciones.",
+  "intro": "Desde hace más de veinte años, el grupo MRS Assessors asesora a empresas, particulares y administraciones públicas de Lloret de Mar y Girona en materia jurídica, fiscal, contable, laboral, inmobiliaria y de seguros. Trabajamos bajo un concepto de cliente integral: una gestión global y cercana, con todos los departamentos coordinados.",
+  "firmLink": "Conoce la Firma",
   "work": "Práctica",
-  "tab2Title": "Fiscal i Tributario",
-  "tab3Title": "Contable",
-  "tab5Title": "Seguros",
-  "tab6Title": "Gestión",
-  "tab7Title": "Jurídico",
-  "tab8Title": "Inmobiliario",
-  "tab9Title": "Financiero",
-  "tab1Content": "El departamento laboral ofrece un asesoramiento global. No pensamos solamente en la confección de unes nóminas y unas liquidaciones a la Seguridad Social, sino también en las relaciones laborales, reuniones de empresa, auditorias laborales, informes de despido, etc. Asesoramos en las relaciones laborales y en las gestiones relativas a la relación de la empresa con la administración pública, de acuerdo con las disposiciones legales vigentes, en el marco de la continua modificación de la legislación laboral, y la evolución constante de los convenios colectivos y de las diferentes obligaciones formales.",
-  "tab2Content1": "En los últimos años las normativas fiscales y contables se han ido acercando, y por tanto, no podemos entender un asesoramiento fiscal desligado de las acciones económicas diarias de la empresa. Y si rellenar bien unos documentos para presentar a la Administración Tributaria es importante, más lo es que estos documentos se ’ajusten a la realidad tributaría de la empresa. El asesoramiento y estudio previo de cualquier operación económica son ahora muy importantes, ya que, como dice el refrán, \"vale más curarse en salud\".",
-  "tab2Content2": "Nuestro asesoramiento se personaliza según el tipo de empresa y su calificación fiscal, y contempla el asesoramiento, el seguimiento y control de los impuestos, la confección de los impresos: IVA, renta, sociedades, sucesiones y donaciones, operaciones con terceros, etc., la relación con la Administración Tributaria: respuesta a requerimientos, asesoramiento en inspecciones, trámites, y defensa jurídica ante los órganos administrativos y judiciales.",
-  "tab3Content1": "Le asesoramos para que tenga una contabilidad adaptada a sus necesidades y que cumpla las normas legales vigentes.",
-  "tab3Content2": "Estamos cerca de las nuevas empresas y de aquellas que quieren hacer realidad una gestión contable por primera vez; estamos a su lado para hacer la puesta en marcha, y para ayudarlos a la formación del personal. Una vez efectuado este primer paso, estemos siempre a su disposición para resolver dudas, hacer comprobaciones periódicas y estudios económicos y financieros. Ofrecemos asesoramiento en el cierre anual de cuenta y la elaboración de la memoria y los balances para depositar en el Registro Mercantil.",
-  "tab3Content3": "Si usted busca el cumplimiento de unas obligaciones fiscales, en MRS Assessors le podemos ofrecer la confección de los registros fiscales necesarios según la normativa vigente en casda momento. Solo es necesario que nos facilite las facturas, el resto es cosa nuestra. Si su empresa necesita una contabilidad ajustada a la normativa mercantil, nuestro trabajo incluye todas las anotaciones para llegar a obtener la imagen fiel del patrimonio de la empresa y la elaboración posterior de la memoria y de los balances.",
-  "tab4Content": "Este departamento se dedica al estudio de la constitución y legalización de todo tipo de sociedades, contratos mercantiles y todas las posibles adaptaciones o cambios que se produzcan sobre la vida societaria.",
-  "tab5Content": "Gestiona la cobertura de los riesgos inherentes al empresario o al particular, y asesora sobre los seguros e inversiones más adecuadas, para disfrutar de la mejor cobertura posible y el mayor ahorro en el producto contratado.",
-  "tab6Content": "Profundamente interrelacionado con el resto de departamentos, sobretodo en la representación ante los organismos oficiales y ante las demás entidades, este departamento hace de puente con todos los demás del despacho, y los ayuda en la tramitación de los diversos documentos.",
-  "tab7Content1": "El alto nivel de especialización jurídica de MRS Assessors ha conllevado a la consecución de una altísima tasa de éxito ante las Administraciones y Tribunales, sin olvidar nuestro importante talante mediador.",
-  "tab7Content2": "Áreas de especialización jurídica:",
-  "tab1List": "Altas iniciales de empresas&&Alta de centros de trabajo&&Inscripciones y altas de trabajadores&&Contratos y prórrogas&&Gestión de nóminas (TC1 y TC2)&&Incapacidad temporal, invalidez y jubilaciones&&Contenciosos labborales CMAC&&Inspecciones laborales, recursos y reclamaciones&&Prevención de riesgos laborales&&Conexión de la red con la tesorería de la Seguridad Social&&Trabajadores autónomos. Altas, bajas y prestaciones&&Base de datos de jurisprudencia y convenios&&Regímenes especiales (hogar, agrario, ...)&&Asesoramiento y consultas",
-  "tab2List": "Impuestos sobre la renta y el patrimonio de las personas físicas&&Impuestos sobre sociedades&&Impuesto sobre el valor añadido&&Tramitación y seguimiento de los regimenes en estimación direcrta simplificada y módulos&&Pagos fraccionados y retenciones de alquileres&&Impuesto sobre actividades económicas y otros tributos locales&&Impuesto sobre transmisiones patrimoniales&&Impuesto sobre sucesiones y donaciones&&Inspecciones fiscales, recursos y reclamaciones&&Requerimientos y aplazamientos",
-  "tab3List": "Asesoramiento general en materia contable&&Planificación y inicio de contabilidades&&Contabilidad de empresas en el régimen de estimación directa&&Contabilidad de sociedades&&Confección de los libros de Contabilidad&&Presentación y tramitación para la legalización de los libros oficiales de la Contabilidad&&Informes técnicos comparables: estudio de ratios, valoración de empresas, actualizaciones de balances, etc.",
-  "tab4List": "Constitución de Sociedades. ( Búsqueda y solicitud de denominaciones sociales, Constitución de Sociedades Civiles y Comunidades de Bienes, Disolución de Sociedades)&&Actuaciones en sociedades constituidas. (Canbio de domicilio, Transformación SA / SL, - Aumento Capital, Disminución Capital, Modificación del objeto social)&&Contratos mercantiles. (Confección de contratos de arrendamiento de Muebles e Inmuebles, Confección de contratos de compraventa, Confección de otros contratos)&&Cuentas anuales",
-  "tab5List": "Multiriesgo empresarial&&Multiriesgo de comercios, industrias y oficinas&&Multiriesgo de hogar y comunidades&&Responsabilidad civil&&Vehículos industriales&&Vehículos comerciales&&Turismo&&Jubilación&&Protección jurídica&&Subsidios&&Vida&&Pensiones&&Accidentes&&Asistencia y hospitalización",
-  "tab6List": "Certificado de registros civiles&&Certificado de últimas voluntades&&Certificado de denominación de sociedades&&Patentes y marcas&&Asesoramiento y tramitación de herencias y donaciones&&Asesoramiento y tramitación de compraventa y cancelación de hipotecas&&Consultas y trámites en diferentes organismos oficiales",
-  "tab7List": "Derecho Civil&&Derecho Mercantil&&Derecho Penal&&Derecho Administrativo (incluyendo Derecho Urbanístico y Derecho de la Función Pública)&&Derecho Laboral&&Derecho Financiero y Tributario",
-  "tab8List": "Administración de Comunidades de Propietarios y Urbanizaciones&&Formalización de contratos&&Registro de contratos, constitución y deposito de fianzas&&Emisión y cobro de recibos de alquiler&&Reclamación de impagados&&Seguro de la finca&&Aplicación de incrementos y repercusiones a arrendatarios&&Búsqueda y selección de arrendatarios&&Intermediación inmobiliaria&&Informes",
-  "tab9List": "Hipotecas&&Préstamos personales",
+  "practiceAreas": [
+    {
+      "title": "Laboral",
+      "summary": "Nóminas, contratos y relaciones laborales, con representación ante la Seguridad Social y la Inspección de Trabajo.",
+      "paragraphs": [
+        "El departamento laboral ofrece un asesoramiento global. No pensamos solamente en la confección de unes nóminas y unas liquidaciones a la Seguridad Social, sino también en las relaciones laborales, reuniones de empresa, auditorias laborales, informes de despido, etc. Asesoramos en las relaciones laborales y en las gestiones relativas a la relación de la empresa con la administración pública, de acuerdo con las disposiciones legales vigentes, en el marco de la continua modificación de la legislación laboral, y la evolución constante de los convenios colectivos y de las diferentes obligaciones formales."
+      ],
+      "items": [
+        "Altas iniciales de empresas",
+        "Alta de centros de trabajo",
+        "Inscripciones y altas de trabajadores",
+        "Contratos y prórrogas",
+        "Gestión de nóminas (TC1 y TC2)",
+        "Incapacidad temporal, invalidez y jubilaciones",
+        "Contenciosos labborales CMAC",
+        "Inspecciones laborales, recursos y reclamaciones",
+        "Prevención de riesgos laborales",
+        "Conexión de la red con la tesorería de la Seguridad Social",
+        "Trabajadores autónomos. Altas, bajas y prestaciones",
+        "Base de datos de jurisprudencia y convenios",
+        "Regímenes especiales (hogar, agrario, ...)",
+        "Asesoramiento y consultas"
+      ]
+    },
+    {
+      "title": "Fiscal y Tributario",
+      "summary": "Planificación y presentación de impuestos, con asistencia en inspecciones y defensa ante la Administración Tributaria.",
+      "paragraphs": [
+        "En los últimos años las normativas fiscales y contables se han ido acercando, y por tanto, no podemos entender un asesoramiento fiscal desligado de las acciones económicas diarias de la empresa. Y si rellenar bien unos documentos para presentar a la Administración Tributaria es importante, más lo es que estos documentos se ’ajusten a la realidad tributaría de la empresa. El asesoramiento y estudio previo de cualquier operación económica son ahora muy importantes, ya que, como dice el refrán, \"vale más curarse en salud\".",
+        "Nuestro asesoramiento se personaliza según el tipo de empresa y su calificación fiscal, y contempla el asesoramiento, el seguimiento y control de los impuestos, la confección de los impresos: IVA, renta, sociedades, sucesiones y donaciones, operaciones con terceros, etc., la relación con la Administración Tributaria: respuesta a requerimientos, asesoramiento en inspecciones, trámites, y defensa jurídica ante los órganos administrativos y judiciales."
+      ],
+      "items": [
+        "Impuestos sobre la renta y el patrimonio de las personas físicas",
+        "Impuestos sobre sociedades",
+        "Impuesto sobre el valor añadido",
+        "Tramitación y seguimiento de los regimenes en estimación direcrta simplificada y módulos",
+        "Pagos fraccionados y retenciones de alquileres",
+        "Impuesto sobre actividades económicas y otros tributos locales",
+        "Impuesto sobre transmisiones patrimoniales",
+        "Impuesto sobre sucesiones y donaciones",
+        "Inspecciones fiscales, recursos y reclamaciones",
+        "Requerimientos y aplazamientos"
+      ]
+    },
+    {
+      "title": "Contable",
+      "summary": "Contabilidad ajustada a la normativa, desde la puesta en marcha hasta el cierre anual y el depósito de cuentas.",
+      "paragraphs": [
+        "Le asesoramos para que tenga una contabilidad adaptada a sus necesidades y que cumpla las normas legales vigentes.",
+        "Estamos cerca de las nuevas empresas y de aquellas que quieren hacer realidad una gestión contable por primera vez; estamos a su lado para hacer la puesta en marcha, y para ayudarlos a la formación del personal. Una vez efectuado este primer paso, estemos siempre a su disposición para resolver dudas, hacer comprobaciones periódicas y estudios económicos y financieros. Ofrecemos asesoramiento en el cierre anual de cuenta y la elaboración de la memoria y los balances para depositar en el Registro Mercantil.",
+        "Si usted busca el cumplimiento de unas obligaciones fiscales, en MRS Assessors le podemos ofrecer la confección de los registros fiscales necesarios según la normativa vigente en casda momento. Solo es necesario que nos facilite las facturas, el resto es cosa nuestra. Si su empresa necesita una contabilidad ajustada a la normativa mercantil, nuestro trabajo incluye todas las anotaciones para llegar a obtener la imagen fiel del patrimonio de la empresa y la elaboración posterior de la memoria y de los balances."
+      ],
+      "items": [
+        "Asesoramiento general en materia contable",
+        "Planificación y inicio de contabilidades",
+        "Contabilidad de empresas en el régimen de estimación directa",
+        "Contabilidad de sociedades",
+        "Confección de los libros de Contabilidad",
+        "Presentación y tramitación para la legalización de los libros oficiales de la Contabilidad",
+        "Informes técnicos comparables: estudio de ratios, valoración de empresas, actualizaciones de balances, etc."
+      ]
+    },
+    {
+      "title": "Mercantil",
+      "summary": "Constitución de sociedades, contratos mercantiles y todos los cambios de la vida societaria.",
+      "paragraphs": [
+        "Este departamento se dedica al estudio de la constitución y legalización de todo tipo de sociedades, contratos mercantiles y todas las posibles adaptaciones o cambios que se produzcan sobre la vida societaria."
+      ],
+      "items": [
+        "Constitución de Sociedades. ( Búsqueda y solicitud de denominaciones sociales, Constitución de Sociedades Civiles y Comunidades de Bienes, Disolución de Sociedades)",
+        "Actuaciones en sociedades constituidas. (Canbio de domicilio, Transformación SA / SL, - Aumento Capital, Disminución Capital, Modificación del objeto social)",
+        "Contratos mercantiles. (Confección de contratos de arrendamiento de Muebles e Inmuebles, Confección de contratos de compraventa, Confección de otros contratos)",
+        "Cuentas anuales"
+      ]
+    },
+    {
+      "title": "Seguros",
+      "summary": "Cobertura de los riesgos de la empresa y del particular, con asesoramiento sobre seguros e inversiones.",
+      "paragraphs": [
+        "Gestiona la cobertura de los riesgos inherentes al empresario o al particular, y asesora sobre los seguros e inversiones más adecuadas, para disfrutar de la mejor cobertura posible y el mayor ahorro en el producto contratado."
+      ],
+      "items": [
+        "Multiriesgo empresarial",
+        "Multiriesgo de comercios, industrias y oficinas",
+        "Multiriesgo de hogar y comunidades",
+        "Responsabilidad civil",
+        "Vehículos industriales",
+        "Vehículos comerciales",
+        "Turismo",
+        "Jubilación",
+        "Protección jurídica",
+        "Subsidios",
+        "Vida",
+        "Pensiones",
+        "Accidentes",
+        "Asistencia y hospitalización"
+      ]
+    },
+    {
+      "title": "Gestión",
+      "summary": "Trámites y certificados ante los organismos oficiales, incluidas herencias, donaciones, patentes y marcas.",
+      "paragraphs": [
+        "Profundamente interrelacionado con el resto de departamentos, sobretodo en la representación ante los organismos oficiales y ante las demás entidades, este departamento hace de puente con todos los demás del despacho, y los ayuda en la tramitación de los diversos documentos."
+      ],
+      "items": [
+        "Certificado de registros civiles",
+        "Certificado de últimas voluntades",
+        "Certificado de denominación de sociedades",
+        "Patentes y marcas",
+        "Asesoramiento y tramitación de herencias y donaciones",
+        "Asesoramiento y tramitación de compraventa y cancelación de hipotecas",
+        "Consultas y trámites en diferentes organismos oficiales"
+      ]
+    },
+    {
+      "title": "Jurídico",
+      "summary": "Defensa y mediación en derecho civil, mercantil, penal, administrativo, laboral y tributario.",
+      "paragraphs": [
+        "El alto nivel de especialización jurídica de MRS Assessors ha conllevado a la consecución de una altísima tasa de éxito ante las Administraciones y Tribunales, sin olvidar nuestro importante talante mediador.",
+        "Áreas de especialización jurídica:"
+      ],
+      "items": [
+        "Derecho Civil",
+        "Derecho Mercantil",
+        "Derecho Penal",
+        "Derecho Administrativo (incluyendo Derecho Urbanístico y Derecho de la Función Pública)",
+        "Derecho Laboral",
+        "Derecho Financiero y Tributario"
+      ]
+    },
+    {
+      "title": "Inmobiliario",
+      "summary": "Administración de comunidades y fincas, contratos de alquiler e intermediación inmobiliaria.",
+      "paragraphs": [],
+      "items": [
+        "Administración de Comunidades de Propietarios y Urbanizaciones",
+        "Formalización de contratos",
+        "Registro de contratos, constitución y deposito de fianzas",
+        "Emisión y cobro de recibos de alquiler",
+        "Reclamación de impagados",
+        "Seguro de la finca",
+        "Aplicación de incrementos y repercusiones a arrendatarios",
+        "Búsqueda y selección de arrendatarios",
+        "Intermediación inmobiliaria",
+        "Informes"
+      ]
+    },
+    {
+      "title": "Financiero",
+      "summary": "Hipotecas y préstamos personales.",
+      "paragraphs": [],
+      "items": [
+        "Hipotecas",
+        "Préstamos personales"
+      ]
+    }
+  ],
   "partner": "Socio",
   "founder": "Socio Fundador",
   "ripaltaBio": "Licenciado en Derecho por la Universidad de Navarra&&Master en Tributación y Asesoría Fiscal&&Técnico en Contabilidad y Análisis Económico-Financiero por la Escuela Superior de Investigación y Técnicas Empresariales&&Gestor Administrativo Colegiado COGAC Nº 3116&&Administrador de Fincas Colegiado CAFGI nº 729&&Agente de la Propiedad Inmobiliaria Girona Colegiado nº 942&&E-mail: rafael@mrsassessors.com",
   "martinezBio": "Licenciado en Derecho por la Universidad de Navarra&&Master en Tributación y Asesoría Fiscal&&Diploma de Estudios Avanzados en Derecho Financiero y Tributario&&Profesor de Derecho Tributario Universidad de Girona&&Asesor Tributario en diferentes entes locales y abogado especialista en la jurisdicción contencioso administrativa&&E-mail: sebastian@mrsassessors.com",
   "saisBio": "Licenciado en Derecho por la UNED&&Especializado en asesoramiento y defensa jurídica civil, laboral y administrativo, especialmente en materia urbanística&&Asesor urbanístico en diferentes entes locales&&E-mail: jordi@mrsassessors.com",
-  "gilBio": "Licenciado en Derecho por la Universidad Pompeu Fabra&&Master en Abogacía por la Universidad de Girona&&Postgrado en Comunicación Política e Institucional por el Instituto de Ciencias Políticas y Sociales (UAB)&&Diploma de especialización en el sector inmobiliario AICAT por la Fundación Universidad de Girona y el Colegio de Agentes de la Propiedad Inmobiliaria de Girona&&Curso “Practica Administrativa y Procesal Laboral” por el Centro de Estudios Financieros&&Curso monográfico “Comunidades de propietarios y administradores de fincas” por el Centro de Estudios Financieros&&E-mail: juridic@mrsassessors.com",
-  "sendEmailBtn": "Envianos un email",
   "office1": "Asesoría Contable, Fiscal, Laboral, Jurídica y Mercantil. Gestoría y Seguros.",
-  "office2": "Asesoría Inmobiliaria y Administración de Fincas.",
-  "office3": "Asesoría Fiscal, Jurídica y Mercantil."
+  "office2": "Asesoría Inmobiliaria y Administración de Fincas."
 }

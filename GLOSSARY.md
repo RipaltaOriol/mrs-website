@@ -10,6 +10,7 @@ areas and its people to prospective and existing clients in Catalan and Spanish.
 
 **Practice Area**:
 One of the nine fields of work the firm advises in, such as Laboral or Mercantil.
+Each carries a one-line summary, body copy and a list of the work it covers.
 _Avoid_: Service, tab, department, area of expertise
 
 **Department**:
@@ -24,7 +25,8 @@ _Avoid_: Company, about, agency, practice
 
 **Office**:
 One of the firm's two physical locations, both in Lloret de Mar, each with its own
-address and telephone number.
+address and a link out to a map application. The firm's email address is not
+attributed to an Office; it reaches the firm.
 _Avoid_: Branch, location, headquarters, seat
 
 ### People
@@ -53,6 +55,16 @@ _Avoid_: Staff, personnel, people
 A published piece of legal or tax commentary. Each Article exists independently
 per Locale rather than as one piece with translations.
 _Avoid_: Blog post, news item, post, entry
+
+**Entry**:
+Contentful's word for a stored record of any content type. Used only in the
+content adapter under `lib/content/`; past it there are only Articles, Employees
+and Partners.
+
+**Notícies**:
+The section of the site that lists the Articles of one Locale, newest first.
+Rendered in Spanish as "Noticias".
+_Avoid_: Blog, Actualitat, news feed
 
 **Locale**:
 One of the two languages the site is published in: Catalan, the default, and Spanish.
