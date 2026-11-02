@@ -292,3 +292,75 @@ test('every committed Practice Area carries a one-line summary and a list', () =
     }
   }
 })
+
+const CA_SLUG = ARTICLE_ENTRIES[0].fields.slug as string
+
+function caArticleWith(fields: Record<string, unknown>) {
+  const [ca] = ARTICLE_ENTRIES
+  return getArticle('ca', CA_SLUG, sourceOf({ mrsBlog: [{ ...ca, fields: { ...ca.fields, ...fields } }] }))
+}
+
+test('an Article is described by its preview', async () => {
+  const article = await getArticle('ca', CA_SLUG, articles)
+  expect(article?.description).toBe('TS Sentencia num. 553/2023 de 5 mayo')
+})
+
+test('an Article with no preview is described by the opening of its body', async () => {
+  const article = await caArticleWith({ textPreview: undefined })
+  expect(article?.preview).toBeNull()
+  expect(article?.description).toBe('El TS declara no haber lugar.')
+})
+
+const paragraph = (value: string) => ({
+  nodeType: 'paragraph',
+  data: {},
+  content: [{ nodeType: 'text', data: {}, marks: [], value }],
+})
+
+test('a long body is cut at a word boundary to fit a description', async () => {
+  const sentence = 'La Llei 12/2023 pel dret a l’habitatge canvia les regles del lloguer per als grans tenidors.'
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: { nodeType: 'document', data: {}, content: [paragraph(sentence), paragraph(sentence)] },
+  })
+
+  expect(article?.description).toBe(
+    'La Llei 12/2023 pel dret a l’habitatge canvia les regles del lloguer per als grans tenidors. La Llei 12/2023 pel dret a l’habitatge canvia les regles del…',
+  )
+  expect(article?.description.length).toBeLessThanOrEqual(160)
+})
+
+test('a blank preview counts as no preview', async () => {
+  const article = await caArticleWith({ textPreview: '   ' })
+  expect(article?.preview).toBeNull()
+  expect(article?.description).toBe('El TS declara no haber lugar.')
+})
+
+test('the items of a list opening the body stay separate words', async () => {
+  const listItem = (value: string) => ({ nodeType: 'list-item', data: {}, content: [paragraph(value)] })
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: {
+      nodeType: 'document',
+      data: {},
+      content: [{ nodeType: 'unordered-list', data: {}, content: [listItem('Primer punt'), listItem('Segon punt')] }],
+    },
+  })
+  expect(article?.description).toBe('Primer punt Segon punt')
+})
+
+test('a body whose opening word overruns a description is cut inside that word', async () => {
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: { nodeType: 'document', data: {}, content: [paragraph(`${'x'.repeat(200)} final`)] },
+  })
+  expect(article?.description).toBe(`${'x'.repeat(159)}…`)
+})
+
+test('an Article with no preview and no text in its body is described by its title', async () => {
+  const article = await caArticleWith({
+    textPreview: undefined,
+    method: { nodeType: 'document', data: {}, content: [{ nodeType: 'hr', data: {}, content: [] }] },
+  })
+  expect(article?.description).toBe("Dissolució matrimonial procedeix l'exempció per reinversió")
+})

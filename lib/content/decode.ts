@@ -51,10 +51,11 @@ export class Fields {
     return value.trim()
   }
 
-  /** An optional non-blank string. */
+  /** An optional non-blank string; a blank one reads as absent. */
   optionalText(field: string): string | null {
     const value = this.entry.fields[field]
     if (value === undefined || value === null) return null
+    if (typeof value === 'string' && value.trim() === '') return null
     return this.text(field)
   }
 

@@ -91,7 +91,7 @@ function assetUrl(url: string): string {
 
 /** An Article as a BlogPosting written and published by the firm. */
 export function articleMarkup(
-  article: Pick<Article, 'slug' | 'title' | 'published' | 'preview' | 'image'>,
+  article: Pick<Article, 'slug' | 'title' | 'published' | 'description' | 'image'>,
   locale: Locale,
 ): JsonLd {
   const url = absoluteUrl(`/blogs/${article.slug}`, locale)
@@ -99,7 +99,7 @@ export function articleMarkup(
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: article.title,
-    ...(article.preview ? { description: article.preview } : {}),
+    description: article.description,
     datePublished: article.published.toISOString(),
     image: assetUrl(article.image.url),
     inLanguage: locale,

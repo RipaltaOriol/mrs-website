@@ -113,7 +113,7 @@ test('an Article is marked up with its own headline, date, image and the firm as
       slug: 'nova-llei',
       title: 'La nova llei de l’habitatge',
       published: new Date('2024-03-05T00:00:00.000Z'),
-      preview: 'Què canvia per als propietaris.',
+      description: 'Què canvia per als propietaris.',
       image: { url: '//images.ctfassets.net/x/nova.jpg', width: 1200, height: 800, alt: '' },
     },
     'ca',

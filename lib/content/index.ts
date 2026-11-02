@@ -1,4 +1,4 @@
-import type { Document } from '@contentful/rich-text-types'
+import { INLINES, type Block, type Document, type Inline, type Text } from '@contentful/rich-text-types'
 import type { Locale } from '@/i18n/routing'
 import caHome from '@/locales/ca/home.json'
 import esHome from '@/locales/es/home.json'
@@ -72,8 +72,27 @@ export type ArticleSummary = {
 
 /** One published piece of commentary, in the single Locale it exists in. */
 export type Article = ArticleSummary & {
+  description: string
   image: ContentImage
   body: Document
+}
+
+const INLINE_TYPES: ReadonlySet<string> = new Set(Object.values(INLINES))
+
+function plainText(node: Block | Inline | Text): string {
+  if (node.nodeType === 'text') return (node as Text).value
+  const text = (node as Block | Inline).content.map(plainText).join('')
+  return INLINE_TYPES.has(node.nodeType) ? text : ` ${text} `
+}
+
+const DESCRIPTION_LIMIT = 160
+
+function excerpt(body: Document): string {
+  const text = body.content.map(plainText).join('').replace(/\s+/g, ' ').trim()
+  if (text.length <= DESCRIPTION_LIMIT) return text
+  const cut = text.slice(0, DESCRIPTION_LIMIT)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : DESCRIPTION_LIMIT - 1)}…`
 }
 
 function summary(fields: Fields): ArticleSummary {
@@ -108,10 +127,13 @@ export async function getArticle(
   )
   if (!found) return null
 
+  const article = summary(found)
+  const body = found.richText('method')
   return {
-    ...summary(found),
+    ...article,
+    description: article.preview ?? (excerpt(body) || article.title),
     image: found.image('featureImage'),
-    body: found.richText('method'),
+    body,
   }
 }
 

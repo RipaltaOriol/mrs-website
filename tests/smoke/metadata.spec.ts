@@ -134,6 +134,11 @@ for (const index of ['/blogs', '/es/blogs']) {
 
     expect(metaContent(html, 'og:type')).toBe('article')
     expect(metaContent(html, 'og:title')).toBe(heading)
+    const description = metaContent(html, 'description')
+    expect(description?.trim()).toBeTruthy()
+    expect(metaContent(html, 'og:description')).toBe(description)
+    expect(metaContent(html, 'twitter:description')).toBe(description)
+    expect(article.description).toBe(description)
     const image = metaContent(html, 'og:image')!
     expect(local(image)).toContain(`${href}/opengraph-image`)
     await expectImage(request, image)
