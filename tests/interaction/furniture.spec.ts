@@ -134,3 +134,18 @@ for (const viewport of [FOLDED_PHONE, PHONE, TABLET, DESKTOP]) {
     }
   })
 }
+
+for (const path of ['/', '/es/about']) {
+  test.describe(`${path} once loaded`, () => {
+    test('has fetched nothing from another origin and reported the visit nowhere', async ({ page, baseURL }) => {
+      const requested: URL[] = []
+      page.on('request', (request) => requested.push(new URL(request.url())))
+
+      await page.goto(path, { waitUntil: 'networkidle' })
+
+      const site = new URL(baseURL!).origin
+      const tracking = requested.filter(({ origin, pathname }) => origin !== site || pathname.startsWith('/_vercel/'))
+      expect(tracking.map(String)).toEqual([])
+    })
+  })
+}
