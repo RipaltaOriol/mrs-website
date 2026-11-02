@@ -61,11 +61,10 @@ export async function pageMetadata(page: MetaPage, locale: Locale): Promise<Meta
 
 /** Title, description, canonical URL and social card for an Article. */
 export function articleMetadata(
-  article: { slug: string; title: string; preview: string | null; published: Date },
+  article: { slug: string; title: string; description: string; published: Date },
   locale: Locale,
 ): Metadata {
-  const { title, slug, preview, published } = article
-  const description = preview ?? undefined
+  const { title, slug, description, published } = article
   const canonical = getPathname({ href: `/blogs/${slug}`, locale })
 
   return {

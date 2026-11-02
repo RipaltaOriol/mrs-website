@@ -1,4 +1,4 @@
-import type { Document } from '@contentful/rich-text-types'
+import type { Block, Document, Inline, Text } from '@contentful/rich-text-types'
 import type { Locale } from '@/i18n/routing'
 import caHome from '@/locales/ca/home.json'
 import esHome from '@/locales/es/home.json'
@@ -72,8 +72,23 @@ export type ArticleSummary = {
 
 /** One published piece of commentary, in the single Locale it exists in. */
 export type Article = ArticleSummary & {
+  description: string
   image: ContentImage
   body: Document
+}
+
+function plainText(node: Block | Inline | Text): string {
+  if (node.nodeType === 'text') return (node as Text).value
+  return (node as Block | Inline).content.map(plainText).join('')
+}
+
+const DESCRIPTION_LIMIT = 160
+
+function opening(body: Document): string {
+  const text = body.content.map(plainText).join(' ').replace(/\s+/g, ' ').trim()
+  if (text.length <= DESCRIPTION_LIMIT) return text
+  const cut = text.slice(0, DESCRIPTION_LIMIT)
+  return `${cut.slice(0, cut.lastIndexOf(' '))}…`
 }
 
 function summary(fields: Fields): ArticleSummary {
@@ -108,10 +123,13 @@ export async function getArticle(
   )
   if (!found) return null
 
+  const article = summary(found)
+  const body = found.richText('method')
   return {
-    ...summary(found),
+    ...article,
+    description: article.preview ?? opening(body),
     image: found.image('featureImage'),
-    body: found.richText('method'),
+    body,
   }
 }
 
