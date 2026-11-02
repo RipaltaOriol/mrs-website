@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { getPathname } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
 import type { Article } from './content'
+import { PAGES, type Page } from './pages'
 import { SITE_NAME, SITE_URL } from './site'
 
 export { SITE_NAME }
@@ -32,22 +33,17 @@ export function localeAlternates(page: string, locale: Locale): Metadata['altern
   }
 }
 
-/** The pages whose title and description live in the `meta` messages. */
-export type MetaPage = 'home' | 'about' | 'blogs' | 'policy'
-
-const PATH: Record<MetaPage, string> = { home: '/', about: '/about', blogs: '/blogs', policy: '/policy' }
-
 /** Title, description, alternates and social card for a page in every Locale. */
-export async function pageMetadata(page: MetaPage, locale: Locale): Promise<Metadata> {
+export async function pageMetadata(page: Page, locale: Locale): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'meta' })
   const title = t(`${page}.title`)
   const description = t(`${page}.description`)
-  const url = getPathname({ href: PATH[page], locale })
+  const url = getPathname({ href: PAGES[page].path, locale })
 
   return {
     title: { absolute: `${title} — ${SITE_NAME}` },
     description,
-    alternates: localeAlternates(PATH[page], locale),
+    alternates: localeAlternates(PAGES[page].path, locale),
     openGraph: {
       title,
       description,

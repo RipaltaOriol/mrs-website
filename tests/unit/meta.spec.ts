@@ -3,8 +3,9 @@ import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { NAMESPACES } from '@/i18n/namespaces'
 import { routing } from '@/i18n/routing'
+import { PAGES as DECLARED } from '@/lib/pages'
 
-const PAGES = ['home', 'about', 'blogs', 'policy']
+const PAGES = Object.keys(DECLARED)
 
 type PageMeta = { title: string; description: string }
 

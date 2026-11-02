@@ -1,5 +1,6 @@
 import { expect, test, type APIRequestContext } from '@playwright/test'
 import { linksUnder, localeSwitchHref, region, styledBy } from './html'
+import { PAGE_PATHS } from './pages'
 
 const PORTAL = 'https://app.kabiku.es/login/?next=/'
 const EMAIL = 'administracio@mrsassessors.com'
@@ -9,7 +10,7 @@ const ADDRESSES = [
   'Passeig Jacint Verdaguer, núm. 8. 17310 Lloret de Mar',
 ]
 
-const PAGES = ['/', '/about', '/blogs', '/policy', '/es', '/es/about', '/es/blogs', '/es/policy']
+const PAGES = [...PAGE_PATHS.ca, ...PAGE_PATHS.es]
 
 for (const path of PAGES) {
   test.describe(`the footer on ${path}`, () => {

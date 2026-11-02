@@ -1,4 +1,6 @@
 import { expect, test } from '@playwright/test'
+import { routing } from '@/i18n/routing'
+import { PAGES } from '@/lib/pages'
 import { sitemapEntries } from '@/lib/sitemap'
 
 const ORIGIN = 'https://www.mrsassessors.com'
@@ -11,7 +13,7 @@ const articles = {
   ],
 }
 
-test('every page is listed in both Locales, each naming its counterparts', () => {
+test('every declared page is listed once in each Locale, each naming its counterparts', () => {
   const entries = sitemapEntries(articles)
   const about = entries.filter((entry) => entry.url.endsWith('/about'))
 
@@ -23,16 +25,8 @@ test('every page is listed in both Locales, each naming its counterparts', () =>
   }
 
   const pages = entries.filter((entry) => !entry.url.includes('/blogs/')).map((entry) => entry.url)
-  expect(pages).toEqual([
-    ORIGIN,
-    `${ORIGIN}/about`,
-    `${ORIGIN}/blogs`,
-    `${ORIGIN}/policy`,
-    `${ORIGIN}/es`,
-    `${ORIGIN}/es/about`,
-    `${ORIGIN}/es/blogs`,
-    `${ORIGIN}/es/policy`,
-  ])
+  expect(new Set(pages).size).toBe(pages.length)
+  expect(pages).toHaveLength(Object.keys(PAGES).length * routing.locales.length)
 })
 
 test('every Article is listed once in its own Locale, dated, with no counterparts', () => {

@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { routing, type Locale } from '@/i18n/routing'
+import { PAGES } from './pages'
 import { absoluteUrl } from './structured-data'
-
-const PAGES = ['/', '/about', '/blogs', '/policy']
 
 /** The Articles published in each Locale, as the sitemap needs them. */
 export type ArticlesByLocale = Record<Locale, Array<{ slug: string; published: Date }>>
@@ -15,7 +14,7 @@ export function sitemapEntries(articles: ArticlesByLocale): MetadataRoute.Sitema
   })
 
   const pages = routing.locales.flatMap((locale) =>
-    PAGES.map((page) => ({ url: absoluteUrl(page, locale), alternates: { languages: languages(page) } })),
+    Object.values(PAGES).map(({ path: page }) => ({ url: absoluteUrl(page, locale), alternates: { languages: languages(page) } })),
   )
   const perArticle = routing.locales.flatMap((locale) =>
     articles[locale].map(({ slug, published }) => ({

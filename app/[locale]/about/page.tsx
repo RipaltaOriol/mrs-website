@@ -6,6 +6,7 @@ import TreatedImage from '@/components/TreatedImage'
 import { IMAGERY } from '@/lib/imagery'
 import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
+import { pageTrail } from '@/lib/pages'
 import { breadcrumbs } from '@/lib/structured-data'
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
@@ -20,13 +21,7 @@ export default async function AboutPage(props: LocaleParams) {
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
       <StructuredData
-        data={breadcrumbs(
-          [
-            { name: common('home'), page: '/' },
-            { name: common('firm'), page: '/about' },
-          ],
-          locale,
-        )}
+        data={breadcrumbs(pageTrail('about', common), locale)}
       />
       <PageTitle title={common('firm')} />
 
