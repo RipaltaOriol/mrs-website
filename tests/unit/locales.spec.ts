@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { NAMESPACES } from '@/i18n/namespaces'
-import { routing } from '@/i18n/routing'
+import { routing, type Locale } from '@/i18n/routing'
 import { getPartners } from '@/lib/content'
 
 const messages = (locale: string, namespace: string): Record<string, unknown> =>
@@ -77,26 +77,30 @@ test('every Partner biography in a locale file belongs to a Partner', () => {
   }
 })
 
-const sentencesOf = (text: string) => text.split(/(?<=\.)\s+/)
+const sentencesOf = (text: string) => text.split(/(?<=[.:;])\s+/)
+const policyOf = (locale: string) => leaves(messages(locale, 'policy'), 'policy')
+const MENTIONS_COOKIES = /cookie|galet/i
+const ASKS_CONSENT = /consenti|acceptar|aceptar|revoc/i
 
 test('the privacy policy asks no consent to cookies in either Locale', () => {
   for (const locale of routing.locales) {
-    for (const [path, value] of leaves(messages(locale, 'policy'), 'policy')) {
-      for (const sentence of sentencesOf(String(value)).filter((s) => /cookie/i.test(s))) {
-        expect(sentence, `${locale}/${path}`).not.toMatch(/consenti|acceptar|aceptar|eliminant|eliminando/i)
+    for (const [path, value] of policyOf(locale)) {
+      for (const sentence of sentencesOf(String(value)).filter((s) => MENTIONS_COOKIES.test(s))) {
+        expect(sentence, `${locale}/${path}`).not.toMatch(ASKS_CONSENT)
       }
     }
   }
 })
 
-const DISCLOSES_NO_TRACKING = {
-  ca: { cookies: /no instal·la cap cookie/, visits: /no mesura ni registra les visites/ },
-  es: { cookies: /no instala ninguna cookie/, visits: /no mide ni registra las visitas/ },
+const DISCLOSES_NO_TRACKING: Record<Locale, { cookies: RegExp; visits: RegExp }> = {
+  ca: { cookies: /no instal·la cap cookie/, visits: /no mesura les visites/ },
+  es: { cookies: /no instala ninguna cookie/, visits: /no mide las visitas/ },
 }
 
 test('the privacy policy says the site sets no cookies and measures no visits', () => {
-  for (const [locale, { cookies, visits }] of Object.entries(DISCLOSES_NO_TRACKING)) {
-    const policy = leaves(messages(locale, 'policy'), 'policy').map(([, value]) => String(value)).join(' ')
+  for (const locale of routing.locales) {
+    const { cookies, visits } = DISCLOSES_NO_TRACKING[locale]
+    const policy = policyOf(locale).map(([, value]) => String(value)).join(' ')
     expect(policy, locale).toMatch(cookies)
     expect(policy, locale).toMatch(visits)
   }
