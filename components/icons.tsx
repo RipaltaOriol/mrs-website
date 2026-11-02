@@ -31,6 +31,12 @@ export const TelephoneIcon = (p: IconProps) => (
   </Icon>
 )
 
+export const MobilePhoneIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2Zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0Z" />
+  </Icon>
+)
+
 export const EnvelopeIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M.05 3.55A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.55L8 8.4.05 3.55ZM0 4.7v7.1l5.8-3.55L0 4.7Zm6.76 4.14L.2 12.86A2 2 0 0 0 2 14h12a2 2 0 0 0 1.8-1.14L9.24 8.84 8 9.6l-1.24-.76Zm3.44-.59L16 11.8V4.7l-5.8 3.55Z" />

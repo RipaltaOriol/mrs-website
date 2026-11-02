@@ -1,15 +1,20 @@
 import { expect, test } from '@playwright/test'
 import { EMAIL, formatTelephone, telephoneHref, TELEPHONES } from '@/lib/contact'
 
-test('the firm publishes two telephone numbers and one email address', () => {
-  expect(TELEPHONES).toEqual(['972371821', '972372240'])
+const numbers = TELEPHONES.map(({ number }) => number)
+
+test('the firm publishes a mobile, a landline and one email address', () => {
+  expect(TELEPHONES).toEqual([
+    { number: '618630099', kind: 'mobile' },
+    { number: '972371821', kind: 'landline' },
+  ])
   expect(EMAIL).toBe('administracio@mrsassessors.com')
 })
 
 test('a telephone number dials in international form', () => {
-  expect(TELEPHONES.map(telephoneHref)).toEqual(['tel:+34972371821', 'tel:+34972372240'])
+  expect(numbers.map(telephoneHref)).toEqual(['tel:+34618630099', 'tel:+34972371821'])
 })
 
 test('a telephone number reads in the grouping it is written in locally', () => {
-  expect(TELEPHONES.map(formatTelephone)).toEqual(['972 37 18 21', '972 37 22 40'])
+  expect(numbers.map(formatTelephone)).toEqual(['618 63 00 99', '972 37 18 21'])
 })

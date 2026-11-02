@@ -19,9 +19,9 @@ for (const path of PATHS) {
     test('offers every telephone number as a dialable link', async ({ request }) => {
       const dialable = anchors(await offices(request)).filter(({ href }) => href.startsWith('tel:'))
       expect(dialable.map(({ href, text }) => ({ href, text }))).toEqual(
-        TELEPHONES.map((telephone) => ({
-          href: telephoneHref(telephone),
-          text: formatTelephone(telephone),
+        TELEPHONES.map(({ number }) => ({
+          href: telephoneHref(number),
+          text: formatTelephone(number),
         })),
       )
     })

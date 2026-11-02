@@ -9,7 +9,7 @@ export type JsonLd = Record<string, unknown>
 
 const FIRM_ID = `${SITE_URL}/#firm`
 
-const FIRM_TELEPHONES = TELEPHONES.map((telephone) => telephoneHref(telephone).replace('tel:', ''))
+const FIRM_TELEPHONES = TELEPHONES.map(({ number }) => telephoneHref(number).replace('tel:', ''))
 
 const PROVINCE: Record<Locale, string> = { ca: 'Província de Girona', es: 'Provincia de Girona' }
 

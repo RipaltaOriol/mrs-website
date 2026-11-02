@@ -1,8 +1,16 @@
 /** The email address the firm takes enquiries on. */
 export const EMAIL = 'administracio@mrsassessors.com'
 
-/** The firm's telephone numbers, as the nine digits dialled nationally. */
-export const TELEPHONES = ['972371821', '972372240'] as const
+/** A firm telephone number, as the nine digits dialled nationally, and the kind of line it rings. */
+export type Telephone = {
+  number: string
+  kind: 'mobile' | 'landline'
+}
+
+export const TELEPHONES: readonly Telephone[] = [
+  { number: '618630099', kind: 'mobile' },
+  { number: '972371821', kind: 'landline' },
+]
 
 /** A telephone number as a dialable URL, in international form. */
 export function telephoneHref(telephone: string): string {
