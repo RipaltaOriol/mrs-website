@@ -56,6 +56,11 @@ A published piece of legal or tax commentary. Each Article exists independently
 per Locale rather than as one piece with translations.
 _Avoid_: Blog post, news item, post, entry
 
+**Entry**:
+Contentful's word for a stored record of any content type. Used only in the
+content adapter under `lib/content/`; past it there are only Articles, Employees
+and Partners.
+
 **Notícies**:
 The section of the site that lists the Articles of one Locale, newest first.
 Rendered in Spanish as "Noticias".
