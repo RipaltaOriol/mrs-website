@@ -18,14 +18,15 @@ for (const [path, { locale, department }] of Object.entries(TEAM_BY_PATH)) {
       expect(markup).not.toContain('background-image')
     })
 
-    test('opens with the Partners in order, each with a role and a full biography', async ({ request }) => {
+    test('opens with the Partners in order, each with a role, an email link and a full biography', async ({ request }) => {
       const partners = getPartners(locale)
       const blocks = headedBlocks(await team(request)).slice(0, partners.length)
 
       expect(blocks.map((block) => block.heading)).toEqual(partners.map((partner) => partner.name))
-      for (const [index, { role, biography }] of partners.entries()) {
+      for (const [index, { role, email, biography }] of partners.entries()) {
         const body = text(blocks[index].body)
         expect(body, partners[index].name).toContain(role)
+        expect(anchors(blocks[index].body), partners[index].name).toContainEqual({ href: `mailto:${email}`, text: email })
         for (const line of biography) expect(body, partners[index].name).toContain(line)
       }
     })
