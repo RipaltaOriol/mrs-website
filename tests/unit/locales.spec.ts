@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { NAMESPACES } from '@/i18n/namespaces'
-import { routing } from '@/i18n/routing'
+import { routing, type Locale } from '@/i18n/routing'
 import { getPartners } from '@/lib/content'
 
 const messages = (locale: string, namespace: string): Record<string, unknown> =>
@@ -74,5 +74,34 @@ test('every Partner biography in a locale file belongs to a Partner', () => {
       const { [key]: _, ...without } = home
       expect(() => getPartners(locale, without), `${locale}/home.${key}`).toThrow(key)
     }
+  }
+})
+
+const sentencesOf = (text: string) => text.split(/(?<=[.:;])\s+/)
+const policyOf = (locale: string) => leaves(messages(locale, 'policy'), 'policy')
+const MENTIONS_COOKIES = /cookie|galet/i
+const ASKS_CONSENT = /consenti|acceptar|aceptar|revoc/i
+
+test('the privacy policy asks no consent to cookies in either Locale', () => {
+  for (const locale of routing.locales) {
+    for (const [path, value] of policyOf(locale)) {
+      for (const sentence of sentencesOf(String(value)).filter((s) => MENTIONS_COOKIES.test(s))) {
+        expect(sentence, `${locale}/${path}`).not.toMatch(ASKS_CONSENT)
+      }
+    }
+  }
+})
+
+const DISCLOSES_NO_TRACKING: Record<Locale, { cookies: RegExp; visits: RegExp }> = {
+  ca: { cookies: /no instal·la cap cookie/, visits: /no mesura les visites/ },
+  es: { cookies: /no instala ninguna cookie/, visits: /no mide las visitas/ },
+}
+
+test('the privacy policy says the site sets no cookies and measures no visits', () => {
+  for (const locale of routing.locales) {
+    const { cookies, visits } = DISCLOSES_NO_TRACKING[locale]
+    const policy = policyOf(locale).map(([, value]) => String(value)).join(' ')
+    expect(policy, locale).toMatch(cookies)
+    expect(policy, locale).toMatch(visits)
   }
 })
