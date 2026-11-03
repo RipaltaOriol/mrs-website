@@ -10,7 +10,7 @@ import { pageTrail } from '@/lib/pages'
 import { breadcrumbs } from '@/lib/structured-data'
 import { Suspense } from 'react'
 import PrototypeSwitcher from '@/components/PrototypeSwitcher'
-import { VARIANTS, VariantA, VariantB, VariantC } from './_prototype/FirmVariants'
+import { VARIANTS, VariantA, VariantB, VariantC, VariantD } from './_prototype/FirmVariants'
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return pageMetadata('about', await pageLocale(props))
@@ -28,6 +28,14 @@ export default async function AboutPage(props: LocaleParams & { searchParams: Pr
     </Suspense>
   )
   const crumbs = <StructuredData data={breadcrumbs(pageTrail('about', common), locale)} />
+  if (variant === 'D1' || variant === 'D2' || variant === 'D3' || variant === 'D4')
+    return (
+      <>
+        {crumbs}
+        <VariantD locale={locale} title={common('firm')} image={variant} />
+        {switcher}
+      </>
+    )
   const Variant = { A: VariantA, B: VariantB, C: VariantC }[variant]
   if (Variant)
     return (

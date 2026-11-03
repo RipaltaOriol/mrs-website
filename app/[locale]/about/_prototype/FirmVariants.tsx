@@ -4,17 +4,21 @@ import TreatedImage from '@/components/TreatedImage'
 import { Link } from '@/i18n/navigation'
 import type { Locale } from '@/i18n/routing'
 import { ABSTRACT_COVE, IMAGERY } from '@/lib/imagery'
+import abstractCloister from './abstract-girona-cloister.png'
+import abstractOnyar from './abstract-girona-onyar.png'
 
 /** PROTOTYPE: three layouts for La Firma, switched by `?variant=` on `/about`. */
 export const VARIANTS = [
-  { key: 'A', name: 'Editorial spread' },
-  { key: 'B', name: 'Ink opening' },
-  { key: 'C', name: 'Dossier' },
+  { key: 'D1', name: 'A+B · cloister abstract band' },
+  { key: 'D2', name: 'A+B · cloister abstract beside the lede' },
+  { key: 'D3', name: 'A+B · small photo under 2001' },
+  { key: 'D4', name: 'A+B · Onyar abstract band' },
 ]
 
 const LABELS = {
   ca: {
     since: 'Des de 2001',
+    beside: 'Al vostre costat des del',
     departments: 'Departaments',
     areas: 'Dues àrees de treball',
     approach: 'Client integral',
@@ -25,6 +29,7 @@ const LABELS = {
   },
   es: {
     since: 'Desde 2001',
+    beside: 'A su lado desde',
     departments: 'Departamentos',
     areas: 'Dos áreas de trabajo',
     approach: 'Cliente integral',
@@ -244,6 +249,86 @@ export async function VariantC({ locale, title }: { locale: Locale; title: strin
           </Link>
         </div>
       </aside>
+    </div>
+  )
+}
+
+type ImageOption = 'D1' | 'D2' | 'D3' | 'D4'
+
+function AbstractBand({ src }: { src: typeof abstractCloister }) {
+  return (
+    <div className="relative mx-auto h-56 max-w-content overflow-hidden bg-mist motion-safe:animate-settle md:h-80">
+      <Image src={src} alt="" placeholder="blur" fill sizes="(min-width: 75rem) 75rem, 100vw" priority className="object-cover object-[50%_40%]" />
+    </div>
+  )
+}
+
+export async function VariantD({ locale, title, image }: { locale: Locale; title: string; image: ImageOption }) {
+  const { t, l, areas } = await firmCopy(locale)
+  return (
+    <div className="motion-safe:animate-fade-in">
+      <header
+        className={`mx-auto max-w-content px-5 pt-10 pb-12 md:pt-16 md:pb-16 ${image === 'D2' ? 'grid gap-10 md:grid-cols-[3fr_2fr] md:items-end' : ''}`}
+      >
+        <div className="motion-safe:animate-rise">
+          <p className={eyebrow}>MRS Assessors</p>
+          <h1 className="mb-8">{title}</h1>
+          <p className="mb-0 max-w-3xl font-display text-3xl text-balance text-ink">{t('body1')}</p>
+        </div>
+        {image === 'D2' && (
+          <div className="relative aspect-[4/5] overflow-hidden bg-mist motion-safe:animate-settle">
+            <Image src={abstractCloister} alt="" placeholder="blur" fill sizes="(min-width: 48rem) 28rem, 100vw" priority className="object-cover object-[20%_50%]" />
+          </div>
+        )}
+      </header>
+
+      {image === 'D1' && <AbstractBand src={abstractCloister} />}
+      {image === 'D4' && <AbstractBand src={abstractOnyar} />}
+
+      <section className={`mx-auto grid max-w-content gap-10 px-5 pb-16 md:grid-cols-[1fr_2fr] md:pb-24 ${image === 'D2' || image === 'D3' ? 'pt-4' : 'pt-16 md:pt-24'}`}>
+        <div className="md:sticky md:top-28 md:self-start">
+          <p className={eyebrow}>{l.beside}</p>
+          <p className="font-display text-[clamp(4rem,10vw,8rem)] leading-none text-brand">2001</p>
+          <div aria-hidden="true" className="mt-6 h-0.5 w-16 bg-rose" />
+          {image === 'D3' && (
+            <div className="mt-10 max-w-80">
+              <TreatedImage photograph={IMAGERY.gironaCloister} ratio="landscape" sizes="20rem" priority />
+            </div>
+          )}
+        </div>
+        <article className="max-w-measure text-pretty">
+          <p className="text-lg">{t('body3')}</p>
+          <p>{t('body4')}</p>
+          <p className="mb-0">{t('body5')}</p>
+        </article>
+      </section>
+
+      <section className="bg-mist">
+        <div className="mx-auto max-w-content px-5 py-16 md:py-20">
+          <h2 className="mb-10">{l.areas}</h2>
+          <ol>
+            {areas.map((area, i) => (
+              <li key={i} className="grid gap-4 border-t border-stone/40 py-8 md:grid-cols-[8rem_1fr]">
+                <span className="font-display text-4xl text-brand">0{i + 1}</span>
+                <p className="mb-0 max-w-3xl text-lg text-pretty">{area}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-content px-5 py-16 text-center md:py-24">
+        <div aria-hidden="true" className="mx-auto mb-8 h-0.5 w-16 bg-rose" />
+        <p className="mx-auto mb-8 max-w-measure font-display text-2xl text-balance">{t('body6')}</p>
+        <div className="flex justify-center gap-6">
+          <Link href="/#contact" className="btn">
+            {l.contact}
+          </Link>
+          <Link href="/#team" className="self-center font-medium text-brand underline-offset-4 hover:underline">
+            {l.team}
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }
