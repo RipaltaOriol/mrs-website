@@ -8,18 +8,39 @@ import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import { pageTrail } from '@/lib/pages'
 import { breadcrumbs } from '@/lib/structured-data'
+import { Suspense } from 'react'
+import PrototypeSwitcher from '@/components/PrototypeSwitcher'
+import { VARIANTS, VariantA, VariantB, VariantC } from './_prototype/FirmVariants'
 
 export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return pageMetadata('about', await pageLocale(props))
 }
 
-export default async function AboutPage(props: LocaleParams) {
+export default async function AboutPage(props: LocaleParams & { searchParams: Promise<{ variant?: string }> }) {
   const locale = await pageLocale(props)
+  const variant = (await props.searchParams).variant ?? 'current'
   const t = await getTranslations('about')
   const common = await getTranslations('common')
 
+  const switcher = (
+    <Suspense>
+      <PrototypeSwitcher variants={[{ key: 'current', name: 'today' }, ...VARIANTS]} />
+    </Suspense>
+  )
+  const crumbs = <StructuredData data={breadcrumbs(pageTrail('about', common), locale)} />
+  const Variant = { A: VariantA, B: VariantB, C: VariantC }[variant]
+  if (Variant)
+    return (
+      <>
+        {crumbs}
+        <Variant locale={locale} title={common('firm')} />
+        {switcher}
+      </>
+    )
+
   return (
     <div className="mx-auto max-w-content px-5 py-14 md:py-20">
+      {switcher}
       <StructuredData
         data={breadcrumbs(pageTrail('about', common), locale)}
       />
