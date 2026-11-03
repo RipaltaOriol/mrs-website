@@ -25,14 +25,15 @@ for (const path of ['/about', '/es/about']) {
         expect(width).toBeGreaterThan(Math.min(measure, viewport.width) * 0.8)
       })
 
-      test('aligns the photograph with the column at its locked ratio', async ({ page }) => {
+      test('spans the abstract across the heading column, between the lede and the article', async ({ page }) => {
         await page.goto(path)
-        const image = (await page.locator('main .treated').boundingBox())!
-        const column = (await page.locator('main article').boundingBox())!
-        expect(image.x).toBeCloseTo(column.x, 0)
-        expect(image.width).toBeCloseTo(column.width, 0)
-        expect(image.width / image.height).toBeCloseTo(3 / 2, 1)
-        expect(image.y + image.height).toBeLessThanOrEqual(column.y)
+        const band = (await page.locator('main [data-band]').boundingBox())!
+        const heading = (await page.locator('main h1').boundingBox())!
+        const article = (await page.locator('main article').boundingBox())!
+        expect(band.x).toBeCloseTo(heading.x, 0)
+        expect(band.width).toBeGreaterThanOrEqual(article.width)
+        expect(band.y).toBeGreaterThan(heading.y + heading.height)
+        expect(band.y + band.height).toBeLessThanOrEqual(article.y)
       })
 
       test('does not overflow sideways', async ({ page }) => {

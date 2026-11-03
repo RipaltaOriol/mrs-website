@@ -12,6 +12,6 @@ stripped. The colour treatment is applied in CSS (`@utility treated` in
 | `girona-onyar.jpg`     | Girona houses on the Onyar               | CC0           | Nicolas Vigier  | https://commons.wikimedia.org/wiki/File:Girona_(36771746542).jpg |
 | `girona-cloister.jpg`  | Girona Cathedral cloister                | CC0           | Zarateman       | https://commons.wikimedia.org/wiki/File:Girona_-_Catedral,_claustro_05.jpg |
 
-`abstract-cove.png` is derived, not sourced: `npm run imagery` thresholds
-`costa-brava-cove.jpg` into brand red and canvas. Regenerate it rather than
-editing it.
+`abstract-cove.png` and `abstract-cloister.png` are derived, not sourced:
+`npm run imagery` thresholds `costa-brava-cove.jpg` and `girona-cloister.jpg`
+into brand red and canvas. Regenerate them rather than editing them.

@@ -1,5 +1,6 @@
 import type { Messages } from 'next-intl'
 import type { StaticImageData } from 'next/image'
+import abstractCloister from '@/assets/imagery/abstract-cloister.png'
 import abstractCove from '@/assets/imagery/abstract-cove.png'
 import costaBravaCove from '@/assets/imagery/costa-brava-cove.jpg'
 import gironaCloister from '@/assets/imagery/girona-cloister.jpg'
@@ -22,3 +23,6 @@ export const IMAGERY = {
 
 /** The two-tone abstract drawn from the Cala Bona photograph by `npm run imagery`. */
 export const ABSTRACT_COVE: StaticImageData = abstractCove
+
+/** The two-tone abstract drawn from the Girona cloister photograph by `npm run imagery`. */
+export const ABSTRACT_CLOISTER: StaticImageData = abstractCloister
