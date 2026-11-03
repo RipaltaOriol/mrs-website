@@ -13,6 +13,9 @@ import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import { PORTAL_URL } from '@/lib/portal'
 import { firmGraph } from '@/lib/structured-data'
+import { Suspense } from 'react'
+import PrototypeSwitcher from '@/components/PrototypeSwitcher'
+import { VARIANTS, VariantA, VariantB, VariantC } from './_prototype/AbstractHeroVariants'
 
 // Repeats CONTENT_REVALIDATE_SECONDS; see `lib/content/cache.ts`.
 export const revalidate = 3600
@@ -21,16 +24,21 @@ export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return pageMetadata('home', await pageLocale(props))
 }
 
-export default async function HomePage(props: LocaleParams) {
+export default async function HomePage(props: LocaleParams & { searchParams: Promise<{ variant?: string }> }) {
   const locale = await pageLocale(props)
+  const variant = (await props.searchParams).variant ?? 'current'
   const t = await getTranslations('home')
   const common = await getTranslations('common')
   const partners = getPartners(locale)
   const employees = await getEmployees(locale)
 
+  const hero = { statement: t('heroStatement'), subline: t('heroSubline'), action: common('portalAction'), href: PORTAL_URL }
+
   return (
     <div>
       <StructuredData data={firmGraph(locale)} />
+      {variant === 'current' && (
+        <>
       <section aria-labelledby="hero-statement" className="mx-auto max-w-content px-5 pt-16 pb-12 md:pt-24 md:pb-16">
         <p className="mb-5 text-sm font-medium tracking-widest text-stone uppercase">MRS Assessors</p>
         <h1 id="hero-statement" className="max-w-4xl">
@@ -43,6 +51,11 @@ export default async function HomePage(props: LocaleParams) {
       </section>
 
       <TreatedImage photograph={IMAGERY.lloretCastle} ratio="band" sizes="100vw" priority />
+        </>
+      )}
+      {variant === 'A' && <VariantA {...hero} />}
+      {variant === 'B' && <VariantB {...hero} />}
+      {variant === 'C' && <VariantC {...hero} />}
 
       <section className="mx-auto max-w-content px-5 py-14 text-center md:py-20">
         <p className="mx-auto mb-4 max-w-measure font-display text-xl text-balance">{t('intro')}</p>
@@ -82,6 +95,9 @@ export default async function HomePage(props: LocaleParams) {
       </section>
 
       <Divider />
+      <Suspense>
+        <PrototypeSwitcher variants={[{ key: 'current', name: 'Lloret photo' }, ...VARIANTS]} />
+      </Suspense>
     </div>
   )
 }
