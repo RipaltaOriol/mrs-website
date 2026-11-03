@@ -1,11 +1,16 @@
 import { expect, test, type APIRequestContext } from '@playwright/test'
 import { EMAIL, formatTelephone, telephoneHref, TELEPHONES } from '@/lib/contact'
 import { formatAddress, OFFICES } from '@/lib/offices'
+import caHome from '@/locales/ca/home.json'
+import esHome from '@/locales/es/home.json'
 import { anchors, sectionLabelledBy } from './html'
 
-const PATHS = ['/', '/es']
+const PATHS = [
+  { path: '/', messages: caHome },
+  { path: '/es', messages: esHome },
+]
 
-for (const path of PATHS) {
+for (const { path, messages } of PATHS) {
   test.describe(`the Offices section on ${path}`, () => {
     const offices = async (request: APIRequestContext) =>
       sectionLabelledBy(await (await request.get(path)).text(), 'contact-heading')
@@ -40,9 +45,10 @@ for (const path of PATHS) {
 
       for (const [index, office] of OFFICES.entries()) {
         const { text, label } = maps[index]
-        expect(label, office.name).toContain(office.name)
+        const name = messages[office.name]
+        expect(label, name).toContain(name)
         // WCAG 2.5.3: speaking the visible label has to activate the link.
-        expect(label, office.name).toContain(text)
+        expect(label, name).toContain(text)
       }
     })
   })

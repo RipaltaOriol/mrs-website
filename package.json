@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test:unit": "playwright test -c playwright.unit.config.ts",
     "test:smoke": "playwright test --project http",
     "test:interaction": "playwright test --project browser",
