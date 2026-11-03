@@ -141,14 +141,20 @@ export async function getArticle(
 export type Partner = {
   name: string
   role: string
+  email: string
   biography: string[]
 }
 
 /** The Partners in Team section order, with the `home` message keys for role and biography. */
 const PARTNERS = [
-  { name: 'Rafael Joaquín Ripalta Romeo', roleKey: 'founder', bioKey: 'ripaltaBio' },
-  { name: 'Sebastián Martínez de Trincheria', roleKey: 'founder', bioKey: 'martinezBio' },
-  { name: 'Jordi Sais Giralt', roleKey: 'partner', bioKey: 'saisBio' },
+  { name: 'Rafael Joaquín Ripalta Romeo', roleKey: 'founder', bioKey: 'ripaltaBio', email: 'rafael@mrsassessors.com' },
+  {
+    name: 'Sebastián Martínez de Trincheria',
+    roleKey: 'founder',
+    bioKey: 'martinezBio',
+    email: 'sebastia@mrsassessors.com',
+  },
+  { name: 'Jordi Sais Giralt', roleKey: 'partner', bioKey: 'saisBio', email: 'jordi@mrsassessors.com' },
 ] as const
 
 /** The `home` message keys the Partners read. */
@@ -198,9 +204,10 @@ export function getPartners(
   locale: Locale,
   messages: Unchecked = HOME_MESSAGES[locale],
 ): Partner[] {
-  return PARTNERS.map(({ name, roleKey, bioKey }) => ({
+  return PARTNERS.map(({ name, roleKey, bioKey, email }) => ({
     name,
     role: requireMessage(messages, roleKey),
+    email,
     biography: splitLocaleList(requireMessage(messages, bioKey)),
   }))
 }

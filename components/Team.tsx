@@ -5,18 +5,24 @@ export default function Team({ partners, departments }: { partners: Partner[]; d
   return (
     <div className="mx-auto mt-10 mb-5 max-w-content">
       <div className="border-t border-mist">
-        {partners.map(({ name, role, biography }) => (
+        {partners.map(({ name, role, email, biography }) => (
           <article
             key={name}
             className="grid gap-x-10 gap-y-4 border-b border-mist py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:py-10"
           >
             <header>
               <h3 className="mb-1 text-2xl">{name}</h3>
-              <p className="mb-0 text-sm font-medium tracking-widest text-brand uppercase">{role}</p>
+              <p className="mb-3 text-sm font-medium tracking-widest text-brand uppercase">{role}</p>
+              <a href={`mailto:${email}`} className="text-sm break-all text-brand underline hover:text-brand-deep">
+                {email}
+              </a>
             </header>
             <ul className="max-w-measure">
               {biography.map((line) => (
-                <li key={line} className="border-t border-mist py-2 text-pretty first:border-t-0 first:pt-0">
+                <li
+                  key={line}
+                  className="border-t border-dotted border-stone/40 py-2 text-sm text-pretty text-stone first:border-t-0 first:pt-0"
+                >
                   {line}
                 </li>
               ))}

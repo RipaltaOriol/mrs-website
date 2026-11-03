@@ -177,6 +177,7 @@ test('the three Partners resolve with their role and their biography as lines', 
   expect(partners[0]).toEqual({
     name: 'Rafael Joaquín Ripalta Romeo',
     role: 'Soci Fundador',
+    email: 'rafael@mrsassessors.com',
     biography: ['Llicenciat en Dret', 'Màster en Tributació'],
   })
   expect(partners[2].role).toBe('Soci')
