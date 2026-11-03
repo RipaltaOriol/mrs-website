@@ -48,8 +48,32 @@
     }
   }
 
+  --animate-rise: rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-settle: settle 1400ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(4rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes settle {
+    from {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   --aspect-*: initial;
-  --aspect-band: 12 / 5;
   --aspect-landscape: 3 / 2;
 
   --spacing: 0.25rem;
@@ -63,6 +87,11 @@
 /* The one button recipe, in the same file as the tokens it is built from. */
 @utility btn {
   @apply inline-block rounded bg-brand px-3 py-1.5 text-white hover:bg-brand-deep;
+}
+
+/** The height of the first screen below the 5rem site header. */
+@utility first-screen {
+  min-height: calc(100svh - 5rem);
 }
 
 /** The one photographic treatment, drawn over every design image at its locked ratio. */

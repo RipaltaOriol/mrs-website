@@ -43,7 +43,7 @@ for (const [text, surface, minimum] of PAIRINGS) {
   })
 }
 
-const COLOUR_COPIES = ['app/manifest.ts', 'lib/social-image.tsx', 'scripts/generate-icons.mjs']
+const COLOUR_COPIES = ['app/manifest.ts', 'lib/social-image.tsx', 'scripts/generate-abstract-imagery.mjs', 'scripts/generate-icons.mjs']
 
 test('only the consumers that cannot read CSS restate a colour', () => {
   const holders = codeFiles()
@@ -99,14 +99,25 @@ test('the reading measure is between 65 and 70 characters of Inter prose', () =>
   expect(characters).toBeLessThanOrEqual(70)
 })
 
-test('the only animation is a short entry fade', () => {
+test('the only animations are a short entry fade and the homepage hero entrance', () => {
   const animations = Object.entries(tokens).filter(([name]) => name.startsWith('--animate-'))
-  expect(animations.map(([name]) => name)).toEqual(['--animate-*', '--animate-fade-in'])
+  expect(animations.map(([name]) => name)).toEqual(['--animate-*', '--animate-fade-in', '--animate-rise', '--animate-settle'])
   expect(tokens['--animate-*']).toBe('initial')
   const [, ms] = tokens['--animate-fade-in'].match(/^fade-in (\d+)ms ease-out both$/) ?? []
   expect(Number(ms)).toBeGreaterThan(0)
   expect(Number(ms)).toBeLessThanOrEqual(400)
   expect(keyframes('fade-in')).toEqual(['from{opacity:0}', 'to{opacity:1}'])
+})
+
+test('the hero entrance plays once, settling within two seconds', () => {
+  for (const name of ['rise', 'settle']) {
+    const token = tokens[`--animate-${name}`]
+    const [duration = 0, delay = 0] = [...token.matchAll(/(\d+)ms/g)].map(([, ms]) => Number(ms))
+    expect(token, name).toMatch(new RegExp(`^${name} \\d+ms .* both$`))
+    expect(token, name).not.toMatch(/infinite|alternate/)
+    expect(duration + delay, name).toBeLessThanOrEqual(2000)
+    expect(keyframes(name).at(-1), name).toBe('to{opacity:1;transform:none}')
+  }
 })
 
 test('a reduced-motion preference suppresses all animation and transition', () => {

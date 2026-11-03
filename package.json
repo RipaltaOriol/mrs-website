@@ -15,7 +15,8 @@
     "test:interaction": "playwright test --project browser",
     "lint:comments": "node scripts/check-comments.mjs --base origin/main",
     "prepare": "git config core.hooksPath .githooks || true",
-    "icons": "node scripts/generate-icons.mjs"
+    "icons": "node scripts/generate-icons.mjs",
+    "imagery": "node scripts/generate-abstract-imagery.mjs"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^16.2.2",

@@ -1,5 +1,6 @@
 import type { Messages } from 'next-intl'
 import type { StaticImageData } from 'next/image'
+import abstractCove from '@/assets/imagery/abstract-cove.png'
 import costaBravaCove from '@/assets/imagery/costa-brava-cove.jpg'
 import gironaCloister from '@/assets/imagery/girona-cloister.jpg'
 import gironaOnyar from '@/assets/imagery/girona-onyar.jpg'
@@ -18,3 +19,6 @@ export const IMAGERY = {
   gironaOnyar: { src: gironaOnyar, alt: 'imageGironaOnyar' },
   gironaCloister: { src: gironaCloister, alt: 'imageGironaCloister' },
 } as const satisfies Record<string, Photograph>
+
+/** The two-tone abstract drawn from the Cala Bona photograph by `npm run imagery`. */
+export const ABSTRACT_COVE: StaticImageData = abstractCove

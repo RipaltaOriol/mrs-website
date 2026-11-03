@@ -1,14 +1,17 @@
 import { expect, test, type APIRequestContext } from '@playwright/test'
-import { anchors, linksUnder, region, treatedFrame as band, visibleText as text } from './html'
+import { anchors, linksUnder, region, visibleText as text } from './html'
 
 const PORTAL = 'https://app.kabiku.es/login/?next=/'
 
-const ALT_BY_PATH = {
-  '/': { alt: "La platja de Lloret de Mar amb el castell d'en Plaja sobre el penya-segat" },
-  '/es': { alt: "La playa de Lloret de Mar con el castillo d'en Plaja sobre el acantilado" },
-} as const
+/** The opening tag and contents of the homepage's abstract band. */
+function band(html: string): { frame: string; inner: string } | undefined {
+  const start = html.search(/<div\b[^>]*\bdata-band\b/)
+  if (start < 0) return undefined
+  const open = html.indexOf('>', start) + 1
+  return { frame: html.slice(start, open), inner: html.slice(open, html.indexOf('</div>', open)) }
+}
 
-for (const [path, { alt }] of Object.entries(ALT_BY_PATH)) {
+for (const path of ['/', '/es']) {
   test.describe(`the homepage hero on ${path}`, () => {
     const main = async (request: APIRequestContext) =>
       region(await (await request.get(path)).text(), 'main')
@@ -22,26 +25,26 @@ for (const [path, { alt }] of Object.entries(ALT_BY_PATH)) {
       expect(linksUnder(hero, PORTAL)).toEqual([PORTAL])
     })
 
-    test('is followed by a treated band at a locked ratio', async ({ request }) => {
-      const found = band(await main(request))
-      expect(found, 'no treated image band').toBeDefined()
-      expect(found!.frame).toMatch(/\baspect-(band|landscape)\b/)
-      expect(found!.frame).not.toMatch(/aspect-\[/)
+    test('closes on an abstract band inside the same first-screen section', async ({ request }) => {
+      const markup = await main(request)
+      const section = markup.slice(markup.indexOf('<section'), markup.indexOf('</section>'))
+      expect(section).toMatch(/^<section\b[^>]*aria-labelledby="hero-statement"[^>]*\bfirst-screen\b/)
+      expect(band(section), 'no abstract band in the hero').toBeDefined()
     })
 
-    test('sets no text over the photograph', async ({ request }) => {
+    test('sets no text over the abstract', async ({ request }) => {
       const { inner } = band(await main(request))!
       expect(inner.match(/<img\b/g)).toHaveLength(1)
       expect(text(inner)).toBe('')
     })
 
-    test('draws the photograph from a static import with a blur placeholder', async ({ request }) => {
+    test('draws the abstract from a static import with a blur placeholder, as decoration', async ({ request }) => {
       const { inner } = band(await main(request))!
       const [img = ''] = inner.match(/<img\b[^>]*>/) ?? []
       const [, src = ''] = img.match(/\bsrc="([^"]*)"/) ?? []
-      expect(decodeURIComponent(src)).toMatch(/\/_next\/static\/media\/lloret-castle\.[\w-]+\.jpg/)
+      expect(decodeURIComponent(src)).toMatch(/\/_next\/static\/media\/abstract-cove\.[\w-]+\.png/)
       expect(img).toMatch(/background-image:url\(&quot;data:image\/svg\+xml/)
-      expect(img).toContain(`alt="${alt.replaceAll("'", '&#x27;')}"`)
+      expect(img).toContain('alt=""')
     })
   })
 }
@@ -54,7 +57,7 @@ for (const [path, firm] of Object.entries(FIRM_BY_PATH)) {
       region(await (await request.get(path)).text(), 'main')
 
     const introduction = (markup: string) => {
-      const start = markup.indexOf('<section', markup.indexOf('treated'))
+      const start = markup.indexOf('<section', markup.indexOf('data-band'))
       return markup.slice(start, markup.indexOf('</section>', start))
     }
 
