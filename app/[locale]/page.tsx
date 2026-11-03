@@ -5,7 +5,10 @@ import HeroBand from '@/components/HeroBand'
 import Offices from '@/components/Offices'
 import PracticeAreas from '@/components/PracticeAreas'
 import StructuredData from '@/components/StructuredData'
+import PrototypeSwitcher from '@/components/PrototypeSwitcher'
 import Team from '@/components/Team'
+import { TEAM_BIO_VARIANT_NAMES, TEAM_BIO_VARIANTS } from '@/components/Team.prototype'
+import { Suspense } from 'react'
 import { Link } from '@/i18n/navigation'
 import { getEmployees, getPartners, getPracticeAreas, groupByDepartment } from '@/lib/content'
 import { pageMetadata } from '@/lib/metadata'
@@ -20,8 +23,9 @@ export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return pageMetadata('home', await pageLocale(props))
 }
 
-export default async function HomePage(props: LocaleParams) {
+export default async function HomePage(props: LocaleParams & { searchParams: Promise<{ variant?: string }> }) {
   const locale = await pageLocale(props)
+  const { variant } = await props.searchParams
   const t = await getTranslations('home')
   const common = await getTranslations('common')
   const partners = getPartners(locale)
@@ -68,7 +72,7 @@ export default async function HomePage(props: LocaleParams) {
         <h2 id="team-heading" className="text-center">
           {common('team')}
         </h2>
-        <Team partners={partners} departments={groupByDepartment(employees)} />
+        <Team partners={partners} departments={groupByDepartment(employees)} variant={variant} />
       </section>
 
       <span id="contact" />
@@ -82,6 +86,9 @@ export default async function HomePage(props: LocaleParams) {
       </section>
 
       <Divider />
+      <Suspense>
+        <PrototypeSwitcher variants={TEAM_BIO_VARIANTS} names={TEAM_BIO_VARIANT_NAMES} />
+      </Suspense>
     </div>
   )
 }
