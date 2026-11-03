@@ -95,7 +95,7 @@ test('the home page publishes the firm as a LegalService at both Offices', async
     ])
     for (const office of offices) {
       expect(office).toMatchObject({
-        telephone: ['+34972371821', '+34972372240'],
+        telephone: ['+34618630099', '+34972371821'],
         geo: { '@type': 'GeoCoordinates' },
         areaServed: [
           { '@type': 'City', name: 'Lloret de Mar' },

@@ -48,7 +48,7 @@ test('each Office carries its coordinates, the firm’s telephones, the area ser
   expect(verdaguer.geo).toEqual({ '@type': 'GeoCoordinates', latitude: 41.6990774, longitude: 2.8484235 })
 
   for (const office of [central, verdaguer]) {
-    expect(office.telephone).toEqual(['+34972371821', '+34972372240'])
+    expect(office.telephone).toEqual(['+34618630099', '+34972371821'])
     expect(office.email).toBe('administracio@mrsassessors.com')
     expect(office.areaServed).toEqual([
       { '@type': 'City', name: 'Lloret de Mar' },
@@ -75,7 +75,7 @@ test('each Office belongs to the firm and links to the site in the asked-for Loc
   expect(firm).toMatchObject({
     name: 'MRS Assessors',
     url: 'https://www.mrsassessors.com',
-    telephone: ['+34972371821', '+34972372240'],
+    telephone: ['+34618630099', '+34972371821'],
   })
   for (const office of offices(graph)) {
     expect(office.parentOrganization).toEqual({ '@id': firm!['@id'] })
