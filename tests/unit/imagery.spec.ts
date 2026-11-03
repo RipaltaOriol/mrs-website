@@ -9,7 +9,6 @@ test('the theme offers only the locked image aspect ratios', () => {
   const ratios = Object.entries(tokens).filter(([name]) => name.startsWith('--aspect-'))
   expect(Object.fromEntries(ratios)).toEqual({
     '--aspect-*': 'initial',
-    '--aspect-band': '12 / 5',
     '--aspect-landscape': '3 / 2',
   })
 })

@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server'
 import type { Photograph } from '@/lib/imagery'
 
 const RATIOS = {
-  band: 'aspect-landscape md:aspect-band',
   landscape: 'aspect-landscape',
 } as const
 

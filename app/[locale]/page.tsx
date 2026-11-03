@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
+import HeroBand from '@/components/HeroBand'
 import Offices from '@/components/Offices'
 import PracticeAreas from '@/components/PracticeAreas'
 import StructuredData from '@/components/StructuredData'
 import Team from '@/components/Team'
-import TreatedImage from '@/components/TreatedImage'
 import { Link } from '@/i18n/navigation'
 import { getEmployees, getPartners, getPracticeAreas, groupByDepartment } from '@/lib/content'
-import { IMAGERY } from '@/lib/imagery'
 import { pageMetadata } from '@/lib/metadata'
 import { pageLocale, type LocaleParams } from '@/lib/page'
 import { PORTAL_URL } from '@/lib/portal'
@@ -31,18 +30,19 @@ export default async function HomePage(props: LocaleParams) {
   return (
     <div>
       <StructuredData data={firmGraph(locale)} />
-      <section aria-labelledby="hero-statement" className="mx-auto max-w-content px-5 pt-16 pb-12 md:pt-24 md:pb-16">
-        <p className="mb-5 text-sm font-medium tracking-widest text-stone uppercase">MRS Assessors</p>
-        <h1 id="hero-statement" className="max-w-4xl">
-          {t('heroStatement')}
-        </h1>
-        <p className="mt-5 mb-8 max-w-measure text-lg text-stone">{t('heroSubline')}</p>
-        <a href={PORTAL_URL} className="btn">
-          {common('portalAction')}
-        </a>
+      <section aria-labelledby="hero-statement" className="flex first-screen flex-col overflow-hidden">
+        <div className="mx-auto w-full max-w-content shrink-0 px-5 pt-8 pb-10 motion-safe:animate-rise md:pt-16 md:pb-14">
+          <p className="mb-5 text-sm font-medium tracking-widest text-stone uppercase">MRS Assessors</p>
+          <h1 id="hero-statement" className="max-w-4xl">
+            {t('heroStatement')}
+          </h1>
+          <p className="mt-5 mb-8 max-w-measure text-lg text-stone">{t('heroSubline')}</p>
+          <a href={PORTAL_URL} className="btn">
+            {common('portalAction')}
+          </a>
+        </div>
+        <HeroBand />
       </section>
-
-      <TreatedImage photograph={IMAGERY.lloretCastle} ratio="band" sizes="100vw" priority />
 
       <section className="mx-auto max-w-content px-5 py-14 text-center md:py-20">
         <p className="mx-auto mb-4 max-w-measure font-display text-xl text-balance">{t('intro')}</p>
