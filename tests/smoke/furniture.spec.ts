@@ -17,9 +17,16 @@ for (const path of PAGES) {
     const footer = async (request: APIRequestContext) =>
       region(await (await request.get(path)).text(), 'footer')
 
-    test('carries both Offices', async ({ request }) => {
+    test('leaves the Office addresses to the Contact section', async ({ request }) => {
       const markup = await footer(request)
-      for (const address of ADDRESSES) expect(markup).toContain(address)
+      for (const address of ADDRESSES) expect(markup).not.toContain(address)
+    })
+
+    test('keeps the copyright alone below the rule', async ({ request }) => {
+      const markup = await footer(request)
+      const rule = markup.slice(markup.lastIndexOf('border-t'))
+      expect(rule).toContain(String(new Date().getFullYear()))
+      expect(rule).not.toContain('<a')
     })
 
     test('offers the email, the Portal and the privacy policy', async ({ request }) => {

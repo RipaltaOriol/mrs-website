@@ -75,13 +75,8 @@ export default async function HomePage(props: LocaleParams) {
       <Divider />
 
       <section aria-labelledby="contact-heading" className="mx-7.5">
-        <h2 id="contact-heading" className="text-center">
-          {common('contact')}
-        </h2>
         <Offices />
       </section>
-
-      <Divider />
     </div>
   )
 }
