@@ -160,3 +160,37 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* PROTOTYPE: footer visibility per contact-section variant. */
+[data-proto='footer-desc'],
+[data-proto='footer-legal'] {
+  display: none;
+}
+body[data-contact-variant='B'] [data-proto='footer-offices'],
+body[data-contact-variant='B'] [data-proto='footer-contact-privacy'],
+body[data-contact-variant='C'] [data-proto='footer-contact'] {
+  display: none;
+}
+body[data-contact-variant='B'] [data-proto='footer-legal'],
+body[data-contact-variant='C'] [data-proto='footer-legal'] {
+  display: flex;
+}
+
+body[data-contact-variant='D'] [data-proto='footer-desc'] {
+  display: inline;
+}
+body[data-contact-variant='B'] [data-proto='footer-locale-bottom'],
+body[data-contact-variant='C'] [data-proto='footer-locale-bottom'] {
+  display: none;
+}
+@media (min-width: 48rem) {
+  body[data-contact-variant='B'] footer .md\:grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+  body[data-contact-variant='C'] footer .md\:grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+  }
+}
+body[data-contact-variant='B'] [data-proto='footer-contact'] li:has(+ [data-proto='footer-contact-privacy']) {
+  margin-bottom: 0;
+}

@@ -16,7 +16,8 @@ export default async function Footer() {
 
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto max-w-content px-5 py-14">
+      <span data-proto-footer-anchor />
+      <div className="mx-auto max-w-content px-5 pt-14 pb-10">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <h2 className={heading}>MRS Assessors</h2>
@@ -26,13 +27,14 @@ export default async function Footer() {
             </a>
           </div>
 
-          <div>
+          <div data-proto="footer-offices">
             <h2 className={heading}>{t('offices')}</h2>
             <ul className="space-y-4 text-sm">
               {OFFICES.map((office) => (
                 <li key={office.name}>
                   <address className="not-italic">
                     <span className="block font-medium">{home(office.name)}</span>
+                    <span data-proto="footer-desc" className="block text-mist/80 italic">{home(office.descriptionKey)}</span>
                     <span className="block text-mist">{formatAddress(office)}</span>
                   </address>
                   <a
@@ -47,25 +49,25 @@ export default async function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div data-proto="footer-contact">
             <h2 className={heading}>{t('footerContact')}</h2>
             <ul className="space-y-2 text-sm">
               {TELEPHONES.map(({ number, kind }) => (
-                <li key={number} className="flex items-center gap-2.5">
+                <li key={number} data-proto="footer-reach" className="flex items-center gap-2.5">
                   {kind === 'mobile' ? <MobilePhoneIcon size={12} /> : <TelephoneIcon size={12} />}
                   <a href={telephoneHref(number)} className="hover:underline">
                     {formatTelephone(number)}
                   </a>
                 </li>
               ))}
-              <li className="flex items-center gap-2.5">
+              <li data-proto="footer-reach" className="flex items-center gap-2.5">
                 <EnvelopeIcon size={12} />
                 <a href={`mailto:${EMAIL}`} className="hover:underline">
                   {mailbox}
                   <wbr />@{domain}
                 </a>
               </li>
-              <li className="flex items-center gap-2.5">
+              <li data-proto="footer-contact-privacy" className="flex items-center gap-2.5">
                 <ShieldLockIcon size={12} />
                 <Link href="/policy" className="hover:underline">
                   {t('privacyPolicy')}
@@ -73,13 +75,25 @@ export default async function Footer() {
               </li>
             </ul>
           </div>
+
+          <div data-proto="footer-legal" className="flex-col gap-4 text-sm md:items-end">
+            <p className="mb-0 flex items-center gap-2.5">
+              <ShieldLockIcon size={12} />
+              <Link href="/policy" className="hover:underline">
+                {t('privacyPolicy')}
+              </Link>
+            </p>
+            <LocaleSwitcher tone="dark" />
+          </div>
         </div>
       </div>
 
       <div className="border-t border-stone">
         <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-4 px-5 py-5 text-sm text-mist">
           <span>© {new Date().getFullYear()} mrsassessors.com</span>
-          <LocaleSwitcher tone="dark" />
+          <span data-proto="footer-locale-bottom">
+            <LocaleSwitcher tone="dark" />
+          </span>
         </div>
       </div>
     </footer>

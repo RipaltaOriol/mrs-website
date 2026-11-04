@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Divider from '@/components/Divider'
 import HeroBand from '@/components/HeroBand'
-import Offices from '@/components/Offices'
+import ContactPrototypeSwitcher from '@/components/prototype/ContactPrototypeSwitcher'
+import { CONTACT_VARIANTS, VariantA, VariantB, VariantC, VariantD } from '@/components/prototype/ContactVariants'
 import PracticeAreas from '@/components/PracticeAreas'
 import StructuredData from '@/components/StructuredData'
 import Team from '@/components/Team'
@@ -20,7 +21,8 @@ export async function generateMetadata(props: LocaleParams): Promise<Metadata> {
   return pageMetadata('home', await pageLocale(props))
 }
 
-export default async function HomePage(props: LocaleParams) {
+export default async function HomePage(props: LocaleParams & { searchParams: Promise<{ variant?: string }> }) {
+  const { variant = 'A' } = await props.searchParams
   const locale = await pageLocale(props)
   const t = await getTranslations('home')
   const common = await getTranslations('common')
@@ -71,17 +73,11 @@ export default async function HomePage(props: LocaleParams) {
         <Team partners={partners} departments={groupByDepartment(employees)} />
       </section>
 
-      <span id="contact" />
-      <Divider />
-
-      <section aria-labelledby="contact-heading" className="mx-7.5">
-        <h2 id="contact-heading" className="text-center">
-          {common('contact')}
-        </h2>
-        <Offices />
-      </section>
-
-      <Divider />
+      {variant === 'A' && <VariantA />}
+      {variant === 'B' && <VariantB />}
+      {variant === 'C' && <VariantC />}
+      {variant === 'D' && <VariantD />}
+      <ContactPrototypeSwitcher variants={CONTACT_VARIANTS} current={variant} />
     </div>
   )
 }
