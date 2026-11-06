@@ -52,14 +52,20 @@ _Avoid_: Staff, personnel, people
 ### Content and access
 
 **Article**:
-A published piece of legal or tax commentary. Each Article exists independently
-per Locale rather than as one piece with translations.
+A published piece of legal or tax commentary. Every Article is published in both
+Locales, as two independent entries the site does not link to each other.
 _Avoid_: Blog post, news item, post, entry
 
 **Entry**:
 Contentful's word for a stored record of any content type. Used only in the
 content adapter under `lib/content/`; past it there are only Articles, Employees
 and Partners.
+
+**Editor**:
+Anyone at the firm, Partner or Employee, who writes Articles or keeps the
+Employee list up to date in Contentful. Editors do not change how content is
+structured.
+_Avoid_: Admin, author, content manager, user
 
 **Notícies**:
 The section of the site that lists the Articles of one Locale, newest first.
