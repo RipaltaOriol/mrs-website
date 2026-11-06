@@ -1,8 +1,10 @@
 import Image from 'next/image'
+import { Suspense } from 'react'
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import HeaderShell from './HeaderShell'
 import SiteNav from './SiteNav'
+import NavbarVariants from './prototype/NavbarVariants'
 
 export default async function Header() {
   const t = await getTranslations('common')
@@ -15,8 +17,14 @@ export default async function Header() {
     { href: '/blogs', label: t('blog') },
   ]
 
-  return (
-    <HeaderShell>
+  const labels = {
+    menu: t('menu'),
+    closeMenu: t('closeMenu'),
+    portal: t('portal'),
+    portalAction: t('portalAction'),
+  }
+
+  const current = (
       <nav
         aria-label="MRS Assessors"
         className="mx-auto flex max-w-content items-center justify-between gap-2 px-5 py-3 xs:gap-4"
@@ -26,14 +34,20 @@ export default async function Header() {
         </Link>
         <SiteNav
           links={links}
-          labels={{
-            menu: t('menu'),
-            closeMenu: t('closeMenu'),
-            portal: t('portal'),
-            portalAction: t('portalAction'),
-          }}
+          labels={labels}
         />
       </nav>
+  )
+
+  return (
+    <HeaderShell>
+      {process.env.NODE_ENV === 'production' ? (
+        current
+      ) : (
+        <Suspense fallback={current}>
+          <NavbarVariants current={current} links={links} labels={labels} homeLabel={t('home')} />
+        </Suspense>
+      )}
     </HeaderShell>
   )
 }
