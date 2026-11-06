@@ -1,6 +1,5 @@
 import type { SVGProps } from 'react'
 
-// Inline replacements for the handful of icons react-bootstrap-icons supplied.
 type IconProps = SVGProps<SVGSVGElement> & { size?: number }
 
 function Icon({ size = 16, children, ...props }: IconProps) {
