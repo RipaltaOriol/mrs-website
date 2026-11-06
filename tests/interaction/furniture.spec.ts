@@ -100,12 +100,31 @@ for (const viewport of [FOLDED_PHONE, PHONE]) {
   test.describe(`the collapsed header at ${viewport.width}px`, () => {
     test.use({ viewport })
 
-    test('keeps the Locale menu and the Portal in the bar beside the toggle', async ({ page }) => {
+    const panel = (page: import('@playwright/test').Page) => page.locator('#site-navigation')
+
+    test('leaves only the logo and the toggle in the bar', async ({ page }) => {
       await page.goto('/')
       const header = page.getByRole('banner')
-      await expect(header.getByRole('button', { name: /^Idioma/ })).toBeVisible()
-      await expect(header.getByRole('link', { name: 'Accedir al Portal' })).toBeVisible()
+      await expect(header.getByRole('button', { name: /^Idioma/ })).toBeHidden()
+      await expect(header.getByRole('link', { name: 'Accedir al Portal' })).toBeHidden()
       await expect(page.locator('button[aria-controls="site-navigation"]')).toBeVisible()
+    })
+
+    test('docks the Locale toggle and the Portal at the foot of the open menu', async ({ page }) => {
+      await page.goto('/')
+      await page.locator('button[aria-controls="site-navigation"]').click()
+
+      const locales = panel(page).getByRole('group', { name: 'Idioma' })
+      await expect(locales.getByRole('link', { name: 'Català' })).toHaveAttribute('aria-current', 'true')
+      await expect(locales.getByRole('link', { name: 'Español' })).toBeVisible()
+      await expect(panel(page).getByRole('link', { name: 'Accedir al Portal' })).toBeInViewport()
+    })
+
+    test('switches Locale from the open menu', async ({ page }) => {
+      await page.goto('/about')
+      await page.locator('button[aria-controls="site-navigation"]').click()
+      await panel(page).getByRole('link', { name: 'Español' }).click()
+      await expect(page).toHaveURL(/\/es\/about$/)
     })
   })
 }

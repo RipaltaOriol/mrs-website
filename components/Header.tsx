@@ -19,7 +19,7 @@ export default async function Header() {
     <HeaderShell>
       <nav
         aria-label="MRS Assessors"
-        className="mx-auto flex max-w-content items-center gap-2 px-5 py-3 xs:gap-4 lg:gap-10"
+        className="mx-auto flex max-w-content items-center gap-4 px-5 py-3 lg:gap-10"
       >
         <Link href="/" aria-label={t('home')} className="shrink-0">
           <Image src="/logo.png" alt="MRS Assessors" width={56} height={56} priority />
@@ -27,6 +27,7 @@ export default async function Header() {
         <SiteNav
           links={links}
           labels={{
+            home: t('home'),
             menu: t('menu'),
             closeMenu: t('closeMenu'),
             portal: t('portal'),
