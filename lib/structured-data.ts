@@ -1,7 +1,5 @@
 import type { Locale } from '@/i18n/routing'
-import caHome from '@/locales/ca/home.json'
-import esHome from '@/locales/es/home.json'
-import type { Article } from './content'
+import { getOfficeNames, type Article } from './content'
 import { EMAIL, TELEPHONES, telephoneHref } from './contact'
 import { SITE_NAME, SITE_URL, absoluteUrl } from './site'
 import { OFFICES } from './offices'
@@ -12,8 +10,6 @@ export type JsonLd = Record<string, unknown>
 const FIRM_ID = `${SITE_URL}/#firm`
 
 const FIRM_TELEPHONES = TELEPHONES.map(({ number }) => telephoneHref(number).replace('tel:', ''))
-
-const HOME_MESSAGES: Record<Locale, typeof caHome> = { ca: caHome, es: esHome }
 
 const PROVINCE: Record<Locale, string> = { ca: 'Província de Girona', es: 'Provincia de Girona' }
 
@@ -36,10 +32,11 @@ export function firmGraph(locale: Locale): JsonLd {
     telephone: FIRM_TELEPHONES,
     email: EMAIL,
   }
+  const names = getOfficeNames(locale)
   const offices = OFFICES.map((office, index) => ({
     '@type': 'LegalService',
     '@id': `${SITE_URL}/#office-${index + 1}`,
-    name: HOME_MESSAGES[locale][office.name],
+    name: names[office.nameKey],
     url: home,
     image: `${SITE_URL}/logo.png`,
     parentOrganization: { '@id': FIRM_ID },

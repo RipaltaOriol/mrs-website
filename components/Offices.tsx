@@ -39,17 +39,17 @@ export default async function Offices() {
       <div>
         {OFFICES.map((office) => (
           <article
-            key={office.name}
+            key={office.nameKey}
             className="grid gap-x-6 gap-y-1 border-t border-dotted border-stone/40 py-4 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline"
           >
             <div>
-              <h3 className="mb-1 text-lg">{t(office.name)}</h3>
+              <h3 className="mb-1 text-lg">{t(office.nameKey)}</h3>
               <p className="mb-1 text-sm text-pretty text-stone">{t(office.descriptionKey)}</p>
               <address className="text-sm not-italic">{formatAddress(office)}</address>
             </div>
             <a
               href={office.map}
-              aria-label={common('viewOnMapAt', { office: t(office.name) })}
+              aria-label={common('viewOnMapAt', { office: t(office.nameKey) })}
               className="w-fit text-sm font-medium text-brand underline underline-offset-4 hover:text-brand-deep"
             >
               {common('viewOnMap')}

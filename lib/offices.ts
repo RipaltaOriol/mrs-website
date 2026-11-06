@@ -1,6 +1,6 @@
 /** One of the firm's two physical locations, with its own address and map link. */
 export type Office = {
-  name: 'office1Title' | 'office2Title'
+  nameKey: 'office1Title' | 'office2Title'
   descriptionKey: 'office1' | 'office2'
   street: string
   postcode: string
@@ -12,7 +12,7 @@ export type Office = {
 
 export const OFFICES: readonly Office[] = [
   {
-    name: 'office1Title',
+    nameKey: 'office1Title',
     descriptionKey: 'office1',
     street: 'Calle Can Guidet, núm. 5 local 1A',
     postcode: '17310',
@@ -22,7 +22,7 @@ export const OFFICES: readonly Office[] = [
     map: 'https://goo.gl/maps/CuMMNSxdEvmvxePt9',
   },
   {
-    name: 'office2Title',
+    nameKey: 'office2Title',
     descriptionKey: 'office2',
     street: 'Passeig Jacint Verdaguer, núm. 8',
     postcode: '17310',
