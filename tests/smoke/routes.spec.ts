@@ -88,8 +88,8 @@ for (const path of ['/does-not-exist', '/es/does-not-exist', '/xx/about']) {
 }
 
 const UNKNOWN_ARTICLE = {
-  '/blogs/no-such-article': 'Aquesta pàgina no existeix',
-  '/es/blogs/no-such-article': 'Esta página no existe',
+  '/blogs/no-such-article': 'No hem trobat aquesta pàgina',
+  '/es/blogs/no-such-article': 'No hemos encontrado esta página',
 }
 
 for (const [path, heading] of Object.entries(UNKNOWN_ARTICLE)) {
