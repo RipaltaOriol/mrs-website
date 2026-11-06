@@ -1,6 +1,7 @@
 {
   "title": "Página no encontrada",
-  "heading": "Esta página no existe",
-  "body": "Es posible que el enlace haya cambiado o que la página se haya retirado.",
-  "destinations": "Dónde puede continuar"
+  "heading": "No hemos encontrado esta página",
+  "body": "Puede que el enlace haya cambiado o que la página ya no esté disponible.",
+  "home": "Volver al inicio",
+  "alsoVisit": "También puede visitar"
 }

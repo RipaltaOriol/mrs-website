@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 
 const DESTINATIONS = [
-  { href: '/', key: 'home' },
   { href: '/about', key: 'firm' },
   { href: '/blogs', key: 'blog' },
   { href: '/#contact', key: 'contact' },
@@ -13,28 +12,29 @@ export default async function NotFoundContent() {
   const common = await getTranslations('common')
 
   return (
-    <div className="mx-auto max-w-content px-5 py-20">
-      <div className="mx-auto max-w-measure motion-safe:animate-fade-in">
-        <p className="mb-2 font-display text-4xl text-stone">404</p>
-        <h1 className="mb-0 text-ink">{t('heading')}</h1>
-        <div aria-hidden="true" className="mt-6 h-0.5 w-16 bg-rose" />
-        <p className="mt-8 text-pretty">{t('body')}</p>
+    <div className="mx-auto flex max-w-content flex-col items-center px-5 py-28 text-center motion-safe:animate-fade-in">
+      <p aria-hidden="true" className="mb-0 font-display text-[clamp(6rem,4rem+8vw,11rem)] leading-none text-mist">
+        404
+      </p>
+      <h1 className="mt-4 text-ink sm:-mt-4">{t('heading')}</h1>
+      <p className="mt-4 max-w-measure text-pretty text-stone">{t('body')}</p>
+      <Link href="/" className="btn mt-4 px-5 py-2.5">
+        {t('home')}
+      </Link>
 
-        <nav aria-label={t('destinations')}>
-          <h2 className="mb-4 font-sans text-sm font-semibold tracking-wide text-stone uppercase">
-            {t('destinations')}
-          </h2>
-          <ul className="space-y-2">
-            {DESTINATIONS.map(({ href, key }) => (
-              <li key={href}>
-                <Link href={href} className="text-brand underline-offset-4 hover:underline">
-                  {common(key)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+      <nav aria-label={t('alsoVisit')} className="mt-10 border-t border-mist pt-6 text-sm">
+        <span className="block text-stone sm:inline">{t('alsoVisit')}: </span>
+        {DESTINATIONS.map(({ href, key }, i) => (
+          <span key={href}>
+            {i > 0 && (
+              <span aria-hidden="true" className="mx-2.5 inline-block size-1 rounded-full bg-rose align-middle" />
+            )}
+            <Link href={href} className="whitespace-nowrap text-brand underline-offset-4 hover:underline">
+              {common(key)}
+            </Link>
+          </span>
+        ))}
+      </nav>
     </div>
   )
 }

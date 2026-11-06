@@ -91,8 +91,8 @@ for (const path of PAGES) {
 const PROMISES_A_REDIRECT = /redirect|redirigi/i
 
 const NOT_FOUND = [
-  { path: '/does-not-exist', heading: 'Aquesta pàgina no existeix' },
-  { path: '/es/does-not-exist', heading: 'Esta página no existe' },
+  { path: '/does-not-exist', heading: 'No hem trobat aquesta pàgina' },
+  { path: '/es/does-not-exist', heading: 'No hemos encontrado esta página' },
 ]
 
 for (const { path, heading } of NOT_FOUND) {
