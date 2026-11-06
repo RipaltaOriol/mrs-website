@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { Link, usePathname } from '@/i18n/navigation'
 import { PORTAL_URL } from '@/lib/portal'
-import { CloseIcon, MenuIcon } from './icons'
-import LocaleSwitcher from './LocaleSwitcher'
+import { CloseIcon, MenuIcon, ShieldLockIcon } from './icons'
+import LocaleMenu from './LocaleMenu'
 
 export type NavLink = { href: string; label: string }
 
@@ -59,38 +59,42 @@ export default function SiteNav({ links, labels }: { links: NavLink[]; labels: N
 
   return (
     <>
-      <div className="hidden lg:block lg:flex-1">
-        <ul className="flex items-center justify-end gap-1">
-          {items.map(({ href, label, current }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                aria-current={current ? 'page' : undefined}
-                className={`rounded px-3 py-2 text-sm font-medium ${current ? 'text-brand' : 'text-ink hover:text-brand'}`}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <ul className="hidden items-center gap-8 lg:flex">
+        {items.map(({ href, label, current }) => (
+          <li key={href}>
+            <Link
+              href={href}
+              aria-current={current ? 'page' : undefined}
+              className={`relative block py-2 text-sm font-medium after:absolute after:inset-x-0 after:bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform ${current ? 'text-brand after:scale-x-100' : 'text-ink after:scale-x-0 hover:after:scale-x-100'}`}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <div className="ml-auto flex items-center gap-1 xs:gap-2">
+        <LocaleMenu />
+        <a
+          href={PORTAL_URL}
+          aria-label={labels.portalAction}
+          className="inline-flex h-10 min-w-10 items-center justify-center gap-2 rounded-full bg-brand px-3 text-sm font-medium text-white hover:bg-brand-deep xs:px-5"
+        >
+          <ShieldLockIcon size={13} />
+          <span className="hidden xs:inline">{labels.portal}</span>
+        </a>
+        <button
+          ref={toggle}
+          type="button"
+          aria-controls="site-navigation"
+          aria-expanded={open}
+          aria-label={labels.menu}
+          onClick={() => setOpen(true)}
+          className="rounded-full p-2 text-ink lg:hidden"
+        >
+          <MenuIcon size={28} />
+        </button>
       </div>
-
-      <a href={PORTAL_URL} aria-label={labels.portalAction} className="btn text-sm font-medium">
-        {labels.portal}
-      </a>
-      <LocaleSwitcher tone="light" />
-
-      <button
-        ref={toggle}
-        type="button"
-        aria-controls="site-navigation"
-        aria-expanded={open}
-        aria-label={labels.menu}
-        onClick={() => setOpen(true)}
-        className="rounded p-2 text-ink lg:hidden"
-      >
-        <MenuIcon size={28} />
-      </button>
 
       <div
         ref={panel}

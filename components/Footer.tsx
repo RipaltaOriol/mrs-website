@@ -52,7 +52,7 @@ export default async function Footer() {
                 {t('privacyPolicy')}
               </Link>
             </p>
-            <LocaleSwitcher tone="dark" />
+            <LocaleSwitcher />
           </div>
         </div>
       </div>

@@ -96,6 +96,55 @@ test.describe('the mobile navigation', () => {
   })
 })
 
+for (const viewport of [FOLDED_PHONE, PHONE]) {
+  test.describe(`the collapsed header at ${viewport.width}px`, () => {
+    test.use({ viewport })
+
+    test('keeps the Locale menu and the Portal in the bar beside the toggle', async ({ page }) => {
+      await page.goto('/')
+      const header = page.getByRole('banner')
+      await expect(header.getByRole('button', { name: /^Idioma/ })).toBeVisible()
+      await expect(header.getByRole('link', { name: 'Accedir al Portal' })).toBeVisible()
+      await expect(page.locator('button[aria-controls="site-navigation"]')).toBeVisible()
+    })
+  })
+}
+
+test.describe('the header Locale menu', () => {
+  test.use({ viewport: DESKTOP })
+
+  const button = (page: import('@playwright/test').Page) =>
+    page.getByRole('banner').getByRole('button', { name: /^Idioma/ })
+
+  test('opens on demand and closes on Escape, handing focus back', async ({ page }) => {
+    await page.goto('/')
+    const list = page.locator(`#${await button(page).getAttribute('aria-controls')}`)
+    await expect(list).toBeHidden()
+
+    await button(page).click()
+    await expect(button(page)).toHaveAttribute('aria-expanded', 'true')
+    await expect(list).toBeVisible()
+
+    await page.keyboard.press('Escape')
+    await expect(list).toBeHidden()
+    await expect(button(page)).toBeFocused()
+  })
+
+  test('closes when the pointer goes down elsewhere', async ({ page }) => {
+    await page.goto('/')
+    await button(page).click()
+    await page.mouse.click(5, 400)
+    await expect(button(page)).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('switches to the chosen Locale', async ({ page }) => {
+    await page.goto('/about')
+    await button(page).click()
+    await page.getByRole('banner').getByRole('link', { name: 'Español' }).click()
+    await expect(page).toHaveURL(/\/es\/about$/)
+  })
+})
+
 const LANDMARKS = { header: 'banner', footer: 'contentinfo' } as const
 
 for (const [region, viewport] of [
