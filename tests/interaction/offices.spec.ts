@@ -27,11 +27,18 @@ test.describe('the Offices section on a phone', () => {
 test.describe('the Offices section on a desktop', () => {
   test.use({ viewport: DESKTOP })
 
-  test('sets the Offices side by side and the contact links on one row', async ({ page }) => {
+  test('stacks the contact links in a column beside the stacked Offices', async ({ page }) => {
     await page.goto('/')
-    expect(await columnsOf(offices(page).locator('article'))).toBe(OFFICES.length)
-    expect(await rowsOf(offices(page).locator('article'))).toBe(1)
-    expect(await rowsOf(offices(page).locator('li'))).toBe(1)
+    const articles = offices(page).locator('article')
+    const links = offices(page).locator('li')
+    expect(await columnsOf(articles)).toBe(1)
+    expect(await rowsOf(articles)).toBe(OFFICES.length)
+    expect(await columnsOf(links)).toBe(1)
+    expect(await rowsOf(links)).toBe(TELEPHONES.length + 1)
+
+    const linksLeft = (await links.first().boundingBox())!.x
+    const articlesLeft = (await articles.first().boundingBox())!.x
+    expect(articlesLeft).toBeGreaterThan(linksLeft)
   })
 })
 

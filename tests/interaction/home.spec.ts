@@ -24,6 +24,9 @@ for (const { name, viewport } of VIEWPORTS) {
 
     test('sits below the hero, not behind it', async ({ page }) => {
       await page.goto('/')
+      await page
+        .locator('main h1')
+        .evaluate((heading) => Promise.all(heading.parentElement!.getAnimations().map(({ finished }) => finished)))
       const hero = await page.locator('main h1').boundingBox()
       const portal = await page.locator('main a.btn').first().boundingBox()
       const image = await band(page).boundingBox()
