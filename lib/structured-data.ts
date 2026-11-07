@@ -1,5 +1,5 @@
 import type { Locale } from '@/i18n/routing'
-import type { Article } from './content'
+import { getOfficeNames, type Article } from './content'
 import { EMAIL, TELEPHONES, telephoneHref } from './contact'
 import { SITE_NAME, SITE_URL, absoluteUrl } from './site'
 import { OFFICES } from './offices'
@@ -32,10 +32,11 @@ export function firmGraph(locale: Locale): JsonLd {
     telephone: FIRM_TELEPHONES,
     email: EMAIL,
   }
+  const names = getOfficeNames(locale)
   const offices = OFFICES.map((office, index) => ({
     '@type': 'LegalService',
     '@id': `${SITE_URL}/#office-${index + 1}`,
-    name: office.name,
+    name: names[office.nameKey],
     url: home,
     image: `${SITE_URL}/logo.png`,
     parentOrganization: { '@id': FIRM_ID },

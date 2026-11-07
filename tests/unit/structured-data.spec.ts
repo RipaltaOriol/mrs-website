@@ -58,6 +58,17 @@ test('each Office carries its coordinates, the firm’s telephones, the area ser
   }
 })
 
+test('each Office is named in the asked-for Locale', () => {
+  expect(offices(firmGraph('ca')).map((office) => office.name)).toEqual([
+    'Seu Central Lloret de Mar',
+    'Serveis Immobiliaris Lloret de Mar',
+  ])
+  expect(offices(firmGraph('es')).map((office) => office.name)).toEqual([
+    'Sede Central Lloret de Mar',
+    'Servicios Inmobiliarios Lloret de Mar',
+  ])
+})
+
 test('the province is named in the asked-for Locale', () => {
   for (const office of offices(firmGraph('es'))) {
     expect(office.areaServed).toEqual([

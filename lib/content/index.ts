@@ -1,5 +1,6 @@
 import { INLINES, type Block, type Document, type Inline, type Text } from '@contentful/rich-text-types'
 import type { Locale } from '@/i18n/routing'
+import { OFFICES, type Office } from '@/lib/offices'
 import caHome from '@/locales/ca/home.json'
 import esHome from '@/locales/es/home.json'
 import { contentful } from './contentful'
@@ -190,7 +191,7 @@ function requireLines(value: unknown, path: string): string[] {
   })
 }
 
-function requireMessage(messages: Unchecked, key: PartnerMessage): string {
+function requireMessage(messages: Unchecked, key: PartnerMessage | Office['nameKey']): string {
   const text = requireText(messages[key], `"${key}"`)
   // next-intl's answer for a key it cannot resolve, for messages passed through a translator.
   if (text === key || text.endsWith(`.${key}`)) {
@@ -210,6 +211,16 @@ export function getPartners(
     email,
     biography: splitLocaleList(requireMessage(messages, bioKey)),
   }))
+}
+
+/** Each Office's name in `locale`, by its message key. */
+export function getOfficeNames(
+  locale: Locale,
+  messages: Unchecked = HOME_MESSAGES[locale],
+): Record<Office['nameKey'], string> {
+  return Object.fromEntries(
+    OFFICES.map(({ nameKey }) => [nameKey, requireMessage(messages, nameKey)]),
+  ) as Record<Office['nameKey'], string>
 }
 
 /** One of the nine fields of work the firm advises in, as a single Locale presents it. */

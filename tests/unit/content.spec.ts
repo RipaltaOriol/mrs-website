@@ -3,6 +3,7 @@ import {
   getArticle,
   getArticles,
   getEmployees,
+  getOfficeNames,
   getPartners,
   getPracticeAreas,
   groupByDepartment,
@@ -364,4 +365,22 @@ test('an Article with no preview and no text in its body is described by its tit
     method: { nodeType: 'document', data: {}, content: [{ nodeType: 'hr', data: {}, content: [] }] },
   })
   expect(article?.description).toBe("Dissolució matrimonial procedeix l'exempció per reinversió")
+})
+
+const OFFICE_MESSAGES = { office1Title: 'Seu Central Lloret de Mar', office2Title: 'Serveis Immobiliaris Lloret de Mar' }
+
+test('each Office resolves to its name in the locale file', () => {
+  expect(getOfficeNames('ca', OFFICE_MESSAGES)).toEqual({
+    office1Title: 'Seu Central Lloret de Mar',
+    office2Title: 'Serveis Immobiliaris Lloret de Mar',
+  })
+})
+
+test('an Office name that is blank or the message key standing in for itself is refused', () => {
+  expect(() => getOfficeNames('ca', { ...OFFICE_MESSAGES, office2Title: ' ' })).toThrow(
+    'home.json: "office2Title" is missing or empty',
+  )
+  expect(() => getOfficeNames('ca', { ...OFFICE_MESSAGES, office2Title: 'home.office2Title' })).toThrow(
+    'home.json: "office2Title" looks like an unresolved message key',
+  )
 })

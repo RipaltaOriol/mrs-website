@@ -93,6 +93,11 @@ test('the home page publishes the firm as a LegalService at both Offices', async
       'Calle Can Guidet, núm. 5 local 1A',
       'Passeig Jacint Verdaguer, núm. 8',
     ])
+    expect(offices.map((office) => office.name)).toEqual(
+      path === '/'
+        ? ['Seu Central Lloret de Mar', 'Serveis Immobiliaris Lloret de Mar']
+        : ['Sede Central Lloret de Mar', 'Servicios Inmobiliarios Lloret de Mar'],
+    )
     for (const office of offices) {
       expect(office).toMatchObject({
         telephone: ['+34618630099', '+34972371821'],

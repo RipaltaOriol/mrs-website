@@ -3,7 +3,7 @@ import { EMAIL, formatTelephone, telephoneHref, TELEPHONES } from '@/lib/contact
 import { formatAddress, OFFICES } from '@/lib/offices'
 import caHome from '@/locales/ca/home.json'
 import esHome from '@/locales/es/home.json'
-import { anchors, sectionLabelledBy } from './html'
+import { anchors, headedBlocks, sectionLabelledBy } from './html'
 
 const PATHS = [
   { path: '/', messages: caHome },
@@ -19,6 +19,11 @@ for (const { path, messages } of PATHS) {
       const markup = await offices(request)
       expect(markup).not.toBe('')
       for (const office of OFFICES) expect(markup).toContain(formatAddress(office))
+    })
+
+    test('names each Office in its Locale', async ({ request }) => {
+      const headings = headedBlocks(await offices(request)).map(({ heading }) => heading)
+      expect(headings).toEqual(OFFICES.map((office) => messages[office.nameKey]))
     })
 
     test('offers every telephone number as a dialable link', async ({ request }) => {
@@ -45,7 +50,7 @@ for (const { path, messages } of PATHS) {
 
       for (const [index, office] of OFFICES.entries()) {
         const { text, label } = maps[index]
-        const name = messages[office.name]
+        const name = messages[office.nameKey]
         expect(label, name).toContain(name)
         // WCAG 2.5.3: speaking the visible label has to activate the link.
         expect(label, name).toContain(text)
